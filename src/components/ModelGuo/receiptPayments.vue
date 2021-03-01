@@ -9,6 +9,7 @@
       type="selection"
       width="55">
     </el-table-column>
+    
     <el-table-column
       prop="rcreateTime"
       label="日期"
