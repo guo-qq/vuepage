@@ -9,6 +9,7 @@ import sell from '@/components/views/sell'
 import sellreturn from '@/components/views/sellreturn'
 import receiptPayments from '@/components/ModelGuo/receiptPayments'
 import payment from '@/components/ModelGuo/payment'
+import inven from '@/components/Inventory/InventorySels'
 
 Vue.use(Router)
 
@@ -38,6 +39,11 @@ export default new Router({
       path: '/zpayment',
       name: 'payment',
       component:payment,
-    } 
+    } ,
+    {
+      path: '/Stock',
+      name: 'inven',
+      component:inven,
+    }
   ]
 })
