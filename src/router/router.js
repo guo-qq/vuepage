@@ -24,7 +24,12 @@ export default new Router({
         path: '/sellreturn',
         name: 'sellreturn',
         component:sellreturn,
-      }        
+      },
+      {
+        path: '/SalesSingleShow',
+        name: 'SalesSingleShow',
+        component:SalesSingleShow,
+      }      
         
       
       
