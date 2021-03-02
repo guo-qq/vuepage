@@ -1,7 +1,9 @@
 <template>
-  <div id="app">
-  <Hand id="Hand"></Hand>    
+  <div id="app"> 
+  <Hand id="Hand"></Hand>  
+ 
   <DH id="DH"   style="float:left;width:15%;height:100%"></DH>
+  <MBX style="float:left;height:50px;width:80%"></MBX>
   <router-view  style="float:left;height:100%;width:80%"/>
   <!-- <WB id="WB"  class="footer" style="clear: both"></WB> -->
   </div>
@@ -11,6 +13,8 @@
 import Hand from './components/Hand'
 import DH from './components/DH'
 import WB from './components/WB'
+import MBX from './components/views/MBX'
+ 
 export default {
   name: 'App',
   data(){
@@ -21,7 +25,9 @@ export default {
   components:{
     "Hand":Hand,
     "DH":DH,
-    "WB":WB
+    "WB":WB,
+    "MBX":MBX
+ 
   }  
 }
 </script>
