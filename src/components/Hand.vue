@@ -3,7 +3,7 @@
   <div class="header" style="background-color:ffffff">
     <a href="#/" >   <!-- 点击进入首页 -->
     <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-      <span class="company">邹邹管理系统</span>
+      <span class="company">管理系统</span>
     </a>   
   <!-- logo和文字结束 -->
   <div class="el-dropdown">
