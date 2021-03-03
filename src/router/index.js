@@ -12,6 +12,7 @@ import payment from '@/components/ModelGuo/payment'
 import SalesSingleShow from '@/components/ModelHan/SalesSingleShow'
 import SellCollect from '@/components/ModelHan/SellCollect'
 import inven from '@/components/Inventory/InventorySels'
+import LeiBie from '@/components/ModelHan/LeiBie'
 
 Vue.use(Router)
 
@@ -51,6 +52,11 @@ export default new Router({
       path: '/bcollect',
       name: '销售汇总表',
       component:SellCollect,
+    },
+    {
+      path: '/LeiBie',
+      name: '销售汇总表(按商品)',
+      component:LeiBie,
     }
 
   ]
