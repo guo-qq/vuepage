@@ -10,6 +10,7 @@ import sellreturn from '@/components/views/sellreturn'
 import receiptPayments from '@/components/ModelGuo/receiptPayments'
 import payment from '@/components/ModelGuo/payment'
 import SalesSingleShow from '@/components/ModelHan/SalesSingleShow'
+import SellCollect from '@/components/ModelHan/SellCollect'
 
 Vue.use(Router)
 
@@ -44,6 +45,11 @@ export default new Router({
       path: '/bdetail',
       name: '销售明细表',
       component:SalesSingleShow,
+    },
+    {
+      path: '/bcollect',
+      name: '销售汇总表',
+      component:SellCollect,
     }
 
   ]

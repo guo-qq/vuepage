@@ -2,7 +2,22 @@
 <template>
     <div>
         <el-row>
-            <el-button type="primary">导出</el-button>
+             <el-button type="primary">导出</el-button>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             <el-button type="primary">类别</el-button>
+             <el-button type="primary">商品</el-button>
+             <el-button type="primary">客户</el-button>
+             <el-button type="primary">销售利润</el-button>
         </el-row>
         <br>
             &nbsp;&nbsp;<span>业务日期</span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -37,51 +52,26 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span>销售毛利合计:</span>
             <label>{{sellmaoli}}</label>
+           
         </div>
         <br>
         <el-table
-            :data="items"
+            :data="tableData"
             border
             style="width: 100%">
             <el-table-column
-            prop="SsZdDate"
-            label="制单时间"
+            prop="date"
+            label="日期"
             width="180">
             </el-table-column>
             <el-table-column
-            prop="SsNumber"
-            label="单据编号"
+            prop="name"
+            label="姓名"
             width="180">
             </el-table-column>
             <el-table-column
-            prop="SsClient"
-            label="客户名称"
-            width="180">
-            </el-table-column>
-            <el-table-column
-            prop="AswName"
-            label="门店"
-            width="180">
-            </el-table-column>
-            <el-table-column
-            prop="SsWarehouse"
-            label="仓库">
-            </el-table-column>
-            <el-table-column
-            prop="SsMode"
-            label="结算方式">
-            </el-table-column>
-            <el-table-column
-            prop="CargoCoding"
-            label="商品编码">
-            </el-table-column>
-            <el-table-column
-            prop="CargoName"
-            label="商品名称">
-            </el-table-column>
-            <el-table-column
-            prop="UnitName"
-            label="单位">
+            prop="address"
+            label="地址">
             </el-table-column>
         </el-table>
     </div>       
@@ -123,21 +113,26 @@ width: 200px;
         }],
         value1: '',
         value2: '',
-        isCollapse: true, 
-        items:[]
+          tableData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1517 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1516 弄'
+        }]
       };
-      
-    },
-    mounted () {
-    this.axios.get('http://localhost:50774/api/SalesSingleDisplay')
-      .then(response => {
-        this.items = response.data
-        console.log('ok')
-      })
-      .catch(function (error) {
-        console.log(error)
-    })
-  }
-}
+    }
+  };
+
 </script>
 
