@@ -9,6 +9,9 @@ import sell from '@/components/views/sell'
 import sellreturn from '@/components/views/sellreturn'
 import receiptPayments from '@/components/ModelGuo/receiptPayments'
 import payment from '@/components/ModelGuo/payment'
+import SalesSingleShow from '@/components/ModelHan/SalesSingleShow'
+import SellCollect from '@/components/ModelHan/SellCollect'
+import inven from '@/components/Inventory/InventorySels'
 
 Vue.use(Router)
 
@@ -20,10 +23,10 @@ export default new Router({
       component: shou
     } ,
     {
-      path: '/sell',
-      name: '销售单',
-      component:sell,
-    },
+      path: '/Stock',
+      name: '库存',
+      component: inven
+    } ,
     {
       path: '/sellreturn',
       name: '销售退货申请单',
@@ -38,7 +41,17 @@ export default new Router({
       path: '/zpayment',
       name: '付款单',
       component:payment,
-    } 
+    },
+    {
+      path: '/bdetail',
+      name: '销售明细表',
+      component:SalesSingleShow,
+    },
+    {
+      path: '/bcollect',
+      name: '销售汇总表',
+      component:SellCollect,
+    }
 
   ]
 })
