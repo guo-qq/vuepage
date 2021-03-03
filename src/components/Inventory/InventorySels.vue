@@ -8,7 +8,7 @@
       v-model="value3"
       :options="options"
       :props="{ expandTrigger: 'hover' }"
-      @change="handleChange" value="0">请选择</el-cascader>
+      @change="handleChange"></el-cascader>
  
   &nbsp;&nbsp;&nbsp;</div>
 
@@ -83,15 +83,27 @@
       fixed="right"
       label="操作"
       width="120">
-    <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="text">库存分布</el-button>
-        <el-button type="text" >库存流水</el-button>
+    <template >
+        <el-button @click="dialogTableVisible = true" type="text">库存分布</el-button>
+        <el-button  @click="dialogTableVisible = true" type="text" >库存流水</el-button>
       </template>
     </el-table-column>
-      
+
+    <!-- 库存分布 -->
+    <el-dialog title="库存分布" :visible.sync="dialogTableVisible">
+    <el-table :data="gridData">
+    <el-table-column property="ASWName" label="门店" ></el-table-column>
+    <el-table-column property="naWnameme" label="仓库" ></el-table-column>
+    <el-table-column property="Wsize" label="库存容量" ></el-table-column>
+    <el-table-column property="CargoCount" label="占用库存" ></el-table-column>
+    <el-table-column property="KYongK" label="可用库存" ></el-table-column>
+    <el-table-column property="CargoCost" label="库存成本"></el-table-column>
+    </el-table>
+    </el-dialog>
    
     </el-table>
   </div>
+  
 </template>
 
 <script>
@@ -131,19 +143,15 @@
         value1: '',
         value2: '',
         input: '',
-        value3:'0',
       }
     },
     methods: {
-      handleChange(e,form,thsAreaCode){
-          thsAreaCode=this.value3
-      },
       sel:function(event){
         this.axios.get('http://localhost:50774/api/InventorySels',{
           params:{
-            WId:this.value3,
-            q:this.value1,
-            h:this.value2,
+            WId:this.value3[1],
+            q:this.value2[0],
+            h:this.value2[1],
             bian:this.input
           }
         })
