@@ -9,6 +9,7 @@ import sell from '@/components/views/sell'
 import sellreturn from '@/components/views/sellreturn'
 import receiptPayments from '@/components/ModelGuo/receiptPayments'
 import payment from '@/components/ModelGuo/payment'
+import Client from '@/components/MrYang/Client'
 
 Vue.use(Router)
 
@@ -38,6 +39,11 @@ export default new Router({
       path: '/zpayment',
       name: '付款单',
       component:payment,
+    } ,
+    {
+      path: '/zclient',
+      name: '客户管理',
+      component:Client,
     } 
 
   ]
