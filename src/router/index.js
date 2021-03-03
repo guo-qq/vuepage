@@ -21,10 +21,10 @@ export default new Router({
       component: shou
     } ,
     {
-      path: '/sell',
-      name: '销售单',
-      component:sell,
-    },
+      path: '/Stock',
+      name: '库存',
+      component: inven
+    } ,
     {
       path: '/sellreturn',
       name: '销售退货申请单',
