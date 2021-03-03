@@ -11,6 +11,7 @@ import receiptPayments from '@/components/ModelGuo/receiptPayments'
 import payment from '@/components/ModelGuo/payment'
 import SalesSingleShow from '@/components/ModelHan/SalesSingleShow'
 import SellCollect from '@/components/ModelHan/SellCollect'
+import inven from '@/components/Inventory/InventorySels'
 
 Vue.use(Router)
 
