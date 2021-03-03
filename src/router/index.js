@@ -17,33 +17,29 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'shou',
+      name: '首页',
       component: shou
     } ,
     {
       path: '/sell',
-      name: 'sell',
+      name: '销售单',
       component:sell,
     },
     {
       path: '/sellreturn',
-      name: 'sellreturn',
+      name: '销售退货申请单',
       component:sellreturn,
     },    
     {
       path: '/zreceipt',
-      name: 'receiptPayments',
+      name: '收款单',
       component:receiptPayments,
     } ,    
     {
       path: '/zpayment',
-      name: 'payment',
+      name: '付款单',
       component:payment,
-    } ,
-    {
-      path: '/Stock',
-      name: 'inven',
-      component:inven,
-    }
+    } 
+
   ]
 })

@@ -1,6 +1,9 @@
 <template>
   <!-- el-menu：菜单栏的根组件 router: 设置路由可以跳转 -->
-  <el-menu
+  
+  <div>
+                                              
+   <el-menu
     :router="true"
     :unique-opened="true"
     class="mymenu el-menu-vertical-demo"   
@@ -48,6 +51,9 @@
       </template>
     </el-submenu>
   </el-menu>
+  
+  </div>
+  
 </template> 
 
 
@@ -81,7 +87,7 @@
   },   
    computed: {
 			onRoutes() {
-				return this.$route.path.replace('/', '');
+				return  items[0];
 			}
    },
   }

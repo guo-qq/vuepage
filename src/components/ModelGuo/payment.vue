@@ -1,7 +1,23 @@
 //收款单
 <template>
-
-  <el-table
+  <div>
+     <div>
+        <table>
+            <tr>
+              <td>新增</td>
+               <td>批量删除</td>
+                <td>导入</td>
+                 <td>导出</td>
+            </tr>
+            <tr>
+              <td>供应商</td>
+              <td>供应商查询框</td>
+              <td>付款日期</td>
+              <td>日期选择框</td>
+            </tr>
+        </table>
+     </div>
+ <el-table
     :data="items"
     style="width: 100%"
     :row-class-name="tableRowClassName">
@@ -53,13 +69,16 @@
       </template>
     </el-table-column>
   </el-table>
+  </div>
+  
 </template>
 <script>
 export default {
     data() {
       return {        
         isCollapse: true, 
-        items:[]
+        items:[],
+        TT:[]
       };
     }, 
      methods: {
@@ -70,6 +89,10 @@ export default {
           return 'success-row';
         }
         return '';
+      },
+      handleClick(row)
+      {
+         this.TT=row;
       }
     },
     mounted () {
