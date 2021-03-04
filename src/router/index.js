@@ -16,6 +16,10 @@ import SLeiBie from '@/components/ModelHan/SLeiBie'
 import SShangPin from '@/components/ModelHan/SShangPin'
 import SKeHu from '@/components/ModelHan/SKeHu'
 
+import ClientShow from '@/components/MrYang/ClientShow'
+import Client from '@/components/MrYang/Client'
+import ClientModify from '@/components/MrYang/ClientModify'
+import CustomerClassShow from '@/components/MrYang/CustomerClassShow'
 Vue.use(Router)
 
 export default new Router({
