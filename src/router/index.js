@@ -15,11 +15,17 @@ import inven from '@/components/Inventory/InventorySels'
 import SLeiBie from '@/components/ModelHan/SLeiBie'
 import SShangPin from '@/components/ModelHan/SShangPin'
 import SKeHu from '@/components/ModelHan/SKeHu'
+import BSalesSingleShow from '@/components/ModelHan/BSalesSingleShow'
+import BuyerCollect from '@/components/ModelHan/BuyerCollect'
+import BShangPin from '@/components/ModelHan/BShangPin'
+import BSupplier from '@/components/ModelHan/BSupplier'
+
 
 import ClientShow from '@/components/MrYang/ClientShow'
 import Client from '@/components/MrYang/Client'
 import ClientModify from '@/components/MrYang/ClientModify'
 import CustomerClassShow from '@/components/MrYang/CustomerClassShow'
+
 Vue.use(Router)
 
 export default new Router({
@@ -93,7 +99,28 @@ export default new Router({
       path: '/zclassify',
       name: '客户分类',
       component:CustomerClassShow,
-    } 
+    },
+    {
+      path: '/bprocurement',
+      name: '采购明细表',
+      component:BSalesSingleShow,
+    },
+    {
+      path: '/BuyerCollect',
+      name: '采购汇总表',
+      component:BuyerCollect,
+    },
+    {
+      path: '/BShangPin',
+      name: '采购汇总表(按商品)',
+      component:BShangPin,
+    },
+    {
+      path: '/BSupplier',
+      name: '销售汇总表(按供应商)',
+      component:BSupplier,
+    },
+
     
 
   ]
