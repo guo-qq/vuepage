@@ -74,7 +74,27 @@ export default new Router({
       path: '/SKeHu',
       name: '销售汇总表(按客户)',
       component:SKeHu,
-    }
+    },
+    {
+      path: '/zclient',
+      name: '客户管理',
+      component:ClientShow,
+    } ,
+    {
+      path: '/zclientadd',
+      name: '客户管理添加页面',
+      component:Client,
+    } ,
+    {
+      path: '/zclientmodify',
+      name: '客户管理修改页面',
+      component:ClientModify,
+    } ,
+    {
+      path: '/zclassify',
+      name: '客户分类',
+      component:CustomerClassShow,
+    } 
     
 
   ]
