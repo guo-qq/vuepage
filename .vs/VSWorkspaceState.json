@@ -1,4 +1,12 @@
 {
+<<<<<<< HEAD
   "ExpandedNodes": [],
+=======
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\router"
+  ],
+>>>>>>> 516a10223c972c237abafe784d8fd3cf8208d4f9
   "PreviewInSolutionExplorer": false
 }
