@@ -63,8 +63,7 @@ export default new Router({
       path: '/SLeiBie',
       name: '销售汇总表(按类别)',
       component:SLeiBie,
-    }
-    ,
+    },
     {
       path: '/SShangPin',
       name: '销售汇总表(按商品)',
