@@ -210,11 +210,7 @@ export default {
       },
        async fetchData(val) {
       
-<<<<<<< HEAD
-       const res = await  this.axios.get('http://localhost:50774/api/payment',{
-=======
         const res = await  this.axios.get('http://localhost:50774/api/payment',{
->>>>>>> 516a10223c972c237abafe784d8fd3cf8208d4f9
         params: {
         FKF: this.state,
         value: this.value[0],
