@@ -2,9 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\router"
-    ""
+    "\\src\\components",
+    "\\src\\components\\MrYang"
   ],
-  "SelectedNode": "\\src\\router\\index.js",
+  "SelectedNode": "\\src\\components\\MrYang\\Client.vue",
   "PreviewInSolutionExplorer": false
 }

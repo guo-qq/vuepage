@@ -131,6 +131,7 @@
 </template>
 <script>
   export default {
+      name:"ClientModify",
     data() {
       return {
         options:[],
@@ -198,8 +199,12 @@
             console.log(error);
           })
       },
-
     methods: {
+      fun(){
+          this.$http.get('http://localhost:50774/api/clientSupplierByid',{
+
+          })
+      },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -240,6 +245,3 @@
   }
   
 </script>
-<style>
-    
-</style>
