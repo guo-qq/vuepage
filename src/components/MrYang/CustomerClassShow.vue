@@ -1,4 +1,49 @@
 <template>
+    <div>
+      <div>
+            <table style="marginLeft:1%;margintop:20%">
+              <tr>
+                <td>
+                  <el-row>
+                <router-link to="/zclientadd"><el-button style="marginLeft:1%;margintop:20%" type="primary">添加</el-button></router-link>
+            </el-row>
+                </td>
+                <td>
+                  <el-row>
+              <el-button style="marginLeft:1%;margintop:20%">批量操作</el-button>
+            </el-row>
+                </td>
+              </tr>
+            </table>
+            <table style="marginLeft:570px;margintop:%">
+                <tr>
+                  <td>
+                    客户等级
+                  </td>
+                    <td>
+                        <el-select v-model="valuee" style="marginLeft:5px" placeholder="请选择">
+                        <el-option
+                          v-for="item in opn"
+                          :key="item.value"
+                          :label="item.cgradeName"
+                          :value="item.cgradeId">
+                        </el-option>
+                        </el-select>
+                    </td>
+                    <td>
+                      <el-input
+                      style="marginLeft:10px"
+                      placeholder="请输入关键字搜索"
+                      prefix-icon="el-icon-search"
+                      v-model="input2">
+                      </el-input>
+                    </td>
+                    <td>
+                      <el-button style="marginLeft:15px" @click="resetForm('ruleForm')">重置</el-button>
+                    </td>
+                </tr>
+            </table>
+        </div>
     <el-table
     :data="tableData"
     style="width: 100%"
@@ -45,6 +90,7 @@
       </template>
     </el-table-column>
     </el-table>
+    </div>
 </template>
 <script>
   export default {

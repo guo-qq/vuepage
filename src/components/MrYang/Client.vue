@@ -203,6 +203,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+
            this.axios.post("http://localhost:50774/api/ClientSupplierAdd",{
                 clientSnumber:this.ruleForm.clientSnumber,
                 clientSname:this.ruleForm.clientSname,

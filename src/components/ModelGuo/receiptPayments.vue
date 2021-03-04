@@ -135,9 +135,6 @@ export default {
         //分页
         currentPage1: 1,       //分页
         currentPage2: 2,
-      
-
-         
         value:'',
          
       };
@@ -211,7 +208,6 @@ export default {
         return '';
       },
        async fetchData(val) {
-      
         const res = await  this.axios.get('http://localhost:50774/api/receiptPayments',{
         params: {
         FKF: this.state,
@@ -229,7 +225,6 @@ export default {
       }
  
     },
-     
     mounted () {
          this.loadAll();
         this.axios.get('http://localhost:50774/api/receiptPayments')

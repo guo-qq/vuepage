@@ -61,7 +61,6 @@ export default new Router({
       path: '/LeiBie',
       name: '销售汇总表(按商品)',
       component:LeiBie,
-    }
     },
     {
       path: '/zclient',
