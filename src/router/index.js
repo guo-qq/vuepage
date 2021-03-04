@@ -12,6 +12,8 @@ import payment from '@/components/ModelGuo/payment'
 import SalesSingleShow from '@/components/ModelHan/SalesSingleShow'
 import SellCollect from '@/components/ModelHan/SellCollect'
 import inven from '@/components/Inventory/InventorySels'
+import LeiBie from '@/components/ModelHan/LeiBie'
+
 import ClientShow from '@/components/MrYang/ClientShow'
 import Client from '@/components/MrYang/Client'
 import ClientModify from '@/components/MrYang/ClientModify'
@@ -54,6 +56,12 @@ export default new Router({
       path: '/bcollect',
       name: '销售汇总表',
       component:SellCollect,
+    },
+    {
+      path: '/LeiBie',
+      name: '销售汇总表(按商品)',
+      component:LeiBie,
+    }
     },
     {
       path: '/zclient',

@@ -1,10 +1,14 @@
 {
+<<<<<<< HEAD
+  "ExpandedNodes": [],
+=======
   "ExpandedNodes": [
     "",
     "\\src",
     "\\src\\components",
     "\\src\\components\\MrYang"
   ],
+>>>>>>> 516a10223c972c237abafe784d8fd3cf8208d4f9
   "SelectedNode": "\\src\\components\\MrYang\\Client.vue",
   "PreviewInSolutionExplorer": false
 }

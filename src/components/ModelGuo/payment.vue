@@ -130,10 +130,10 @@ export default {
         state: '',
         timeout:  null,
         input2:'',
+        //分页
         currentPage1: 1,       //分页
         currentPage2: 2,
-        currentPage3: 3,
-        currentPage4: 4,
+      
 
          
         value:'',
@@ -157,6 +157,12 @@ export default {
         this.fetchData();
       
       },300)
+    },
+    currentPage1(){
+      this.fetchData();
+    },
+    currentPage2(){
+      this.fetchData();
     }
     },
   
@@ -173,10 +179,10 @@ export default {
                  })
         ]},
          handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+            this.currentPage1=val
         },
          handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+            this.currentPage2=val
         },
          querySearchAsync(queryString, cb) {
         var restaurants = this.restaurants;
@@ -204,12 +210,18 @@ export default {
       },
        async fetchData(val) {
       
-      const res = await  this.axios.get('http://localhost:50774/api/payment',{
+<<<<<<< HEAD
+       const res = await  this.axios.get('http://localhost:50774/api/payment',{
+=======
+        const res = await  this.axios.get('http://localhost:50774/api/payment',{
+>>>>>>> 516a10223c972c237abafe784d8fd3cf8208d4f9
         params: {
         FKF: this.state,
         value: this.value[0],
         value1: this.value[1],
         DJ:this.input2,
+        datepage:this.currentPage1,
+        datesize:this.currentPage2
       },
       })
         .then(response => {
