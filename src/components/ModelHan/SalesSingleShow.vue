@@ -146,13 +146,12 @@ const delay = (function() {
         state:'',
         isCollapse: true, 
         items:[],
-        currentPage1: 1,       //分页
-        currentPage2: 2,
-        currentPage3: 3,
-        currentPage4: 4,
         sscNumber:'',
         sscSubtotal:'',
-        maoLi:''
+        maoLi:'',
+        currentPage1: 1,       //分页
+        currentPage2: 1
+
       };
     },
     watch: {
@@ -168,9 +167,33 @@ const delay = (function() {
         this.fetchData();
       
       },300)
+    },
+    currentPage1(){
+      this.fetchData();
+    },
+    currentPage2(){
+      this.fetchData();
     }
+    
     },
      methods: { 
+       loadAll() {
+        return [
+           this.axios.get('http://localhost:50774/api/SalesSingleShow')
+           .then(response => {
+            
+            this.restaurants=response.data;
+            })
+            .catch(function (error) {
+            console.log(error)
+                 })
+        ]},
+        handleSizeChange(val) {
+            this.currentPage1=val
+        },
+         handleCurrentChange(val) {
+            this.currentPage2=val
+        },
         async fetchData(val) {
 
       const res = await  this.axios.get('http://localhost:50774/api/SalesSingleShow',{
@@ -178,6 +201,8 @@ const delay = (function() {
         clientName: this.state,
         start: this.value[0],
         end: this.value[1],
+        pageSize: this.currentPage1,
+        pageIndex: this.currentPage2
         
       },
       })
@@ -218,6 +243,7 @@ const delay = (function() {
       },
       
     mounted () {
+       this.loadAll();
     this.axios.get('http://localhost:50774/api/SalesSingleShow')
       .then(response => {
         this.items = response.data
@@ -226,6 +252,7 @@ const delay = (function() {
       .catch(function (error) {
         console.log(error)
     })
+    
   }
 }
 </script>

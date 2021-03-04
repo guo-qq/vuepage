@@ -24,11 +24,9 @@
                 </template>
             </el-input>
              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-             <el-button type="primary">查询</el-button>
-              <el-button type="primary"  @click="$router.push('/LeiBie')" >类别</el-button>&nbsp;&nbsp;&nbsp;
-              <el-button type="primary">商品</el-button>&nbsp;&nbsp;&nbsp;
-              <el-button type="primary">客户</el-button>&nbsp;&nbsp;&nbsp;
-              <el-button type="primary">利润</el-button>&nbsp;&nbsp;&nbsp;
+             <el-button type="primary"  @click="$router.push('/LeiBie')">类别</el-button>&nbsp;&nbsp;&nbsp;
+              <el-button type="primary" @click="$router.push('/LeiBie')">商品</el-button>&nbsp;&nbsp;&nbsp;
+              <el-button type="primary" @click="$router.push('/LeiBie')">客户</el-button>&nbsp;&nbsp;&nbsp;
              <el-button @click="resetForm('ruleForm')">重置</el-button>
         <div class="sys">
         <br>
@@ -37,10 +35,10 @@
             <label>{{sscNumber}}</label>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span>销售金额合计:</span>
-            <label>{{sscSubtotal}}</label>
+            <label>{{ssPrice}}</label>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span>销售毛利合计:</span>
-            <label>{{maoLi}}</label>
+            <label>{{jLiRun}}</label>
         </div>
         <br>
         <el-table
@@ -78,39 +76,39 @@
             label="结算方式">
             </el-table-column>
             <el-table-column
-            prop="cargoCoding"
-            label="商品编码">
-            </el-table-column>
-            <el-table-column
-            prop="cargoName"
-            label="商品名称">
-            </el-table-column>
-            <el-table-column
-            prop="unitName"
-            label="单位">
-            </el-table-column>
-            <el-table-column
             prop="sscNumber"
-            label="数量">
+            label="销售数量">
             </el-table-column>
             <el-table-column
-            prop="cpPrice"
-            label="单价(元)">
-            </el-table-column>
-            <el-table-column
-            prop="sscSubtotal"
+            prop="ssPrice"
             label="销售金额(元)">
             </el-table-column>
             <el-table-column
-            prop="maoLi"
-            label="销售毛利(元)">
+            prop="ssZkMoney"
+            label="折扣金额(元)">
+            </el-table-column>
+            <el-table-column
+            prop="ssFjMoney"
+            label="附加金额(元)">
+            </el-table-column>
+            <el-table-column
+            prop="jLiRun"
+            label="销售利润(元)">
+            </el-table-column>
+            <el-table-column
+            prop="ysMoeney"
+            label="应收金额(元)">
+            </el-table-column>
+             <el-table-column
+            prop="ssSjMoney"
+            label="已收金额(元)">
             </el-table-column>
             <el-table-column
             prop="ssHandle"
-            label="经办人">
+            label="销售人员">
             </el-table-column>
             <el-table-column
-            prop="sscRemark"
+            prop="ssRemark"
             label="备注">
             </el-table-column>
         </el-table>
@@ -150,13 +148,12 @@ const delay = (function() {
         state:'',
         isCollapse: true, 
         items:[],
-        currentPage1: 1,       //分页
-        currentPage2: 2,
-        currentPage3: 3,
-        currentPage4: 4,
         sscNumber:'',
         sscSubtotal:'',
-        maoLi:''
+        maoLi:'',
+        currentPage1: 1,       //分页
+        currentPage2: 1
+
       };
     },
     watch: {
@@ -172,16 +169,42 @@ const delay = (function() {
         this.fetchData();
       
       },300)
+    },
+    currentPage1(){
+      this.fetchData();
+    },
+    currentPage2(){
+      this.fetchData();
     }
+    
     },
      methods: { 
+       loadAll() {
+        return [
+           this.axios.get('http://localhost:50774/api/SellCategory')
+           .then(response => {
+            
+            this.restaurants=response.data;
+            })
+            .catch(function (error) {
+            console.log(error)
+                 })
+        ]},
+        handleSizeChange(val) {
+            this.currentPage1=val
+        },
+         handleCurrentChange(val) {
+            this.currentPage2=val
+        },
         async fetchData(val) {
 
-      const res = await  this.axios.get('http://localhost:50774/api/SalesSingleShow',{
+      const res = await  this.axios.get('http://localhost:50774/api/SellProfit',{
         params: {
         clientName: this.state,
         start: this.value[0],
         end: this.value[1],
+        pageSize: this.currentPage1,
+        pageIndex: this.currentPage2
         
       },
       })
@@ -200,7 +223,7 @@ const delay = (function() {
           return;
           }
           const values = data.map(item => Number(item[column.property]));
-          if (column.property === 'sscNumber' || column.property === 'sscSubtotal' || column.property === 'maoLi') {
+          if (column.property === 'sscNumber' || column.property === 'ssPrice' || column.property === 'jLiRun') {
           sums[index] = values.reduce((prev, curr) => {
           const value = Number(curr);
           if (!isNaN(value)) {
@@ -222,7 +245,8 @@ const delay = (function() {
       },
       
     mounted () {
-    this.axios.get('http://localhost:50774/api/SalesSingleShow')
+       this.loadAll();
+    this.axios.get('http://localhost:50774/api/SellProfit')
       .then(response => {
         this.items = response.data
         console.log('ok')
@@ -230,6 +254,7 @@ const delay = (function() {
       .catch(function (error) {
         console.log(error)
     })
+    
   }
 }
 </script>
