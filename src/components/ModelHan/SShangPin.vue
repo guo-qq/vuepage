@@ -1,3 +1,4 @@
+
 <template>
     <div>
         <el-row>
@@ -23,21 +24,21 @@
                 </template>
             </el-input>
              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <el-button type="primary" @click="$router.push('/LeiBie')">商品</el-button>&nbsp;&nbsp;&nbsp;
-              <el-button type="primary" @click="$router.push('/LeiBie')">客户</el-button>&nbsp;&nbsp;&nbsp;
+             <el-button type="primary"  @click="$router.push('/SLeiBie')">类别</el-button>&nbsp;&nbsp;&nbsp;
+              <el-button type="primary" @click="$router.push('/SKeHu')">客户</el-button>&nbsp;&nbsp;&nbsp;
               <el-button type="primary" @click="$router.push('/bcollect')">利润</el-button>&nbsp;&nbsp;&nbsp;
              <el-button @click="resetForm('ruleForm')">重置</el-button>
         <div class="sys">
         <br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span>销售数量合计:</span>
-            <label>{{sscNumber}}</label>
+            <label>{{sums}}</label>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span>销售金额合计:</span>
-            <label>{{sscSubtotal}}</label>
+            <label>{{ssPrice}}</label>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span>销售毛利合计:</span>
-            <label>{{maoLi}}</label>
+            <label>{{xsMaoLi}}</label>
         </div>
         <br>
         <el-table
@@ -48,26 +49,35 @@
             :summary-method="getTotal"
             row-class-name="tableRowClassName">
             <el-table-column
-            prop="ssNumber"
-            label="单据编号"
+            prop="cargoCoding"
+            label="商品编码"
             width="180">
             </el-table-column>
             <el-table-column
-            prop="className"
-            label="商品类别"
+            prop="cargoName"
+            label="商品名称"
+            width="180">
+            </el-table-column>
+            <el-table-column
+            prop="unitName"
+            label="单位"
             width="180">
             </el-table-column>
             <el-table-column
             prop="sscNumber"
-            label="销售数量">
+            label="数量">
             </el-table-column>
             <el-table-column
-            prop="sscSubtotal"
+            prop="cpPrice"
+            label="单价(元)">
+            </el-table-column>
+            <el-table-column
+            prop="ssPrice"
             label="销售金额(元)">
             </el-table-column>
             <el-table-column
-            prop="maoLi"
-            label="销售毛利(元)">
+            prop="xsMaoLi"
+            label="销售利润(元)">
             </el-table-column>
         </el-table>
         <div class="block">      
@@ -107,8 +117,8 @@ const delay = (function() {
         isCollapse: true, 
         items:[],
         sscNumber:'',
-        sscSubtotal:'',
-        maoLi:'',
+        ssPrice:'',
+        xsMaoLi:'',
         currentPage1: 1,       //分页
         currentPage2: 1
 
@@ -139,7 +149,7 @@ const delay = (function() {
      methods: { 
        loadAll() {
         return [
-           this.axios.get('http://localhost:50774/api/SellCategory')
+           this.axios.get('http://localhost:50774/api/SellShop')
            .then(response => {
             
             this.restaurants=response.data;
@@ -156,9 +166,9 @@ const delay = (function() {
         },
         async fetchData(val) {
 
-      const res = await  this.axios.get('http://localhost:50774/api/SellCategory',{
+      const res = await  this.axios.get('http://localhost:50774/api/SellShop',{
         params: {
-        clientName: this.state,
+        cargoName: this.state,
         start: this.value[0],
         end: this.value[1],
         pageSize: this.currentPage1,
@@ -181,7 +191,7 @@ const delay = (function() {
           return;
           }
           const values = data.map(item => Number(item[column.property]));
-          if (column.property === 'sscNumber' || column.property === 'sscSubtotal' || column.property === 'maoLi') {
+          if (column.property === 'sscNumber' || column.property === 'ssPrice' || column.property === 'xsMaoLi') {
           sums[index] = values.reduce((prev, curr) => {
           const value = Number(curr);
           if (!isNaN(value)) {
@@ -195,16 +205,16 @@ const delay = (function() {
           sums[index] = '--';
           }
           });
-          this.sscNumber=sums[9];
-          this.sscSubtotal=sums[11];
-          this.maoLi=sums[12];
+          this.sscNumber=sums[3];
+          this.ssPrice=sums[5];
+          this.xsMaoLi=sums[6];
           return sums;
           }
       },
       
     mounted () {
        this.loadAll();
-    this.axios.get('http://localhost:50774/api/SellCategory')
+    this.axios.get('http://localhost:50774/api/SellShop')
       .then(response => {
         this.items = response.data
         console.log('ok')

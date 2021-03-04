@@ -12,7 +12,9 @@ import payment from '@/components/ModelGuo/payment'
 import SalesSingleShow from '@/components/ModelHan/SalesSingleShow'
 import SellCollect from '@/components/ModelHan/SellCollect'
 import inven from '@/components/Inventory/InventorySels'
-import LeiBie from '@/components/ModelHan/LeiBie'
+import SLeiBie from '@/components/ModelHan/SLeiBie'
+import SShangPin from '@/components/ModelHan/SShangPin'
+import SKeHu from '@/components/ModelHan/SKeHu'
 
 Vue.use(Router)
 
@@ -54,10 +56,22 @@ export default new Router({
       component:SellCollect,
     },
     {
-      path: '/LeiBie',
-      name: '销售汇总表(按商品)',
-      component:LeiBie,
+      path: '/SLeiBie',
+      name: '销售汇总表(按类别)',
+      component:SLeiBie,
     }
+    ,
+    {
+      path: '/SShangPin',
+      name: '销售汇总表(按商品)',
+      component:SShangPin,
+    },
+    {
+      path: '/SKeHu',
+      name: '销售汇总表(按客户)',
+      component:SKeHu,
+    }
+    
 
   ]
 })
