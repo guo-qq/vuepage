@@ -12,6 +12,10 @@ import payment from '@/components/ModelGuo/payment'
 import SalesSingleShow from '@/components/ModelHan/SalesSingleShow'
 import SellCollect from '@/components/ModelHan/SellCollect'
 import inven from '@/components/Inventory/InventorySels'
+import running from '@/components/Inventory/WaterSel'
+import point from '@/components/Inventory/CheckShow'
+import AddCheck from '@/components/Inventory/AddCheck'
+
 
 Vue.use(Router)
 
@@ -21,6 +25,21 @@ export default new Router({
       path: '/',
       name: '首页',
       component: shou
+    } ,
+    {
+      path: '/AddCheck',
+      name: '新增盘点表',
+      component: AddCheck
+    } ,
+    {
+      path: '/running',
+      name: '库存流水',
+      component: running
+    } ,
+    {
+      path: '/point',
+      name: '库存盘点',
+      component: point
     } ,
     {
       path: '/Stock',

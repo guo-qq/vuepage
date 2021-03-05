@@ -1,16 +1,18 @@
 <template>
 <div>
   <div id="app">
-    <!--仓库选择-->
-    <div style="float:left">    
-        <span class="demonstration">仓库</span>
-    <el-cascader
-      v-model="value3"
-      :options="options"
-      :props="{ expandTrigger: 'hover' }"
-      @change="handleChange"></el-cascader>
- 
-  &nbsp;&nbsp;&nbsp;</div>
+    <!--单据类型-->
+  <div style="float:left">
+      <span class="demonstration">单据类型</span>
+      <el-select v-model="value" placeholder="请选择">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>&nbsp;&nbsp;&nbsp;&nbsp;
+  </div>
 
   <!--创建日期-->
   <div class="block" style="float:left"> 
@@ -26,8 +28,6 @@
       :picker-options="pickerOptions">
     </el-date-picker>
   &nbsp;&nbsp;&nbsp;</div>
-
-  
   <!--关键字搜索-->
   <div style="width:200px;float:left">
     <el-input v-model="input" placeholder="请输入关键字"></el-input>
@@ -42,63 +42,64 @@
     max-height="250">
     <el-table-column
       fixed
-      prop="cargoDate"
+      prop="sdateTime"
       label="创建时间"
+
       >
     </el-table-column>
     <el-table-column
-      prop="cargoCoding"
+      prop="shopBian"
       label="商品编码"
+
       >
     </el-table-column>
     <el-table-column
-      prop="cargoName"
-      label="商品名称"
+      prop="receiptsB"
+      label="单据编号"
+
       >
     </el-table-column>
     <el-table-column
-      prop="cargoPic"
-      label="商品图片"
+      prop="relevanceRec"
+      label="关联业务单号"
+
       >
     </el-table-column>
     <el-table-column
-      prop="wsize"
-      label="实物库存"
+      prop="receType"
+      label="单据类型"
+
       >
     </el-table-column>
     <el-table-column
-      prop="cargoCount"
-      label="占用库存"
+      prop="storeName"
+      label="门店"
+
       >
     </el-table-column>
     <el-table-column
-      fixed="kYongK"
-      label="可用库存"
+      prop="warehouseName"
+      label="仓库"
+
       >
     </el-table-column>
     <el-table-column
-      fixed="cargoCost"
-      label="库存成本（元）"
+      prop="contact"
+      label="来往单位"
+
       >
     </el-table-column>
-     <el-table-column
-      fixed="right"
-      label="操作"
-      width="120">
-    <template slot-scope="scope">
-      <el-button @click="handleClick(scope.row)" type="text">库存分布</el-button>
-        <!-- 库存分布弹出层 -->       
-          <el-dialog title="库存分布" :visible.sync="dialogTableVisible">
-          <el-table :data="gridData">
-          <el-table-column property="ASWName" label="门店" ></el-table-column>
-          <el-table-column property="naWnameme" label="仓库" ></el-table-column>
-          <el-table-column property="Wsize" label="库存容量" ></el-table-column>
-          <el-table-column property="CargoCount" label="占用库存" ></el-table-column>
-          <el-table-column property="KYongK" label="可用库存" ></el-table-column>
-          <el-table-column property="CargoCost" label="库存成本"></el-table-column>
-          </el-table>
-          </el-dialog>
-      </template>
+    <el-table-column
+      prop="stockC"
+      label="出库量"
+
+      >
+    </el-table-column>
+    <el-table-column
+      prop="storage"
+      label="入库量"
+
+      >
     </el-table-column>
     </el-table>
   </div>
@@ -109,8 +110,32 @@
   export default {
     data() {
       return {  
+        options:[{
+            value:'销售出库',
+            label: '销售出库'
+        },{
+            value:'销售退货入库',
+            label: '销售退货入库'
+        },{
+            value:'采购入库',
+            label: '采购入库'
+        },{
+            value:'采购退货出库',
+            label: '采购退货出库'
+        },{
+            value:'调拨出库',
+            label: '调拨出库'
+        },{
+            value:'调拨入库',
+            label: '调拨入库'
+        },{
+            value:'盘盈入库',
+            label: '盘盈入库'
+        },{
+            value:'盘亏出库',
+            label: '盘亏出库'
+        }],
         tableData:[],
-        options:[],
         //日期
         pickerOptions: {
           shortcuts: [{
@@ -139,6 +164,7 @@
             }
           }]
         },
+        value:'',
         value1: '',
         value2: '',
         input: '',
@@ -148,12 +174,12 @@
     },
     methods: {
       sel:function(event){
-        this.axios.get('http://localhost:50774/api/InventorySels',{
+        this.axios.get('http://localhost:50774/api/stockTaking',{
           params:{
-            WId:this.value3[1],
+            TypeName:this.value,
             q:this.value2[0],
             h:this.value2[1],
-            bian:this.input
+            ShopBian:this.input
           }
         })
         .then(response=>{
@@ -163,42 +189,18 @@
             console.log(error);
         })
       },
-      //库存分布
-      handleClick(row) {
-        dialogTableVisible=true;      
-        axios.get('http://localhost:50774/api/InventoryDistribute',{
-          params:{
-            name : row.CargoName
-          }
-        })
-        .then(response=>{
-            this.gridData=response.data
-        })
-        .catch(function(error){
-          console.log(error);
-        })
-      },
 
     }, 
     mounted(){
         //显示       
-        this.axios.get('http://localhost:50774/api/InventorySels')
+        this.axios.get('http://localhost:50774/api/stockTaking')
           .then(response=>{
             this.tableData=response.data;
             console.log('ok')
           })      
           .catch(function(error){
             console.log(error);
-          }) ,
-        //仓库下拉
-        this.axios.get('http://localhost:50774/api/SelectWare')
-        .then(response=>{
-          this.options=response.data;
-            console.log('ok')
-        })
-        .catch(function(error){
-            console.log(error);
-          })
+          }) 
       }
   }
 </script>
