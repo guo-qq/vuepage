@@ -2,7 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\router"
+    "\\src\\components",
+    "\\src\\components\\ModelGuo"
   ],
+  "SelectedNode": "\\src\\components\\ModelGuo\\Addfkd.vue",
   "PreviewInSolutionExplorer": false
 }
