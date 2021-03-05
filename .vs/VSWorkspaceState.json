@@ -2,8 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\src",
+    "\\src\\components",
+    "\\src\\components\\Inventory",
+    "\\src\\router"
     "\\src\\components"
   ],
+  "SelectedNode": "\\src\\components\\Inventory\\InventorySels.vue",
   "SelectedNode": "\\src\\components",
   "PreviewInSolutionExplorer": false
 }

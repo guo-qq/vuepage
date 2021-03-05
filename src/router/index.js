@@ -20,6 +20,20 @@ import details from '@/components/ModelLiu/details'  //详情页
 
 import receiptPayments from '@/components/ModelGuo/receiptPayments'
 import payment from '@/components/ModelGuo/payment'
+import SalesSingleShow from '@/components/ModelHan/SalesSingleShow'
+import SellCollect from '@/components/ModelHan/SellCollect'
+import inven from '@/components/Inventory/InventorySels'
+import SLeiBie from '@/components/ModelHan/SLeiBie'
+import SShangPin from '@/components/ModelHan/SShangPin'
+import SKeHu from '@/components/ModelHan/SKeHu'
+import running from '@/components/Inventory/WaterSel'
+import point from '@/components/Inventory/CheckShow'
+import AddCheck from '@/components/Inventory/AddCheck'
+
+import ClientShow from '@/components/MrYang/ClientShow'
+import Client from '@/components/MrYang/Client'
+import ClientModify from '@/components/MrYang/ClientModify'
+import CustomerClassShow from '@/components/MrYang/CustomerClassShow'
 
 
 
@@ -33,10 +47,25 @@ export default new Router({
       component: shou
     } ,
     {
-      path: '/sell',
-      name: '销售单',
-      component:sell,
-    },
+      path: '/AddCheck',
+      name: '新增盘点表',
+      component: AddCheck
+    } ,
+    {
+      path: '/running',
+      name: '库存流水',
+      component: running
+    } ,
+    {
+      path: '/point',
+      name: '库存盘点',
+      component: point
+    } ,
+    {
+      path: '/Stock',
+      name: '库存',
+      component: inven
+    } ,
     {
       path: '/sellreturn',
       name: '销售退货申请单',
@@ -61,6 +90,55 @@ export default new Router({
       path: '/zpayment',
       name: '付款单',
       component:payment,
+    },
+    {
+      path: '/bdetail',
+      name: '销售明细表',
+      component:SalesSingleShow,
+    },
+    {
+      path: '/bcollect',
+      name: '销售汇总表',
+      component:SellCollect,
+    },
+    {
+      path: '/SLeiBie',
+      name: '销售汇总表(按类别)',
+      component:SLeiBie,
+    }
+    ,
+    {
+      path: '/SShangPin',
+      name: '销售汇总表(按商品)',
+      component:SShangPin,
+    },
+    {
+      path: '/SKeHu',
+      name: '销售汇总表(按客户)',
+      component:SKeHu,
+    },
+    {
+      path: '/zclient',
+      name: '客户管理',
+      component:ClientShow,
+    } ,
+    {
+      path: '/zclientadd',
+      name: '客户管理添加页面',
+      component:Client,
+    } ,
+    {
+      path: '/zclientmodify',
+      name: '客户管理修改页面',
+      component:ClientModify,
+    } ,
+    {
+      path: '/zclassify',
+      name: '客户分类',
+      component:CustomerClassShow,
+    } 
+    
+
     } ,
     {
       path: '/market',
