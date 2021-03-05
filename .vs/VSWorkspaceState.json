@@ -3,8 +3,9 @@
     "",
     "\\src",
     "\\src\\components",
-    "\\src\\components\\ModelGuo"
+    "\\src\\components\\Inventory",
+    "\\src\\router"
   ],
-  "SelectedNode": "\\src\\components\\ModelGuo\\Addfkd.vue",
+  "SelectedNode": "\\src\\components\\Inventory\\InventorySels.vue",
   "PreviewInSolutionExplorer": false
 }
