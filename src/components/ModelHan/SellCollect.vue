@@ -134,10 +134,10 @@ export default {
     },
   },
   methods: {
-    loadAll() {
+  async  loadAll() {
       return [
-        this.axios
-          .get("http://localhost:50774/api/SellCategory")
+    await    this.axios
+          .get("http://localhost:50774/api/SellProfit")
           .then((response) => {
             this.restaurants = response.data;
           })
@@ -201,9 +201,9 @@ export default {
     },
   },
 
-  mounted() {
+ async mounted() {
     this.loadAll();
-    this.axios
+await    this.axios
       .get("http://localhost:50774/api/SellProfit")
       .then((response) => {
         this.items = response.data;

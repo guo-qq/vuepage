@@ -19,6 +19,10 @@ import BSalesSingleShow from '@/components/ModelHan/BSalesSingleShow'
 import BuyerCollect from '@/components/ModelHan/BuyerCollect'
 import BShangPin from '@/components/ModelHan/BShangPin'
 import BSupplier from '@/components/ModelHan/BSupplier'
+import RepertoryFirst from '@/components/ModelHan/RepertoryFirst'
+import RepertoryTwo from '@/components/ModelHan/RepertoryTwo'
+import RepertoryMax from '@/components/ModelHan/RepertoryMax'
+import RepertoryMin from '@/components/ModelHan/RepertoryMin'
 
 
 import ClientShow from '@/components/MrYang/ClientShow'
@@ -120,7 +124,26 @@ export default new Router({
       name: '销售汇总表(按供应商)',
       component:BSupplier,
     },
-
+    {
+      path: '/bwarning',
+      name: '库存预警表',
+      component:RepertoryFirst,
+    },
+    {
+      path: '/RepertoryMax',
+      name: '超过库存上限',
+      component:RepertoryMax,
+    },
+    {
+      path: '/RepertoryMin',
+      name: '低于库存下限',
+      component:RepertoryMin,
+    },
+    {
+      path: '/bbalance',
+      name: '库存余额表',
+      component:RepertoryTwo,
+    },
     
 
   ]
