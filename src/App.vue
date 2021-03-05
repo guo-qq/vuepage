@@ -27,7 +27,6 @@ export default {
     "DH":DH,
     "WB":WB,
     "MBX":MBX
- 
   }  
 }
 </script>
