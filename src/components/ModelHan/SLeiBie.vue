@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <el-row>
@@ -17,18 +16,18 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <el-input class="sty" placeholder="请输入内容" v-model="state">
+    <el-input class="sty" placeholder="请输入内容" v-model="states">
       <template #prefix>
         <i class="el-input__icon el-icon-search"></i>
       </template>
     </el-input>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <el-button type="primary" @click="$router.push('/SLeiBie')">类别</el-button
-    >&nbsp;&nbsp;&nbsp;
     <el-button type="primary" @click="$router.push('/SShangPin')"
       >商品</el-button
     >&nbsp;&nbsp;&nbsp;
     <el-button type="primary" @click="$router.push('/SKeHu')">客户</el-button
+    >&nbsp;&nbsp;&nbsp;
+    <el-button type="primary" @click="$router.push('/bcollect')">利润</el-button
     >&nbsp;&nbsp;&nbsp;
     <el-button @click="resetForm('ruleForm')">重置</el-button>
     <div class="sys">
@@ -38,10 +37,10 @@
       <label>{{ sscNumber }}</label>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <span>销售金额合计:</span>
-      <label>{{ ssPrice }}</label>
+      <label>{{ sscSubtotal }}</label>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <span>销售毛利合计:</span>
-      <label>{{ jLiRun }}</label>
+      <label>{{ maoLi }}</label>
     </div>
     <br />
     <el-table
@@ -52,24 +51,14 @@
       :summary-method="getTotal"
       row-class-name="tableRowClassName"
     >
-      <el-table-column prop="ssZdDate" label="制单时间">   </el-table-column>
-      <el-table-column prop="ssNumber" label="单据编号" width="180">
+      <el-table-column prop="cargoCoding" label="单据编号" width="180">
       </el-table-column>
-      <el-table-column prop="ssClient" label="客户名称" width="180">
+      <el-table-column prop="className" label="商品类别" width="180">
       </el-table-column>
-      <el-table-column prop="aswName" label="门店" width="180">
-      </el-table-column>
-      <el-table-column prop="ssWarehouse" label="仓库"> </el-table-column>
-      <el-table-column prop="ssMode" label="结算方式"> </el-table-column>
       <el-table-column prop="sscNumber" label="销售数量"> </el-table-column>
-      <el-table-column prop="ssPrice" label="销售金额(元)"> </el-table-column>
-      <el-table-column prop="ssZkMoney" label="折扣金额(元)"> </el-table-column>
-      <el-table-column prop="ssFjMoney" label="附加金额(元)"> </el-table-column>
-      <el-table-column prop="jLiRun" label="销售利润(元)"> </el-table-column>
-      <el-table-column prop="ysMoeney" label="应收金额(元)"> </el-table-column>
-      <el-table-column prop="ssSjMoney" label="已收金额(元)"> </el-table-column>
-      <el-table-column prop="ssHandle" label="销售人员"> </el-table-column>
-      <el-table-column prop="ssRemark" label="备注"> </el-table-column>
+      <el-table-column prop="sscSubtotal" label="销售金额(元)">
+      </el-table-column>
+      <el-table-column prop="maoLi" label="销售毛利(元)"> </el-table-column>
     </el-table>
     <div class="block">
       <el-pagination
@@ -104,7 +93,7 @@ export default {
     return {
       input2: "", //查询输入框
       value: "",
-      state: "",
+      states: "",
       isCollapse: true,
       items: [],
       sscNumber: "",
@@ -116,7 +105,7 @@ export default {
   },
   watch: {
     //watch title change
-    state() {
+    states() {
       delay(() => {
         this.fetchData();
       }, 300);
@@ -134,10 +123,10 @@ export default {
     },
   },
   methods: {
-  async  loadAll() {
+    loadAll() {
       return [
-    await    this.axios
-          .get("http://localhost:50774/api/SellProfit")
+        this.axios
+          .get("http://localhost:50774/api/SellCategory")
           .then((response) => {
             this.restaurants = response.data;
           })
@@ -154,9 +143,9 @@ export default {
     },
     async fetchData(val) {
       const res = await this.axios
-        .get("http://localhost:50774/api/SellProfit", {
+        .get("http://localhost:50774/api/SellCategory", {
           params: {
-            clientName: this.state,
+            shopName: this.states,
             start: this.value[0],
             end: this.value[1],
             pageSize: this.currentPage1,
@@ -178,8 +167,8 @@ export default {
         const values = data.map((item) => Number(item[column.property]));
         if (
           column.property === "sscNumber" ||
-          column.property === "ssPrice" ||
-          column.property === "jLiRun"
+          column.property === "sscSubtotal" ||
+          column.property === "maoLi"
         ) {
           sums[index] = values.reduce((prev, curr) => {
             const value = Number(curr);
@@ -194,17 +183,17 @@ export default {
           sums[index] = "--";
         }
       });
-      this.sscNumber = sums[6];
-      this.ssPrice = sums[7];
-      this.jLiRun = sums[10];
+      this.sscNumber = sums[2];
+      this.sscSubtotal = sums[3];
+      this.maoLi = sums[4];
       return sums;
     },
   },
 
- async mounted() {
+  mounted() {
     this.loadAll();
-await    this.axios
-      .get("http://localhost:50774/api/SellProfit")
+    this.axios
+      .get("http://localhost:50774/api/SellCategory")
       .then((response) => {
         this.items = response.data;
         console.log("ok");
