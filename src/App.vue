@@ -32,7 +32,7 @@ export default {
     "MBX":MBX
   }  
 }
-}
+
 </script>
 <style >
 .main {
