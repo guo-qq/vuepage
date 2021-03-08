@@ -10,34 +10,19 @@
         :visible.sync="dialogFormVisible"
       >
         <div class="bigdiv">
-          <el-input
-            v-model="Condition"
-            size="mini"
-            placeholder="输入关键字搜索"
-            style="width: 300px;"
-          />
-          <el-button type="primary" @click="selll()" style="float:reight">搜索</el-button>
-          <el-table
-            class="el-table"
-            ref="multipleTable"
-            style="marginLeft:300px"
-            :data="gridData"
-            tooltip-effect="dark"
-            @selection-change="handleSelectionChange"
-          >
-            <el-table-column type="selection" width="55"> </el-table-column>
-            <el-table-column prop="cargoName" label="商品名称" width="120">
-            </el-table-column>
-            <el-table-column prop="unitPice" label="采购价格" width="120">
-            </el-table-column>
-            <el-table-column prop="className" label="商品分类" width="120">
-            </el-table-column>
-            <el-table-column
-              prop="cargoCount"
-              label="库存"
-              show-overflow-tooltip
-            >
-            </el-table-column>
+          <el-input v-model="Condition" size="mini" placeholder="输入关键字搜索" style="width: 300px"/>
+          <el-button type="primary" @click="selll()">搜索</el-button>
+
+          <el-table class="el-table" ref="multipleTable" :data="gridData" tooltip-effect="dark" @selection-change="handleSelectionChange" >
+                    <el-table-column type="selection" width="55"> </el-table-column>
+                    <el-table-column prop="cargoName" label="商品名称" width="120">
+                    </el-table-column>
+                    <el-table-column prop="unitPice" label="采购价格" width="120">
+                    </el-table-column>
+                    <el-table-column prop="className" label="商品分类" width="120">
+                    </el-table-column>
+                    <el-table-column prop="cargoCount" label="库存" show-overflow-tooltip>
+                    </el-table-column>
           </el-table>
         </div>
 
@@ -49,20 +34,6 @@
     </div>
   </el-form>
 </template>
-
-<style scoped>
-.bigdiv {
-  width: 74%;
-  height: 400px;
-}
-.dialog {
-  width: 50px;
-}
-.el-table {
-  width: 526px;
-  float: right;
-}
-</style>
 
 <script>
 export default {
@@ -92,7 +63,7 @@ export default {
     },
     Getshoop() {
       this.axios
-        .get("http://localhost:50774/api/ChoiceShoop", {
+        .get("http://localhost:50774/api/GetGoods", {
           params: {
             name: this.Condition,
           },
@@ -126,7 +97,6 @@ export default {
     getCheckedKeys() {
       console.log(this.$refs.tree.getCheckedKeys());
     },
-  
     setCheckedKeys() {
       this.$refs.tree.setCheckedKeys([3]);
     },
@@ -139,3 +109,21 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+        .bigdiv {
+        width: 95%;
+        height: 400px;
+        }
+        .dialog {
+        width: 85%;
+        }
+        .el-tree {
+        width: 170px;
+        float: left;
+        }
+        .el-table {
+        width: 526px;
+        float: right;
+        }
+</style>

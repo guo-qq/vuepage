@@ -40,8 +40,6 @@
         </el-table-column>
         <el-table-column prop="cargoCoding" label="商品编号" width="120">
         </el-table-column>
-        <el-table-column prop="cargoPic" label="商品图片" width="120">
-        </el-table-column>
         <el-table-column prop="cargoName" label="商品名称" width="120">
         </el-table-column>
         <el-table-column prop="cargoCount" label="账面库存" width="120">
@@ -125,7 +123,7 @@ export default {
   },
 
   methods: {
-    wan() {
+   async wan() {
       var shu = 0;
       var jin = 0;
       var result = true;
@@ -138,14 +136,15 @@ export default {
         STCRemark: "",
       };
       this.tableData.forEach((items, index) => {
-        shu = shu + items.sTCYkNum;
-        jin = jin + items.sTCYkPrice;
+
+        shu = shu + items.stcYkNum;
+        jin = jin + items.stcYkPrice;
         this.sss = items;
         let no = index + 1;
         o.CargoId = items.cargoId;
-        o.STCPractical = items.sTCPractical;
-        o.STCYkNum = items.stcYkNum;
-        o.STCYkPrice = items.sTCPractical;
+        o.STCPractical = Number(items.sTCPractical);
+        o.STCYkNum =Number(items.stcYkNum) ;
+        o.STCYkPrice =Number(items.stcYkPrice)  ;
         o.STCRemark = items.sTCRemark;
         this.y.push(o);
         oo = oo + 1;
@@ -158,7 +157,7 @@ export default {
       console.log(this.y);
       if (result) {
         console.log(this.tableData);
-        this.axios({
+       this.axios({
           method: "post",
           url: "http://localhost:50774/api/AddWareCheck",
           data: {
@@ -174,26 +173,19 @@ export default {
             StzdDate: new Date(),
           },
         }).then((res) => {
-          this.axios({
+         this.axios({
             method: "post",
             url: "http://localhost:50774/api/DuoWare",
             data:this.y,
           }).then((res) => {
               this.y = [];
-              if (res > 0) {
-                this.$message({
-                  message: "添加成功",
-                  type: "success",
-                });
-              };
+                alert(添加成功);
+                location.reload();
             });
         });
       }
     },
-    tableRowClassName({ row, rowIndex }) {
-      // 把每一行的索引放进row
-      row.index = rowIndex;
-    },
+
     tabClick(row, column, cell, event) {
       switch (column.label) {
         case "备注":

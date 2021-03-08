@@ -1,5 +1,5 @@
 <template>
-  <el-form>
+  <div>
     <el-button type="text" @click="dialogFormVisible = true"
       >添 加 商 品</el-button
     >
@@ -14,13 +14,15 @@
             v-model="Condition"
             size="mini"
             placeholder="输入关键字搜索"
-            style="width: 300px;"
+            style="width: 300px"
           />
-          <el-button type="primary" @click="selll()" style="float:reight">搜索</el-button>
+          <el-button type="primary" @click="selll()" style="float: reight"
+            >搜索</el-button
+          >
           <el-table
             class="el-table"
             ref="multipleTable"
-            style="marginLeft:300px"
+            style="marginleft: 300px"
             :data="gridData"
             tooltip-effect="dark"
             @selection-change="handleSelectionChange"
@@ -47,22 +49,8 @@
         </div>
       </el-dialog>
     </div>
-  </el-form>
+  </div>
 </template>
-
-<style scoped>
-.bigdiv {
-  width: 74%;
-  height: 400px;
-}
-.dialog {
-  width: 50px;
-}
-.el-table {
-  width: 526px;
-  float: right;
-}
-</style>
 
 <script>
 export default {
@@ -126,7 +114,7 @@ export default {
     getCheckedKeys() {
       console.log(this.$refs.tree.getCheckedKeys());
     },
-  
+
     setCheckedKeys() {
       this.$refs.tree.setCheckedKeys([3]);
     },
