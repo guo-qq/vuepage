@@ -7,17 +7,23 @@
 </template>
 
 <script>
-import Hand from './components/Hand'
-import DH from './components/DH'
-import WB from './components/WB'
-import MBX from './components/views/MBX'
- 
+import Hand from "./components/Hand";
+import DH from "./components/DH";
+import WB from "./components/WB";
+import MBX from "./components/views/MBX";
+
 export default {
-  name: 'App',
-  data(){
-    return{
-      Hand:"Hand"   
-    }
+  name: "App",
+  data() {
+    return {
+      Hand: "Hand",
+    };
+  },
+  components: {
+    Hand: Hand,
+    DH: DH,
+    WB: WB,
+    MBX: MBX,
   },
   components:{
     "Hand":Hand,
@@ -26,10 +32,21 @@ export default {
     "MBX":MBX
   }  
 }
+}
 </script>
-<style >   
-  .main{padding-bottom:100px;background-color: #ffffff;width:85%}/* main的padding-bottom值要等于或大于footer的height值 */
-  .footer{position:absolute;bottom:0;width:100%;height:100px;background-color: #ffffff;}
+<style >
+.main {
+  padding-bottom: 100px;
+  background-color: #ffffff;
+  width: 85%;
+} /* main的padding-bottom值要等于或大于footer的height值 */
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  background-color: #ffffff;
+}
 </style>
 
  
