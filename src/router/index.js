@@ -7,6 +7,12 @@ import sellreturn from '@/components/views/sellreturn'
 import receiptPayments from '@/components/ModelGuo/receiptPayments'
 import Addfkd from '@/components/ModelGuo/Addfkd'
 import Addfkdy from '@/components/ModelGuo/Addfkdy'
+import senterprise from '@/components/ModelGuo/senterprise'
+import sstaff from '@/components/ModelGuo/sstaff'
+import srole from '@/components/ModelGuo/srole'
+import slog from '@/components/ModelGuo/slog'
+//其他收支
+import ZLS from '@/components/ModelGuo/ZLS'
 import payment from '@/components/ModelGuo/payment'
 import SalesSingleShow from '@/components/ModelHan/SalesSingleShow'
 import SellCollect from '@/components/ModelHan/SellCollect'
@@ -36,17 +42,17 @@ export default new Router({
       path: '/AddCheck',
       name: '新增盘点表',
       component: AddCheck
-    } ,
+    },
     {
       path: '/running',
       name: '库存流水',
       component: running
-    } ,
+    },
     {
       path: '/point',
       name: '库存盘点',
       component: point
-    } ,
+    },
     {
       path: '/Stock',
       name: '库存',
@@ -86,45 +92,69 @@ export default new Router({
       path: '/Addfkdy',
       name: '付款单添加',
       component: Addfkdy,
-      component:SellCollect,
     },
     {
       path: '/SLeiBie',
       name: '销售汇总表(按类别)',
-      component:SLeiBie,
+      component: SLeiBie,
     }
     ,
     {
       path: '/SShangPin',
       name: '销售汇总表(按商品)',
-      component:SShangPin,
+      component: SShangPin,
     },
     {
       path: '/SKeHu',
       name: '销售汇总表(按客户)',
-      component:SKeHu,
+      component: SKeHu,
     },
     {
       path: '/zclient',
       name: '客户管理',
-      component:ClientShow,
-    } ,
+      component: ClientShow,
+    },
     {
       path: '/zclientadd',
       name: '客户管理添加页面',
-      component:Client,
-    } ,
+      component: Client,
+    },
     {
       path: '/zclientmodify',
       name: '客户管理修改页面',
-      component:ClientModify,
-    } ,
+      component: ClientModify,
+    },
     {
       path: '/zclassify',
       name: '客户分类',
-      component:CustomerClassShow,
-    } 
-    
+      component: CustomerClassShow,
+    },
+    {
+      path: '/zrests',
+      name: '其他收支',
+      component: ZLS,
+    },
+    {
+      path: '/senterprise',
+      name: '企业信息',
+      component: senterprise,
+    },
+    {
+      path: '/sstaff',
+      name: '员工管理',
+      component: sstaff,
+    },
+    {
+      path: '/srole',
+      name: '角色管理',
+      component: srole,
+    },
+    {
+      path: '/slog',
+      name: '操作日志',
+      component: slog,
+    }
+
 
   ]
 })
