@@ -69,12 +69,12 @@
             <el-select
               size="mini"
               v-model="scope.row.aswName"
-              @change="display"
+              @change="display(scope.row)"
               :disabled="!scope.row.show"
             >
               <el-option
                 v-for="item in displayOptions"
-                :key="item.aswname"
+                :key="item.aswid"
                 :label="item.label"
                 :value="item.aswname"
               >
@@ -87,7 +87,7 @@
             <el-select
               size="mini"
               v-model="scope.row.roleidName"
-              @change="display"
+              @change="display1"
               :disabled="!scope.row.show"
             >
               <el-option
@@ -103,13 +103,13 @@
         <el-table-column label="员工状态">
           <template slot-scope="scope">
             <el-switch
-              on-text="禁止"
-              off-text="启动"
-              v-model="scope.row.userstate"
+              :disabled=!scope.row.show            
+              v-model=scope.row.userstate1
               active-color="#13ce66"
               inactive-color="#ff4949"
               active-value="0"
               inactive-value="1"
+              @change="changeSwitch(scope.row)"
             >
             </el-switch>
           </template>
@@ -139,6 +139,7 @@
 export default {
   data() {
     return {
+      
       options: [
         {
           value: "选项1",
@@ -191,7 +192,7 @@ export default {
       displayOptions1: [],
     };
   },
-  mounted() {
+  created() {
     this.show();
     this.staff();
     this. shop();
@@ -201,6 +202,7 @@ export default {
       this.axios
         .get("http://localhost:50774/api/users")
         .then((response) => {
+          console.log(response.data)
           this.tabledatas = response.data;
         })
         .catch(function (error) {
@@ -227,6 +229,29 @@ export default {
           console.log(error);
         });
     },
+    changeSwitch (data) {
+       this.axios
+        .get("http://localhost:50774/api/Userstate",{
+            params:{
+                id:Number(data.userid),
+                state:Number(data.userstate1)
+                            }
+        })
+        .then((response) => {
+              this.$message({
+                  message: '修改成功',
+                  type: 'success'
+                   });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    
+    },
+    display(val){
+       alert(val.userid);
+       alert(val.aswid);
+    }
   },
 };
 </script>

@@ -176,10 +176,8 @@ export default new Router({
       path: '/bbalance',
       name: '库存余额表',
       component:RepertoryTwo,
-    },
-    
-      component: CustomerClassShow,
-    },
+    },   
+   
     {
       path: '/zrests',
       name: '其他收支',
