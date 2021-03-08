@@ -22,6 +22,11 @@ import RepertoryFirst from '@/components/ModelHan/RepertoryFirst'
 import RepertoryTwo from '@/components/ModelHan/RepertoryTwo'
 import RepertoryMax from '@/components/ModelHan/RepertoryMax'
 import RepertoryMin from '@/components/ModelHan/RepertoryMin'
+import ReceiptShou from '@/components/ModelHan/ReceiptShou'
+import ReceiptFu from '@/components/ModelHan/ReceiptFu'
+import Profile from '@/components/ModelHan/Profile'
+import SS from '@/components/ModelHan/SS'
+
 
 import running from '@/components/Inventory/WaterSel'
 import point from '@/components/Inventory/CheckShow'
@@ -172,6 +177,26 @@ export default new Router({
       name: '库存余额表',
       component:RepertoryTwo,
     },
+    {
+      path: '/bbill',
+      name: '客户对账单',
+      component:ReceiptShou,
+    },
+    {
+      path: '/bstatement',
+      name: '供应商对账单',
+      component:ReceiptFu,
+    },
+    {
+      path: '/bgeneralize',
+      name: '数据分析',
+      component:Profile,
+    },
+    {
+      path: '/SS',
+      name: '数据分析',
+      component:SS,
+    }
     
 
   ]
