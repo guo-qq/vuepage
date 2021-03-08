@@ -1,8 +1,7 @@
 <template>
-<!--创建日期-->
-<div>
+    <div>
   <div>
-    <router-link to="/AddCheck"> <el-button  type="primary">新增</el-button></router-link>
+    <router-link to="/AddAllot"> <el-button  type="primary">新增</el-button></router-link>
   </div>
     <div id="app">
         <div style="float:right">
@@ -48,41 +47,36 @@
       width="55">
     </el-table-column>
     <el-table-column
-      prop="sttime"
+      prop="rtywDate"
       label="提交时间"
     >
     </el-table-column>
     <el-table-column
-      prop="stnumber"
+      prop="reSerial"
       label="单据编号"
     >
     </el-table-column>
     <el-table-column
-      prop="stwarehouse"
-      label="盘点仓库"
+      prop="wnamec"
+      label="调出仓库"
     >
     </el-table-column>
     <el-table-column
-      prop="sttitle"
-      label="盘点标题"
+      prop="wnamer"
+      label="调入仓库"
     >
     </el-table-column>
     <el-table-column
-      prop="styknum"
-      label="盈亏数量"
-    >
-    </el-table-column>
-    <el-table-column
-      prop="stykprice"
-      label="盈亏金额（元）"
+      prop="cDzhuang"
+      label="状态"
     >
     </el-table-column>
   </el-table>
     </div>
 </div>
 </template>
-<script>
 
+<script>
 
 export default {
     data(){
@@ -160,7 +154,7 @@ export default {
         },
         show:function(){
             //显示     
-            this.axios.get('http://localhost:50774/api/ShowWareCheck')
+            this.axios.get('http://localhost:50774/api/AllotShow')
             .then(response=>{
                 this.tableData=response.data
                 console.log('ok')

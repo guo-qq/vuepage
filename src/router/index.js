@@ -18,11 +18,15 @@ import SKeHu from '@/components/ModelHan/SKeHu'
 import running from '@/components/Inventory/WaterSel'
 import point from '@/components/Inventory/CheckShow'
 import AddCheck from '@/components/Inventory/AddCheck'
-
+import AddAllot from '@/components/Inventory/AddAllot'
+import TiaoBo from '@/components/Inventory/AllotShow'
 import ClientShow from '@/components/MrYang/ClientShow'
 import Client from '@/components/MrYang/Client'
 import ClientModify from '@/components/MrYang/ClientModify'
 import CustomerClassShow from '@/components/MrYang/CustomerClassShow'
+import lend from '@/components/Inventory/JieChu'
+import AddJie from '@/components/Inventory/AddJie'
+import ckmanagement from '@/components/Inventory/ckmanagement'
 
 Vue.use(Router)
 
@@ -32,6 +36,31 @@ export default new Router({
       path: '/',
       name: '首页',
       component: shou
+    } ,
+    {
+      path: '/ckmanagement',
+      name: '出库管理',
+      component: ckmanagement
+    } ,
+    {
+      path: '/AddJie',
+      name: '借出新增',
+      component: AddJie
+    } ,
+    {
+      path: '/lend',
+      name: '借出',
+      component: lend
+    },
+    {
+      path: '/TiaoBo',
+      name: '调拨单',
+      component: TiaoBo
+    } ,
+    {
+      path: '/AddAllot',
+      name: '亲憎调拨单',
+      component: AddAllot
     } ,
     {
       path: '/AddCheck',
