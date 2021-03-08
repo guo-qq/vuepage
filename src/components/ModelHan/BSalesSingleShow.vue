@@ -23,25 +23,16 @@
       </template>
     </el-input>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <el-button type="primary" @click="$router.push('/SLeiBie')">类别</el-button
-    >&nbsp;&nbsp;&nbsp;
-    <el-button type="primary" @click="$router.push('/SShangPin')"
-      >商品</el-button
-    >&nbsp;&nbsp;&nbsp;
-    <el-button type="primary" @click="$router.push('/SKeHu')">客户</el-button
-    >&nbsp;&nbsp;&nbsp;
+    <el-button type="primary">查询</el-button>
     <el-button @click="resetForm('ruleForm')">重置</el-button>
     <div class="sys">
       <br />
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span>销售数量合计:</span>
+      <span>采购数量合计:</span>
       <label>{{ sscNumber }}</label>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span>销售金额合计:</span>
-      <label>{{ ssPrice }}</label>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span>销售毛利合计:</span>
-      <label>{{ jLiRun }}</label>
+      <span>采购金额合计:</span>
+      <label>{{ sscSubtotal }}</label>
     </div>
     <br />
     <el-table
@@ -61,15 +52,16 @@
       </el-table-column>
       <el-table-column prop="ssWarehouse" label="仓库"> </el-table-column>
       <el-table-column prop="ssMode" label="结算方式"> </el-table-column>
-      <el-table-column prop="sscNumber" label="销售数量"> </el-table-column>
-      <el-table-column prop="ssPrice" label="销售金额(元)"> </el-table-column>
-      <el-table-column prop="ssZkMoney" label="折扣金额(元)"> </el-table-column>
-      <el-table-column prop="ssFjMoney" label="附加金额(元)"> </el-table-column>
-      <el-table-column prop="jLiRun" label="销售利润(元)"> </el-table-column>
-      <el-table-column prop="ysMoeney" label="应收金额(元)"> </el-table-column>
-      <el-table-column prop="ssSjMoney" label="已收金额(元)"> </el-table-column>
-      <el-table-column prop="ssHandle" label="销售人员"> </el-table-column>
-      <el-table-column prop="ssRemark" label="备注"> </el-table-column>
+      <el-table-column prop="cargoCoding" label="商品编码"> </el-table-column>
+      <el-table-column prop="cargoName" label="商品名称"> </el-table-column>
+      <el-table-column prop="unitName" label="单位"> </el-table-column>
+      <el-table-column prop="sscNumber" label="数量"> </el-table-column>
+      <el-table-column prop="cpPrice" label="单价(元)"> </el-table-column>
+      <el-table-column prop="sscSubtotal" label="销售金额(元)">
+      </el-table-column>
+      <el-table-column prop="maoLi" label="销售毛利(元)"> </el-table-column>
+      <el-table-column prop="ssHandle" label="经办人"> </el-table-column>
+      <el-table-column prop="sscRemark" label="备注"> </el-table-column>
     </el-table>
     <div class="block">
       <el-pagination
@@ -134,10 +126,10 @@ export default {
     },
   },
   methods: {
-  async  loadAll() {
+    loadAll() {
       return [
-    await    this.axios
-          .get("http://localhost:50774/api/SellProfit")
+        this.axios
+          .get("http://localhost:50774/api/BuyerSalesSingle")
           .then((response) => {
             this.restaurants = response.data;
           })
@@ -154,7 +146,7 @@ export default {
     },
     async fetchData(val) {
       const res = await this.axios
-        .get("http://localhost:50774/api/SellProfit", {
+        .get("http://localhost:50774/api/BuyerSalesSingle", {
           params: {
             clientName: this.state,
             start: this.value[0],
@@ -178,8 +170,7 @@ export default {
         const values = data.map((item) => Number(item[column.property]));
         if (
           column.property === "sscNumber" ||
-          column.property === "ssPrice" ||
-          column.property === "jLiRun"
+          column.property === "sscSubtotal"
         ) {
           sums[index] = values.reduce((prev, curr) => {
             const value = Number(curr);
@@ -194,17 +185,16 @@ export default {
           sums[index] = "--";
         }
       });
-      this.sscNumber = sums[6];
-      this.ssPrice = sums[7];
-      this.jLiRun = sums[10];
+      this.sscNumber = sums[9];
+      this.sscSubtotal = sums[11];
       return sums;
     },
   },
 
- async mounted() {
+  mounted() {
     this.loadAll();
-await    this.axios
-      .get("http://localhost:50774/api/SellProfit")
+    this.axios
+      .get("http://localhost:50774/api/BuyerSalesSingle")
       .then((response) => {
         this.items = response.data;
         console.log("ok");
