@@ -139,8 +139,9 @@ export default {
                 });
             });
         },
-        editData(id){
-            this.$router.push({path:'/details',query:{Id:id}});
+        //详情页
+        editData(id) {
+        this.$router.push({ path:"/details?id=" + id });
         },
 
 

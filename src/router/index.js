@@ -35,152 +35,169 @@ import Client from '@/components/MrYang/Client'
 import ClientModify from '@/components/MrYang/ClientModify'
 import CustomerClassShow from '@/components/MrYang/CustomerClassShow'
 
-
+import App from '@/App'
+import One from '@/One'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: '首页',
-      component: shou
-    } ,
-    {
-      path: '/AddCheck',
-      name: '新增盘点表',
-      component: AddCheck
-    } ,
-    {
-      path: '/running',
-      name: '库存流水',
-      component: running
-    } ,
-    {
-      path: '/point',
-      name: '库存盘点',
-      component: point
-    } ,
-    {
-      path: '/Stock',
-      name: '库存',
-      component: inven
-    } ,
-    {
-      path: '/sellreturn',
-      name: '销售退货申请单',
-      component:sellreturn,
-    },  
-    {
-      path: '/purchase',
-      name: '采购单',
-      component:purchase,
-    },
-    {
-      path: '/purchasereturn',
-      name: '采购退货申请单',
-      component:purchasereturn,
-    },  
-    {
-      path: '/zreceipt',
-      name: '收款单',
-      component:receiptPayments,
-    } ,    
-    {
-      path: '/zpayment',
-      name: '付款单',
-      component:payment,
-    },
-    {
-      path: '/bdetail',
-      name: '销售明细表',
-      component:SalesSingleShow,
-    },
-    {
-      path: '/bcollect',
-      name: '销售汇总表',
-      component:SellCollect,
-    },
-    {
-      path: '/SLeiBie',
-      name: '销售汇总表(按类别)',
-      component:SLeiBie,
-    }
-    ,
-    {
-      path: '/SShangPin',
-      name: '销售汇总表(按商品)',
-      component:SShangPin,
-    },
-    {
-      path: '/SKeHu',
-      name: '销售汇总表(按客户)',
-      component:SKeHu,
-    },
-    {
-      path: '/zclient',
-      name: '客户管理',
-      component:ClientShow,
-    } ,
-    {
-      path: '/zclientadd',
-      name: '客户管理添加页面',
-      component:Client,
-    } ,
-    {
-      path: '/zclientmodify',
-      name: '客户管理修改页面',
-      component:ClientModify,
-    } ,
-    {
-      path: '/zclassify',
-      name: '客户分类',
-      component:CustomerClassShow,
-    } 
-    
-
-    } ,
-    {
-      path: '/market',
-      name: '新增销售单',
-      component:market,
-    },
-    {
-      path: '/AddSellretun',
-      name: '新增销售退货单',
-      component:AddSellretun,
-    },
-    {
-      path: '/Addpurchase',
-      name: '新增采购单',
-      component:Addpurchase,
-    },
-    {
-      path: '/Addpurchaseretun',
-      name: '新增采购退货单',
-      component:Addpurchaseretun,
-    },
-    {
-      path: '/details',
-      name: '销售详情页',
-      component:details,
-    },
-    {
-      path: '/registerindex',
-      name: '登录',
-      component:registerindex,
+      path: '/',     
+      component: registerindex,   
+   
     },
     {
       path: '/enrollindex',
       name: '注册',
-      component:enrollindex,
+      component: enrollindex,
     },
     {
       path: '/company',
       name: '完善企业资料',
-      component:company,
+      component: company,
     },
-    
+    {
+      path: '/Home', 
+      component: One,
+      children: [
+        {
+          path: '/AddCheck',
+          name: '新增盘点表',
+          component: AddCheck
+        },
+        {
+          path: '/running',
+          name: '库存流水',
+          component: running
+        },
+        {
+          path: '/point',
+          name: '库存盘点',
+          component: point
+        },
+        {
+          path: '/Stock',
+          name: '库存',
+          component: inven
+        },
+        {
+          path: '/sell',
+          name: '销售退货申请单',
+          component: sell,
+        },
+        {
+          path: '/sellreturn',
+          name: '销售退货申请单',
+          component: sellreturn,
+        },
+        {
+          path: '/purchase',
+          name: '采购单',
+          component: purchase,
+        },
+        {
+          path: '/purchasereturn',
+          name: '采购退货申请单',
+          component: purchasereturn,
+        },
+        {
+          path: '/zreceipt',
+          name: '收款单',
+          component: receiptPayments,
+        },
+        {
+          path: '/zpayment',
+          name: '付款单',
+          component: payment,
+        },
+        {
+          path: '/bdetail',
+          name: '销售明细表',
+          component: SalesSingleShow,
+        },
+        {
+          path: '/bcollect',
+          name: '销售汇总表',
+          component: SellCollect,
+        },
+        {
+          path: '/SLeiBie',
+          name: '销售汇总表(按类别)',
+          component: SLeiBie,
+        }
+        ,
+        {
+          path: '/SShangPin',
+          name: '销售汇总表(按商品)',
+          component: SShangPin,
+        },
+        {
+          path: '/SKeHu',
+          name: '销售汇总表(按客户)',
+          component: SKeHu,
+        },
+        {
+          path: '/zclient',
+          name: '客户管理',
+          component: ClientShow,
+        },
+        {
+          path: '/zclientadd',
+          name: '客户管理添加页面',
+          component: Client,
+        },
+        {
+          path: '/zclientmodify',
+          name: '客户管理修改页面',
+          component: ClientModify,
+        },
+        {
+          path: '/zclassify',
+          name: '客户分类',
+          component: CustomerClassShow,
+        },
+        {
+          path: '/market',
+          name: '新增销售单',
+          component: market,
+        },
+        {
+          path: '/AddSellretun',
+          name: '新增销售退货单',
+          component: AddSellretun,
+        },
+        {
+          path: '/Addpurchase',
+          name: '新增采购单',
+          component: Addpurchase,
+        },
+        {
+          path: '/Addpurchaseretun',
+          name: '新增采购退货单',
+          component: Addpurchaseretun,
+        },
+        {
+          path: '/details',
+          name: '销售详情页',
+          component: details,
+        },
+        {
+          path: '/Home',
+          name: '首页',
+          component: shou,
+        }
+      ],
+  
+    },
+
+
+
+
+
+
+
+
 
 
 

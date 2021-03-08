@@ -1,211 +1,203 @@
-
 <template>
-  <div class="demo-input-size">
+<div>
+      <div style="float: right">单据编号:{{ datetime }}</div>
     <div>
-      <table style="width: 100%">
-        <tr>
-          <td><h1>销售单</h1></td>
-        </tr>
-      </table>
+     
+        <el-form :inline="true" :model="ruleForm" :rules="rules"  ref="ruleForm" label-width="100px" class="demo-form-inline">
+          <el-form-item label="出货仓库">
+                <el-cascader v-model="ruleForm.SsWarehouse" :options="options" :props="{ expandTrigger: 'hover' }"  @change="handleChange"></el-cascader>
+          </el-form-item>
+          <el-form-item label="客户">
+                <el-input v-model="ruleForm.SsClient"  placeholder="客户名称/编码" style="width: 140px"></el-input>
+          </el-form-item>
+          <el-form-item label="经手人">
+                <el-input v-model="ruleForm.SsHandle"  placeholder="姓名/手机号" style="width: 140px"></el-input>
+          </el-form-item>
+          <el-form-item>
+                <div style="float: right">
+                  <goods @signStatus="signStatu"></goods>   <!--与子页面名一直,否则没有按钮出现-->
+                </div>
+                <div>
+                  <el-table :data="tableData"  border style="width: 100%" @cell-click="tabClick" prop="re">
+                        <el-table-column fixed prop="cargoId" label="序号" width="150"></el-table-column>
+                        <el-table-column prop="cargoCoding" label="商品编号" width="120"></el-table-column>
+                        <el-table-column prop="cargoPic" label="商品图片" width="120"></el-table-column>
+                        <el-table-column prop="cargoName" label="商品名称" width="120"> </el-table-column>
+                        <el-table-column prop="sscNumber" label="数量" width="120"> </el-table-column>
+                        <el-table-column prop="unitName" label="单位" width="120"> </el-table-column>
+                        <el-table-column prop="unitPice" label="销售单价(元)" width="120"> </el-table-column>
+                        <el-table-column prop="sscSubtotal" label="小计(元)" width="120"> </el-table-column>
+                        <el-table-column prop="sscRemark" label="备注" width="120"> </el-table-column>
+                  </el-table>
+                </div>
+          </el-form-item>
+          <br>
+          <el-form-item label="折扣率">
+                <el-input v-model="ruleForm.SsDiscount"  placeholder="折扣率" style="width: 140px"></el-input>
+          </el-form-item>
+          <el-form-item label="折扣金额(元)">
+                <el-input v-model="ruleForm.SsZkMoney"  placeholder="折扣金额" style="width: 140px"></el-input>
+          </el-form-item>
+          <el-form-item label="附加金额(元)">
+                <el-input v-model="ruleForm.SsFjMoney"  style="width: 140px" placeholder="附加金额"> </el-input>
+          </el-form-item>
+          <el-form-item label="结算方式">
+                <el-select v-model="ruleForm.SsMode" placeholder="请选择">
+                      <el-option label="现金" value="现金"></el-option>
+                      <el-option label="支付宝" value="支付宝"></el-option>
+                      <el-option label="微信" value="微信"></el-option>
+                      <el-option label="建设银行" value="建设银行"></el-option>
+                      <el-option label="工商银行" value="工商银行"></el-option>
+              </el-select>
+          </el-form-item>
+          <br>
+          <el-form-item label="单据备注">
+                <el-input v-model="ruleForm.SsRemark"  placeholder="单据备注"> </el-input>
+          </el-form-item>
+          <el-form-item label="总计金额(元)">
+                <el-input v-model="ruleForm.SsPrice"  style="width: 140px" :disabled="true" placeholder="总计金额"> </el-input>
+          </el-form-item>
+          <el-form-item label="实收金额(元)">
+                <el-input v-model="ruleForm.SsSjMoney"  style="width: 140px" placeholder="实收金额"> </el-input>
+          </el-form-item>
+          <br>
+          <el-form-item >
+                <router-link to="/sellreturn"><el-button>返回</el-button></router-link>
+                <el-button type="primary" @click="add()">保存审核</el-button>
+          </el-form-item>
+    </el-form>
     </div>
-    <div>
-      <el-form
-        :inline="true"
-        :model="form"
-        :rules="rules"
-        ref="form"
-        class="demo-form-inline"
-      >
-        <el-form-item label="出库仓库:">
-          <el-select v-model="form.SsWarehouse" placeholder="请选择">
-          </el-select>
-        </el-form-item>
-        <el-form-item label="客户:">
-          <el-input
-            v-model="form.SsClient"
-            placeholder="客户名称/编码"
-            style="width: 140px"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="经手人">
-          <el-input
-            v-model="form.SsHandle"
-            placeholder="姓名/手机号"
-            style="width: 140px"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="业务日期">
-          <el-date-picker
-            v-model="SsYwDate"
-            type="date"
-            placeholder="请选择日期"
-          >
-          </el-date-picker>
-        </el-form-item>
-        <br />
-        <!-- <el-table
-                        :data="tableData"
-                        border
-                        show-summary
-                        style="width: 100%">
-                        <el-table-column
-                        prop="id"
-                        label="序号"
-                        width="50">
-                        </el-table-column>
-                        <el-table-column
-                        prop="name"
-                        label="商品编号"
-                            width="120">
-                        </el-table-column>
-                        <el-table-column
-                        prop="amount1"
-                        sortable
-                        label="商品图片"
-                        width="120">
-                        </el-table-column>
-                        <el-table-column
-                        prop="amount2"
-                        sortable
-                        label="商品名称"
-                        width="120">
-                        </el-table-column>
-                        <el-table-column
-                        prop="amount3"
-                        sortable
-                        label="商品规格"
-                        width="120">
-                        </el-table-column>
-                        <el-table-column
-                        prop="id"
-                        label="数量"
-                        width="100">
-                        </el-table-column>
-                        <el-table-column
-                        prop="id"
-                        label="单位"
-                        width="100">
-                        </el-table-column>
-                        <el-table-column
-                        prop="id"
-                        label="销售单价(元)"
-                        width="120">
-                        </el-table-column>
-                        <el-table-column
-                        prop="id"
-                        label="小计(元)"
-                        width="100">
-                        </el-table-column>
-                        <el-table-column
-                        prop="id"
-                        label="备注"
-                        width="80">
-                        </el-table-column>
-                    </el-table>
-                    <br> -->
-        <el-form-item label="折扣率%">
-          <el-input v-model="form.SsDiscount" style="width: 140px"></el-input>
-        </el-form-item>
-        <el-form-item label="折扣金额(元)">
-          <el-input v-model="form.SsZkMoney" style="width: 140px"></el-input>
-        </el-form-item>
-        <el-form-item label="附加金额(元)">
-          <el-input v-model="form.SsFjMoney" style="width: 140px"></el-input>
-        </el-form-item>
-        <el-form-item label="结算方式">
-          <el-select v-model="form.SsMode" placeholder="请选择">
-            <el-option label="现金" value="现金"></el-option>
-            <el-option label="支付宝" value="支付宝"></el-option>
-            <el-option label="微信" value="微信"></el-option>
-            <el-option label="建设银行" value="建设银行"></el-option>
-            <el-option label="工商银行" value="工商银行"></el-option>
-          </el-select>
-        </el-form-item>
-        <br />
-        <el-form-item label="单据备注">
-          <el-input v-model="form.SsRemark"></el-input>
-        </el-form-item>
-        <el-form-item label="总计金额￥">
-          <el-input v-model="form.SsPrice" style="width: 140px"></el-input>
-        </el-form-item>
-        <el-form-item label="实收金额￥">
-          <el-input v-model="form.SsSjMoney" style="width: 140px"></el-input>
-        </el-form-item>
-        <br />
-        <el-form-item>
-          <router-link to="/sell"><el-button>返回</el-button></router-link>
-        </el-form-item>
-      </el-form>
-    </div>
-  </div>
+</div>
 </template>
-<script>
-let id = 0;
-export default {
-  data() {
-    return {
-      form: {
-        SsWarehouse: "",
-        SsClient: "",
-        SsHandle: "",
-        SsYwDate: "",
-        SsDiscount: "",
-        SsZkMoney: "",
-        SsFjMoney: "",
-        SsMode: "",
-        SsRemark: "",
-        SsPrice: "",
-        SsSjMoney: "",
-      },
-      props: {
-        lazy: true,
-        lazyLoad(node, resolve) {
-          const { level } = node;
-          setTimeout(() => {
-            const nodes = Array.from({ length: level + 1 }).map((item) => ({
-              value: ++id,
-              label: `选项${id}`,
-              leaf: level >= 2,
-            }));
-            // 通过调用resolve将子节点数据返回，通知组件数据加载完成
-            resolve(nodes);
-          }, 1000);
-        },
-      },
 
-      SsYwDate: "", //日期
-    };
-  },
-  methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
+<script>
+      import goods from "@/components/ModelLiu/goods";   //不用再index里面引用/父组件使用子组件
+      export default {
+        components: {
+          goods: goods,
+        },
+        data() {
+          return {
+              ruleForm: {
+                SsWarehouse: '',   //仓库
+                SsClient: '',      //客户
+                SsHandle: '',      //经手人
+                SsDiscount: '',    //折扣率
+                SsZkMoney: '',     //折扣金额
+                SsFjMoney: '',     //附加金额
+                SsMode: '',        //付款方式
+                SsPrice:'',       //总计金额
+                SsSjMoney:'',     //实收金额
+                SsRemark:'',      //单据备注
+
+              },
+                datetime: "",    //销售编号日期
+
+                SsCount:'',
+                 CargoId: "",
+                  SscNumber: "",
+                  SscRemark: "",
+                  SscSubtotal: "",
+                  UnitPice: "",
+              options: [],
+              sss: [],
+              tableData: [],
+              y: [],
+          };
+        },
+        methods: {
+             async add() {
+                alert(true);
+                var oo = 0;
+                var o = {
+                  CargoId: "",
+                  SscNumber: "",
+                  SscRemark: "",
+                  SscSubtotal: "",
+                  UnitPice: "",
+                };
+                this.tableData.forEach((items, index) => {
+                  this.SsCount=this.SsCount+=Number(items.sscNumber);   //总数量=数量+数量
+                  this.ruleForm.SsPrice=this.ruleForm.SsPrice+=Number(items.sscNumber*items.unitPice) ;  //总价格=数量*单价
+                  this.SscSubtotal=this.SscSubtotal+= Number(items.sscNumber*items.unitPice) ;  //小计
+                  this.sss = items;
+                  let no = index + 1;
+                  o.CargoId = items.cargoId;
+                  o.SscNumber=Number(items.sscNumber) ;
+                  o.SscRemark=items.sscRemark;
+                  o.SscSubtotal=Number(items.sscSubtotal);
+                  o.UnitPice=Number(items.unitPice);
+                  this.y.push(o);
+                   oo = oo + 1;
+                });
+                console.log(this.y);
+              console.log(this.tableData);
+              this.axios.post("http://localhost:50774/api/AddSalesSingles",{
+                    //给销售表数据添加
+                    SsNumber:this.datetime,   //单据编号
+                    SsCount:Number(this.SsCount),     //商品总数量
+                    SsPrice:Number(this.ruleForm.SsPrice),   //总价格
+                    SsSjMoney:Number(this.ruleForm.SsSjMoney),  //实收金额
+                    SsRemark:this.ruleForm.SsRemark,   //总备注
+                    SsWarehouse:"上海仓库",   //仓库
+                    SsClient:this.ruleForm.SsClient,    //客户
+                    SsHandle:this.ruleForm.SsHandle,   //经手人
+                    SsDrawer:"李四",    //制单人
+                    SsMode:this.ruleForm.SsMode,   //结算方式
+                    SsFjMoney:Number(this.ruleForm.SsFjMoney),  //附加金额
+                    SsZkMoney:Number(this.ruleForm.SsZkMoney),   //折扣金额
+                    SsDiscount:Number(this.ruleForm.SsDiscount),   //折扣率
+                    ASWId:Number(1),    //店面外键
+                    SsAudit:Number(0),   //审核状态
+                    QfjCg:Number(1),     //区分键
+                    Tui:Number(0),       //增/退区分键
+              }).then((res) => {
+                 this.axios({
+                  method: "post",
+                  url: "http://localhost:50774/api/AddSalesSingleCargo",
+                  data:this.y,
+                }).then((res) => {
+                  this.y = [];
+                  if (res > 0) {
+                    this.$message({
+                      message: "添加成功",
+                      type: "success",
+                    });
+                  }
+                });
+              });
+          },
+          tableRowClassName({ row, rowIndex }) {
+            // 把每一行的索引放进row
+            row.index = rowIndex;
+          },
+
+          signStatu(item) {
+            this.tableData = item;
+            console.log(item);
+          },
+
+          GetNowtime() {
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            this.datetime =
+              "PO" + year + month + day + Math.floor(Math.random() * 10000);
+          },
+        },
+        mounted() {
+          this.GetNowtime();
+          //仓库下拉
           this.axios
-            .post("http://localhost:50774/api/AddSalesSingles", {
-              SsWarehouse: this.formInline.SsWarehouse,
-              SsClient: this.formInline.SsClient,
-              SsHandle: this.formInline.SsHandle,
-              SsYwDate: this.formInline.SsYwDate,
-              SsDiscount: Number(this.formInline.SsDiscount),
-              SsZkMoney: Number(this.formInline.SsZkMoney),
-              SsFjMoney: Number(this.formInline.SsFjMoney),
-              SsMode: this.formInline.SsMode,
-              SsRemark: this.formInline.SsRemark,
-              SsPrice: Number(this.formInline.SsPrice),
-              SsSjMoney: Number(this.formInline.SsSjMoney),
-              QfjCg:Number(1),
-              Tui:Number(0)
+            .get("http://localhost:50774/api/SelectWare")
+            .then((response) => {
+              this.options = response.data;
+              console.log("ok");
             })
-            .then(function (response) {});
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
-  },
-};
+            .catch(function (error) {
+              console.log(error);
+            });
+        },
+      };
 </script>

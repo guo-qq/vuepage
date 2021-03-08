@@ -128,25 +128,25 @@ export default {
     },
     //详情页
     editData(id) {
-      this.$router.push({ path: "/details?id=" + id });
+      this.$router.push({ path:"/details?id=" + id });
     },
     resetForm(formName) {   //重置按钮
       console.log(this.$refs[formName]);
       this.$refs[formName].resetFields();
     },
   },
-  mounted() {
-    //表格显示
-    this.axios
-      .get("http://localhost:50774/api/GetSalesSingles")
-      .then((response) => {
-        this.items = response.data;
-        console.log("ok");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  },
+    mounted() {
+      //表格显示
+      this.axios
+        .get("http://localhost:50774/api/GetSalesSingles")
+        .then((response) => {
+          this.items = response.data;
+          console.log("ok");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
 };
 </script>
 

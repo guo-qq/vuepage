@@ -24,7 +24,7 @@
             <el-checkbox v-model="checked">注册即表示你同意遵守《服务协议》</el-checkbox>
           </el-form-item>
         </el-form>
-         <router-link to="/registerindex" class="li1">已有账号,现在去登录</router-link>
+         <router-link to="/" class="li1">已有账号,现在去登录</router-link>
       </div>
     </div>
   </div>
@@ -77,7 +77,7 @@ export default {
 }
 .div4 {
   margin-top: 100px;
-  margin-left: 200px;
+  margin-left: 300px;
   width: 1100px;
   height: 600px;
 }
@@ -89,7 +89,6 @@ export default {
   opacity: 0.3;
 }
 .div2 {
-  border: gray 1px solid;
   float: left;
   width: 548px;
   height: 600px;

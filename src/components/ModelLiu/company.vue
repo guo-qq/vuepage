@@ -92,7 +92,7 @@ export default {
 }
 .div2 {
   margin-top: 100px;
-  margin-left: 400px;
+  margin-left: 550px;
   width: 548px;
   height: 600px;
 }

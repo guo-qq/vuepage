@@ -23,9 +23,10 @@
             ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="Login(form)" class="bt"
+            <el-button type="primary" @click="Login()" class="bt"
               >登录</el-button
             >
+            <router-link to="/Home"></router-link>
           </el-form-item>
         </el-form>
         <router-link to="/enrollindex" class="li1"
@@ -47,23 +48,8 @@ export default {
     };
   },
   methods: {
-    Login(form) {
-      var gg = {};
-      gg.Usernumber = Number(this.form.Usernumber);
-      gg.Userpwd = this.form.Userpwd;
-      this.axios.get("http://localhost:50774/api/GetEnter", { gg })
-        .then(function (res) {
-          console.log(res.data);
-          if (res != null) {
-            alert("登录成功");
-            this.$router.push('/shou');
-          } else {
-            alert("登录失败");
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+    Login() {
+       this.$router.push({path:'/Home'})
     },
   },
 };
@@ -93,7 +79,7 @@ export default {
 }
 .div4 {
   margin-top: 100px;
-  margin-left: 200px;
+  margin-left: 300px;
   width: 1100px;
   height: 600px;
 }
@@ -105,7 +91,6 @@ export default {
   opacity: 0.3;
 }
 .div2 {
-  border: gray 1px solid;
   float: left;
   width: 548px;
   height: 600px;
