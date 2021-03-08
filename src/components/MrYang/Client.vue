@@ -155,7 +155,7 @@
         },
         rules: {
           name: [
-            
+            { required: true, message: '请输入客户名称', trigger: 'blur' },
           ]
         }
       };
@@ -203,8 +203,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-
-           this.axios.post("http://localhost:50774/api/ClientSupplierAdd",{
+           this.axios.post("http://localhost:50774/api/ClientSuppliAdd",{
                 clientSnumber:this.ruleForm.clientSnumber,
                 clientSname:this.ruleForm.clientSname,
                 aswid:Number(this.ruleForm.aswid),

@@ -5,7 +5,7 @@
         <tr>
           <td>
             <el-row>
-              <CustomerClass></CustomerClass>
+              <Clationadd></Clationadd>
             </el-row>
           </td>
           <td>
@@ -68,20 +68,22 @@
       </el-table-column>
       <el-table-column prop="ccsstate" label="状态" width="600">
         <template scope="scope">
-          <span v-if="scope.row.ccsstate == 1" style="color: black">禁用</span>
-          <span v-if="scope.row.ccsstate == 0" style="color: green">启用</span>
+          <span v-if="scope.row.ccsstate == 0" style="color: black">禁用</span>
+          <span v-if="scope.row.ccsstate == 1" style="color: green">启用</span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
-          <CustomerClassModify v-bind:id="scope.row.ccsid"></CustomerClassModify>
+          <el-button @click="upt(scope.row.ccsid)" type="text" size="small"
+            >编辑</el-button
+          >
           <span v-if="scope.row.ccsstate == 0"
             ><el-button @click="ztai(scope.row.ccsid)" type="text" size="small"
               >启用</el-button
             ></span
           >
           <span v-if="scope.row.ccsstate == 1"
-            ><el-button @click="zt(scope.row.ccsid)" type="text" size="small"
+            ><el-button @click="ztai(scope.row.ccsid)" type="text" size="small"
               >禁用</el-button
             ></span
           >
@@ -94,8 +96,7 @@
   </div>
 </template>
 <script>
-import CustomerClass from "@/components/MrYang/CustomerClass"
-import CustomerClassModify from "@/components/MrYang/CustomerClassModify"
+import Clationadd from "@/components/MrYang/Gongyinghang/Clationadd";
 // 节流函数
 const delay = (function() {
   let timer = 0;
@@ -128,32 +129,17 @@ export default {
     },
   methods: {
     del(id) {
-      this.$confirm("确认删除此数据吗","提示", {
+      this.$confirm("确认删除此数据吗？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        this.$http.post("http://localhost:50774/api/ClientifySuppDelt?id="+id);
+        this.$http.post("http://localhost:50774/api/LableCDelt?id=" + id);
         aler("删除成功");
-        location.reload()
-        
+        location.reload().catch((res) => {
+          console.log("err");
+        });
       });
-    },
-    ztai(id){
-        this.axios.post("http://localhost:50774/api/ClientifySuppZtai?id="+id +"&ztai="+0)
-        this.$message({
-                  message: '启用成功',
-                   type: 'success',
-                })
-                location.reload()
-    },
-    zt(id){
-        this.axios.post("http://localhost:50774/api/ClientifySuppZtai?id="+id +"&ztai="+1)
-        this.$message({
-                  message: '禁用成功',
-                   type: 'success',
-                })
-                location.reload()
     },
     upt(id) {
       this.$router.push("/zclientmodify?id=" + id);
@@ -162,7 +148,7 @@ export default {
     this.$refs[formName].resetFields();
   },
     fetchData(val) {
-        this.axios.get('http://localhost:50774/api/ClientClassifySuppShow',{
+        this.axios.get('http://localhost:50774/api/ClientClassifyShow',{
         params: {
         flname:this.flname,
         stratime:this.value1[0],
@@ -178,7 +164,7 @@ export default {
   created() {
     //显示
     this.axios
-      .get("http://localhost:50774/api/ClientClassifySuppShow")
+      .get("http://localhost:50774/api/ClientClassifyShow")
       .then((response) => {
         this.tableData = response.data;
         console.log("ok");
@@ -189,8 +175,7 @@ export default {
   },
   
   components: {
-    'CustomerClass': CustomerClass,
-    'CustomerClassModify':CustomerClassModify
+    'Clationadd': Clationadd,
   },
   
 };
