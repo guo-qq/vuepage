@@ -205,7 +205,6 @@ export default new Router({
       component:RepertoryTwo,
     },
     
-    } ,
     {
       path: '/zclassifyadd',
       name: '客户分类添加頁面',
