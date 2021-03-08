@@ -20,6 +20,15 @@ import inven from '@/components/Inventory/InventorySels'
 import SLeiBie from '@/components/ModelHan/SLeiBie'
 import SShangPin from '@/components/ModelHan/SShangPin'
 import SKeHu from '@/components/ModelHan/SKeHu'
+import BSalesSingleShow from '@/components/ModelHan/BSalesSingleShow'
+import BuyerCollect from '@/components/ModelHan/BuyerCollect'
+import BShangPin from '@/components/ModelHan/BShangPin'
+import BSupplier from '@/components/ModelHan/BSupplier'
+import RepertoryFirst from '@/components/ModelHan/RepertoryFirst'
+import RepertoryTwo from '@/components/ModelHan/RepertoryTwo'
+import RepertoryMax from '@/components/ModelHan/RepertoryMax'
+import RepertoryMin from '@/components/ModelHan/RepertoryMin'
+
 import running from '@/components/Inventory/WaterSel'
 import point from '@/components/Inventory/CheckShow'
 import AddCheck from '@/components/Inventory/AddCheck'
@@ -96,9 +105,8 @@ export default new Router({
     {
       path: '/SLeiBie',
       name: '销售汇总表(按类别)',
-      component: SLeiBie,
-    }
-    ,
+      component:SLeiBie,
+    },
     {
       path: '/SShangPin',
       name: '销售汇总表(按商品)',
@@ -127,6 +135,49 @@ export default new Router({
     {
       path: '/zclassify',
       name: '客户分类',
+      component:CustomerClassShow,
+    },
+    {
+      path: '/bprocurement',
+      name: '采购明细表',
+      component:BSalesSingleShow,
+    },
+    {
+      path: '/BuyerCollect',
+      name: '采购汇总表',
+      component:BuyerCollect,
+    },
+    {
+      path: '/BShangPin',
+      name: '采购汇总表(按商品)',
+      component:BShangPin,
+    },
+    {
+      path: '/BSupplier',
+      name: '销售汇总表(按供应商)',
+      component:BSupplier,
+    },
+    {
+      path: '/bwarning',
+      name: '库存预警表',
+      component:RepertoryFirst,
+    },
+    {
+      path: '/RepertoryMax',
+      name: '超过库存上限',
+      component:RepertoryMax,
+    },
+    {
+      path: '/RepertoryMin',
+      name: '低于库存下限',
+      component:RepertoryMin,
+    },
+    {
+      path: '/bbalance',
+      name: '库存余额表',
+      component:RepertoryTwo,
+    },
+    
       component: CustomerClassShow,
     },
     {

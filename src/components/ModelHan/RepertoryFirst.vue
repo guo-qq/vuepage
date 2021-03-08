@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <el-row>
@@ -23,48 +22,33 @@
       </template>
     </el-input>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <el-button type="primary">查询</el-button>
     <el-button @click="resetForm('ruleForm')">重置</el-button>
-    <div class="sys">
-      <br />
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span>销售数量合计:</span>
-      <label>{{ sscNumber }}</label>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span>销售金额合计:</span>
-      <label>{{ sscSubtotal }}</label>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span>销售毛利合计:</span>
-      <label>{{ maoLi }}</label>
-    </div>
+    <el-button type="primary" @click="$router.push('/RepertoryMax')"
+      >超出库存上限</el-button
+    >
+    <el-button type="primary" @click="$router.push('/RepertoryMin')"
+      >低于库存下限</el-button
+    >
+    <br />
     <br />
     <el-table
       :data="items"
       border
       style="width: 100%"
-      show-summary
-      :summary-method="getTotal"
       row-class-name="tableRowClassName"
     >
-      <el-table-column prop="ssZdDate" label="制单时间">   </el-table-column>
-      <el-table-column prop="ssNumber" label="单据编号" width="180">
+      <el-table-column prop="cargoCoding" label="商品编码" width="180">
       </el-table-column>
-      <el-table-column prop="ssClient" label="客户名称" width="180">
+      <el-table-column prop="className" label="商品类别" width="180">
       </el-table-column>
-      <el-table-column prop="aswName" label="门店" width="180">
+      <el-table-column prop="cargoName" label="商品名称" width="180">
       </el-table-column>
-      <el-table-column prop="ssWarehouse" label="仓库"> </el-table-column>
-      <el-table-column prop="ssMode" label="结算方式"> </el-table-column>
-      <el-table-column prop="cargoCoding" label="商品编码"> </el-table-column>
-      <el-table-column prop="cargoName" label="商品名称"> </el-table-column>
-      <el-table-column prop="unitName" label="单位"> </el-table-column>
-      <el-table-column prop="sscNumber" label="数量"> </el-table-column>
-      <el-table-column prop="cpPrice" label="单价(元)"> </el-table-column>
-      <el-table-column prop="sscSubtotal" label="销售金额(元)">
+      <el-table-column prop="unitName" label="单位" width="180">
       </el-table-column>
-      <el-table-column prop="maoLi" label="销售毛利(元)"> </el-table-column>
-      <el-table-column prop="ssHandle" label="经办人"> </el-table-column>
-      <el-table-column prop="sscRemark" label="备注"> </el-table-column>
+      <el-table-column prop="wname" label="仓库"> </el-table-column>
+      <el-table-column prop="wsize" label="可存储数量"> </el-table-column>
+      <el-table-column prop="cpMaxNumber" label="库存上限"> </el-table-column>
+      <el-table-column prop="cpMinNumber" label="库存下限"> </el-table-column>
     </el-table>
     <div class="block">
       <el-pagination
@@ -102,9 +86,6 @@ export default {
       state: "",
       isCollapse: true,
       items: [],
-      sscNumber: "",
-      sscSubtotal: "",
-      maoLi: "",
       currentPage1: 1, //分页
       currentPage2: 1,
     };
@@ -129,10 +110,10 @@ export default {
     },
   },
   methods: {
-   async loadAll() {
+    loadAll() {
       return [
-      await  this.axios
-          .get("http://localhost:50774/api/SalesSingleShow")
+        this.axios
+          .get("http://localhost:50774/api/RepertoryShow")
           .then((response) => {
             this.restaurants = response.data;
           })
@@ -149,9 +130,9 @@ export default {
     },
     async fetchData(val) {
       const res = await this.axios
-        .get("http://localhost:50774/api/SalesSingleShow", {
+        .get("http://localhost:50774/api/RepertoryShow", {
           params: {
-            clientName: this.state,
+            wname: this.state,
             start: this.value[0],
             end: this.value[1],
             pageSize: this.currentPage1,
@@ -162,44 +143,12 @@ export default {
           this.items = response.data;
         });
     },
-    getTotal(param) {
-      const { columns, data } = param;
-      const sums = [];
-      columns.forEach((column, index) => {
-        if (index === 0) {
-          sums[index] = "合计";
-          return;
-        }
-        const values = data.map((item) => Number(item[column.property]));
-        if (
-          column.property === "sscNumber" ||
-          column.property === "sscSubtotal" ||
-          column.property === "maoLi"
-        ) {
-          sums[index] = values.reduce((prev, curr) => {
-            const value = Number(curr);
-            if (!isNaN(value)) {
-              return prev + curr;
-            } else {
-              return prev;
-            }
-          }, 0);
-          sums[index];
-        } else {
-          sums[index] = "--";
-        }
-      });
-      this.sscNumber = sums[9];
-      this.sscSubtotal = sums[11];
-      this.maoLi = sums[12];
-      return sums;
-    },
   },
 
-async  mounted() {
+  mounted() {
     this.loadAll();
-  await  this.axios
-      .get("http://localhost:50774/api/SalesSingleShow")
+    this.axios
+      .get("http://localhost:50774/api/RepertoryShow")
       .then((response) => {
         this.items = response.data;
         console.log("ok");
