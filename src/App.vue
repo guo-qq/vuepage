@@ -1,11 +1,8 @@
 <template>
-  <div id="app">
-    <Hand id="Hand"></Hand>
-
-    <DH id="DH" style="float: left; width: 15%; height: 100%"></DH>
-    <MBX style="float: left; height: 50px; width: 80%"></MBX>
-    <router-view style="float: left; height: 100%; width: 80%" />
-    <!-- <WB id="WB"  class="footer" style="clear: both"></WB> -->
+  <div>    
+ 
+  <router-view  style="float:left;height:100%;width:100%"/>
+  <!-- <WB id="WB"  class="footer" style="clear: both"></WB> -->
   </div>
 </template>
 
@@ -28,7 +25,14 @@ export default {
     WB: WB,
     MBX: MBX,
   },
-};
+  components:{
+    "Hand":Hand,
+    "DH":DH,
+    "WB":WB,
+    "MBX":MBX
+  }  
+}
+
 </script>
 <style >
 .main {

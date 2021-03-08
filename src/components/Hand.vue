@@ -24,7 +24,9 @@
         <!-- icon是修改图标 ，command是点击后传给方法的值-->
       <el-dropdown-item icon="el-icon-edit" command="edit">>修改密码</el-dropdown-item>
 
-      <el-dropdown-item icon="el-icon-s-operation" command="quit">>退出登录</el-dropdown-item>
+      <el-dropdown-item icon="el-icon-s-operation" >
+        <router-link to="/">退出登录</router-link>
+      </el-dropdown-item>
       
     </el-dropdown-menu>
 </el-dropdown>
