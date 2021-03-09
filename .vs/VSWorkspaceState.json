@@ -3,9 +3,7 @@
     "",
     "\\config",
     "\\src",
-    "\\src\\components",
-    "\\src\\components\\MrYang"
+    "\\src\\components"
   ],
-  "SelectedNode": "\\src\\components",
   "PreviewInSolutionExplorer": false
 }
