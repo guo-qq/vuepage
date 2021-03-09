@@ -28,9 +28,10 @@ import slog from '@/components/ModelGuo/slog'
 //其他收支
 import ZLS from '@/components/ModelGuo/ZLS'
 import payment from '@/components/ModelGuo/payment'
+
+//报表
 import SalesSingleShow from '@/components/ModelHan/SalesSingleShow'
 import SellCollect from '@/components/ModelHan/SellCollect'
-import inven from '@/components/Inventory/InventorySels'
 import SLeiBie from '@/components/ModelHan/SLeiBie'
 import SShangPin from '@/components/ModelHan/SShangPin'
 import SKeHu from '@/components/ModelHan/SKeHu'
@@ -42,7 +43,13 @@ import RepertoryFirst from '@/components/ModelHan/RepertoryFirst'
 import RepertoryTwo from '@/components/ModelHan/RepertoryTwo'
 import RepertoryMax from '@/components/ModelHan/RepertoryMax'
 import RepertoryMin from '@/components/ModelHan/RepertoryMin'
+import Profile from '@/components/ModelHan/Profile'
+import ReceiptShou from '@/components/ModelHan/ReceiptShou'
+import ReceiptFu from '@/components/ModelHan/ReceiptFu'
+import PerformanceShow from '@/components/ModelHan/PerformanceShow'
 
+
+import inven from '@/components/Inventory/InventorySels'
 import running from '@/components/Inventory/WaterSel'
 import point from '@/components/Inventory/CheckShow'
 import AddCheck from '@/components/Inventory/AddCheck'
@@ -319,6 +326,26 @@ export default new Router({
           path: '/slog',
           name: '操作日志',
           component: slog,
+        },
+        {
+          path: '/bbill',
+          name: '客户对账单',
+          component: ReceiptShou,
+        },
+        {
+          path: '/bstatement',
+          name: '供应商对账单',
+          component: ReceiptFu,
+        },
+        {
+          path: '/bgeneralize',
+          name: '财务分析',
+          component: Profile,
+        },
+        {
+          path: '/bperformance',
+          name: '销售业绩',
+          component: PerformanceShow,
         },
 
       ],
