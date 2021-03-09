@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src"
+    "\\config",
+    "\\src",
+    "\\src\\components",
+    "\\src\\components\\MrYang"
   ],
   "SelectedNode": "\\src\\components",
   "PreviewInSolutionExplorer": false
