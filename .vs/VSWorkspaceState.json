@@ -1,9 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\config",
     "\\src",
-    "\\src\\components"
+    "\\src\\components",
+    "\\src\\components\\MrYang"
   ],
+  "SelectedNode": "\\src\\components\\MrYang\\Client.vue",
   "PreviewInSolutionExplorer": false
 }

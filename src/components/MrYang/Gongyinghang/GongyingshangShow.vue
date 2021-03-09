@@ -5,7 +5,7 @@
               <tr>
                 <td>
                   <el-row>
-                <router-link to="/zclientadd"><el-button style="marginLeft:1%;margintop:20%" type="primary">添加</el-button></router-link>
+                <router-link to="/zsupplieradd"><el-button style="marginLeft:1%;margintop:20%" type="primary">添加</el-button></router-link>
             </el-row>
                 </td>
                 <td>
@@ -16,18 +16,18 @@
               </tr>
             </table>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <table style="marginLeft:570px;margintop:%">
+            <table style="marginLeft:500px;margintop:%">
                 <tr>
                   <td>
-                    客户等级
+                    供应商分类
                   </td>
                     <td>
-                        <el-select v-model="svpid" style="marginLeft:5px" placeholder="请选择">
+                        <el-select v-model="flid" style="marginLeft:5px" placeholder="请选择">
                         <el-option
                           v-for="item in opn"
                           :key="item.value"
-                          :label="item.cgradeName"
-                          :value="item.cgradeId">
+                          :label="item.ccsname"
+                          :value="item.ccsid">
                         </el-option>
                         </el-select>
                     </td>
@@ -36,7 +36,7 @@
                       style="marginLeft:10px"
                       placeholder="请输入关键字搜索"
                       prefix-icon="el-icon-search"
-                      v-model="khname">
+                      v-model="gname">
                       </el-input>
                     </td>
                     <td>
@@ -62,22 +62,22 @@
     </el-table-column>
     <el-table-column
       prop="clientSnumber"
-      label="客户编号"
+      label="供应商编号"
       width="150">
     </el-table-column>
      <el-table-column
        prop="clientSname"
-      label="客户名称"
+      label="供应商名称"
       width="150">
     </el-table-column>
      <el-table-column
-      prop="cgradeName"
-      label="商品等级"
+      prop="ccsname"
+      label="供应商分类"
       width="150">
     </el-table-column>
      <el-table-column
-      prop="lclientName"
-      label="标签"
+      prop="clientSaddress"
+      label="地区"
       width="150">
     </el-table-column>
      <el-table-column
@@ -121,32 +121,27 @@ const delay = (function() {
   };
 })();
   export default {
+    name:"GongyingshangShow",
     data() {
       return {
         opn:[],
         isCollapse: true,
         tableData: [],
-        svpid:'',
-        khname:'',
-        lxname:''
+        flid:'',
+        gname:''
       }
     },
     watch:{
-       svpid(){
+       flid(){
       delay(()=>{
         this.fetchData();
       },300);
     },
-     khname(){
+     gname(){
       delay(()=>{
         this.fetchData();
       },300);
-    },
-     lxname(){
-      delay(()=>{
-        this.fetchData();
-      },300);
-    },
+    }
     },
     methods: {
         del(id){
@@ -155,35 +150,36 @@ const delay = (function() {
               cancelButtonText:'取消',
               type:'warning'
             }).then(()=>{
-              this.$http.post('http://localhost:50774/api/LableCDelt?id='+id)
+              this.$http.post('http://localhost:50774/api/ClientSupplierDelt?id='+id)
               aler("删除成功")
               location.reload()
+              .catch(res=>{
+                console.log("err");
+              })
             })
         },
         upt(id){
-             this.$router.push({path:"/zclientmodify?id="+id});
+            this.$route.push('/zclientmodify?id='+id);
         },
          fetchData(val) {
-        this.axios.get('http://localhost:50774/api/ClientSupplierShowkh',{
+        this.axios.get('http://localhost:50774/api/ClientSupplierShowde',{
         params: {
-        svpid:Number(this.svpid),
-        khname:this.khname,
-        lxname:this.lxname
+        flid:Number(this.flid),
+        gname:gname,
+        lxrname:gname
       },
       })
         .then(response => {
         this.tableData = response.data
-        
       })       
       }
-
     },
     resetForm(formName) {
         this.$refs[formName].resetFields();
       },
     created(){
         //显示       
-        this.axios.get('http://localhost:50774/api/ClientSupplierShowkh')
+        this.axios.get('http://localhost:50774/api/ClientSupplierShowde')
           .then(response=>{
             this.tableData=response.data;
             console.log('ok')
@@ -191,8 +187,8 @@ const delay = (function() {
           .catch(function(error){
             console.log(error);
           })
-            //客户级别
-        this.axios.get('http://localhost:50774/api/ClientGradeSelect')
+            //供应商分类
+        this.axios.get('http://localhost:50774/api/ClientClassifySelect')
         .then(response=>{
           this.opn=response.data;
             console.log('ok')

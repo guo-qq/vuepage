@@ -131,8 +131,24 @@
 </template>
 <script>
   export default {
-      name:"ClientModify",
+
     data() {
+      this.axios.get('http://localhost:50774/api/clientSupplierByid?id='+this.$route.query.id).then((res)=>{
+            this.ruleForm.clientSnumber=res.data.clientSnumber
+            this.ruleForm.clientSname=res.data.clientSname
+            this.ruleForm.aswid=res.data.aswid
+            this.ruleForm.cgradeId=res.data.cgradeId
+            this.ruleForm.lclientId=res.data.lclientId
+            this.ruleForm.ccsid=res.data.ccsid
+            this.ruleForm.clientSaddress=res.data.clientSaddress
+            this.ruleForm.postcode=res.data.postcode
+            this.ruleForm.clientSremark=res.data.clientSremark
+            this.ruleForm.clientSstate=res.data.clientSstate
+            this.ruleForm.clientSlinkman=res.data.clientSlinkman
+            this.ruleForm.clientSphone=res.data.clientSphone
+            this.ruleForm.clientSpost=res.data.clientSpost
+            this.ruleForm.clientSemail=res.data.clientSemail
+          })
       return {
         options:[],
         optio:[],
@@ -154,11 +170,6 @@
           clientSpost:'',
           clientSemail:'',
         },
-        rules: {
-          name: [
-            
-          ]
-        }
       };
     },
     mounted(){
@@ -198,13 +209,9 @@
         .catch(function(error){
             console.log(error);
           })
+        
       },
     methods: {
-      fun(){
-          this.$http.get('http://localhost:50774/api/clientSupplierByid',{
-
-          })
-      },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {

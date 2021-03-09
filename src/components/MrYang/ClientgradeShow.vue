@@ -4,9 +4,7 @@
       <table style="marginleft: 1%; margintop: 20%">
         <tr>
           <td>
-            <el-row>
-              <CustomerClass></CustomerClass>
-            </el-row>
+            <Clientgradeadd></Clientgradeadd>
           </td>
           <td>
             <el-row>
@@ -17,11 +15,9 @@
           </td>
         </tr>
       </table>
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-      <div style="marginLeft:400px;margintop:%">
-          <table>
+      <table style="marginLeft:400px;margintop:%">
         <tr>
-          <td>创建日期</td>
+          <td>创建时间</td>
           <td>
             <el-date-picker
               v-model="value1"
@@ -42,12 +38,12 @@
             </el-input>
           </td>
           <td>
-            <el-button style="marginleft: 15px" @click="resetForm('ruleForm')">重置</el-button>
+            <el-button style="marginleft: 15px" @click="resetForm('ruleForm')"
+              >重置</el-button
+            >
           </td>
         </tr>
       </table>
-      </div>
-      </el-form>
     </div>
     <el-table
       :data="tableData"
@@ -55,37 +51,24 @@
       :row-class-name="tableRowClassName"
     >
       <el-table-column type="selection" width="55"> </el-table-column>
-      <el-table-column v-if="fales" prop="ccsid" label="id" width="150">
+      <el-table-column v-if="fales" prop="cgradeId" label="id" width="150">
       </el-table-column>
       <el-table-column
         type="yyyy-dd-mm-ss"
-        prop="ccsdate"
+        prop="cgradeDate"
         label="创建时间"
         width="180"
       >
       </el-table-column>
-      <el-table-column prop="ccsname" label="分类名称" width="180">
+      <el-table-column prop="cgradeName" label="等級名称" width="180">
       </el-table-column>
-      <el-table-column prop="ccsstate" label="状态" width="600">
-        <template scope="scope">
-          <span v-if="scope.row.ccsstate == 0" style="color: black">禁用</span>
-          <span v-if="scope.row.ccsstate == 1" style="color: green">启用</span>
-        </template>
+
+      <el-table-column prop="cgradeDiscount" label="折扣率" width="600">
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
-          <CustomerClassModify v-bind:id="scope.row.ccsid"></CustomerClassModify>
-          <span v-if="scope.row.ccsstate == 0"
-            ><el-button @click="ztai(scope.row.ccsid)" type="text" size="small"
-              >启用</el-button
-            ></span
-          >
-          <span v-if="scope.row.ccsstate == 1"
-            ><el-button @click="zt(scope.row.ccsid)" type="text" size="small"
-              >禁用</el-button
-            ></span
-          >
-          <el-button @click="del(scope.row.ccsid)" type="text" size="small"
+          <ClientgradeModify v-bind:id="scope.row.cgradeId"></ClientgradeModify>
+          <el-button @click="del(scope.row.cgradeId)" type="text" size="small"
             >删除</el-button
           >
         </template>
@@ -94,8 +77,8 @@
   </div>
 </template>
 <script>
-import CustomerClass from "@/components/MrYang/CustomerClass"
-import CustomerClassModify from "@/components/MrYang/CustomerClassModify"
+import Clientgradeadd from "@/components/MrYang/Clientgradeadd";
+import ClientgradeModify from "@/components/MrYang/ClientgradeModify";
 // 节流函数
 const delay = (function() {
   let timer = 0;
@@ -109,10 +92,8 @@ export default {
     return {
       opn: [],
       isCollapse: true,
-      dialogTableVisible: false,
-        dialogFormVisible: false,
       tableData: [],
-      value1:'',
+      value1: "",
       flname:''
     };
   },
@@ -130,40 +111,21 @@ export default {
     },
   methods: {
     del(id) {
-      this.$confirm("确认删除此数据吗","提示", {
+      this.$confirm("确认删除此数据吗？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        this.$http.post("http://localhost:50774/api/ClientifySuppDelt?id="+id);
+        this.$http.post("http://localhost:50774/api/ClientGradeDlet?id="+id);
         aler("删除成功");
-        location.reload()
+        this.$router.go(0)
       });
-    },
-    ztai(id){
-        this.axios.post("http://localhost:50774/api/ClientifySuppZtai?id="+id +"&ztai="+1)
-        this.$message({
-                  message: '启用成功',
-                   type: 'success',
-                })
-                this.$router.go(0)
-    },
-    zt(id){
-        this.axios.post("http://localhost:50774/api/ClientifySuppZtai?id="+id +"&ztai="+0)
-        this.$message({
-                  message: '禁用成功',
-                   type: 'success',
-                })
-               this.$router.go(0)
     },
     upt(id) {
       this.$router.push("/zclientmodify?id=" + id);
     },
-    resetForm(formName) {
-    this.$refs[formName].resetFields();
-  },
     fetchData(val) {
-        this.axios.get('http://localhost:50774/api/ClientClassifySuppShow',{
+        this.axios.get('http://localhost:50774/api/ClientGradeShow',{
         params: {
         flname:this.flname,
         stratime:this.value1[0],
@@ -176,10 +138,13 @@ export default {
       })       
       }
   },
+  resetForm(formName) {
+    this.$refs[formName].resetFields();
+  },
   created() {
     //显示
     this.axios
-      .get("http://localhost:50774/api/ClientClassifySuppShow")
+      .get("http://localhost:50774/api/ClientGradeShow")
       .then((response) => {
         this.tableData = response.data;
         console.log("ok");
@@ -188,11 +153,9 @@ export default {
         console.log(error);
       });
   },
-  
   components: {
-    'CustomerClass': CustomerClass,
-    'CustomerClassModify':CustomerClassModify
+    'Clientgradeadd': Clientgradeadd,
+    'ClientgradeModify': ClientgradeModify
   },
-  
 };
 </script>

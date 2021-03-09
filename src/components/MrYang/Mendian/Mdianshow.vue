@@ -5,7 +5,7 @@
               <tr>
                 <td>
                   <el-row>
-                <router-link to="/zclientadd"><el-button style="marginLeft:1%;margintop:20%" type="primary">添加</el-button></router-link>
+                <Mdianadd></Mdianadd>
             </el-row>
                 </td>
                 <td>
@@ -16,27 +16,25 @@
               </tr>
             </table>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <table style="marginLeft:570px;margintop:%">
+            <table style="marginLeft:360px;margintop:%">
                 <tr>
                   <td>
-                    客户等级
+                      <el-form-item label="创建日期" prop="name">
+                     <el-date-picker
+                        v-model="vlaue"
+                        type="datetimerange"
+                        range-separator="至"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期">
+                    </el-date-picker>
+                    </el-form-item>
                   </td>
-                    <td>
-                        <el-select v-model="svpid" style="marginLeft:5px" placeholder="请选择">
-                        <el-option
-                          v-for="item in opn"
-                          :key="item.value"
-                          :label="item.cgradeName"
-                          :value="item.cgradeId">
-                        </el-option>
-                        </el-select>
-                    </td>
                     <td>
                       <el-input
                       style="marginLeft:10px"
                       placeholder="请输入关键字搜索"
                       prefix-icon="el-icon-search"
-                      v-model="khname">
+                      v-model="mdname">
                       </el-input>
                     </td>
                     <td>
@@ -56,47 +54,52 @@
     </el-table-column>
     <el-table-column 
       v-if="fales"
-      prop="clientSid"
+      prop="aswid"
       label="客户编号"
-      width="150">
+      width="10">
     </el-table-column>
     <el-table-column
-      prop="clientSnumber"
-      label="客户编号"
-      width="150">
+      prop="aswdate"
+      label="创建日期"
+      width="180">
     </el-table-column>
      <el-table-column
-       prop="clientSname"
-      label="客户名称"
-      width="150">
+       prop="aswnumber"
+      label="门店编号"
+      width="80">
     </el-table-column>
      <el-table-column
-      prop="cgradeName"
-      label="商品等级"
-      width="150">
-    </el-table-column>
-     <el-table-column
-      prop="lclientName"
-      label="标签"
-      width="150">
-    </el-table-column>
-     <el-table-column
-      prop="clientSlinkman"
-      label="联系人"
-      width="150">
-    </el-table-column>
-     <el-table-column
-      prop="clientSphone"
-      label="手机号码"
-      width="150">
-    </el-table-column>
-     <el-table-column
-      prop="clientSstate"
-      label="状态"
+      prop="aswname"
+      label="门店名称"
       width="120">
+    </el-table-column>
+     <el-table-column
+      prop="aswlinkman"
+      label="联系人"
+      width="80">
+    </el-table-column>
+     <el-table-column
+      prop="aswphone"
+      label="手机号码"
+      width="130">
+    </el-table-column>
+    <el-table-column
+      prop="aswemail"
+      label="邮箱"
+      width="200">
+    </el-table-column>
+    <el-table-column
+      prop="aswqq"
+      label="QQ"
+      width="150">
+    </el-table-column>
+     <el-table-column
+      prop="aswstate"
+      label="状态"
+      width="80">
       <template scope="scope">
-                <span v-if="scope.row.clientSstate==0" style="color:black;">禁用</span>
-                <span v-if="scope.row.clientSstate==1" style="color:green;">启用</span>
+                <span v-if="scope.row.aswstate==0" style="color:black;">禁用</span>
+                <span v-if="scope.row.aswstate==1" style="color:green;">启用</span>
             </template>
     </el-table-column>
        <el-table-column
@@ -104,14 +107,16 @@
       label="操作"
       width="100">
       <template slot-scope="scope">
-        <el-button @click="upt(scope.row.clientSid)" type="text" size="small">编辑</el-button> 
-        <el-button @click="del(scope.row.clientSid)" type="text" size="small">删除</el-button>        
+        <Mdianmodify v-bind:id="scope.row.aswid"></Mdianmodify>
+        <el-button @click="del(scope.row.aswid)" type="text" size="small">删除</el-button>        
       </template>
     </el-table-column>
   </el-table>
   </div>
 </template>
 <script>
+import Mdianadd from "@/components/MrYang/Mendian/Mdianadd";
+import Mdianmodify from "@/components/MrYang/Mendian/Mdianmodify";
 // 节流函数
 const delay = (function() {
   let timer = 0;
@@ -121,32 +126,27 @@ const delay = (function() {
   };
 })();
   export default {
+    name:"GongyingshangShow",
     data() {
       return {
         opn:[],
         isCollapse: true,
         tableData: [],
-        svpid:'',
-        khname:'',
-        lxname:''
+        mdname:'',
+        vlaue:''
       }
     },
     watch:{
-       svpid(){
+       value1(){
       delay(()=>{
         this.fetchData();
       },300);
     },
-     khname(){
+     mdname(){
       delay(()=>{
         this.fetchData();
       },300);
-    },
-     lxname(){
-      delay(()=>{
-        this.fetchData();
-      },300);
-    },
+    }
     },
     methods: {
         del(id){
@@ -155,35 +155,36 @@ const delay = (function() {
               cancelButtonText:'取消',
               type:'warning'
             }).then(()=>{
-              this.$http.post('http://localhost:50774/api/LableCDelt?id='+id)
+              this.$http.post('http://localhost:50774/api/AddShopWareDelt?id='+id)
               aler("删除成功")
               location.reload()
+              .catch(res=>{
+                console.log("err");
+              })
             })
         },
         upt(id){
-             this.$router.push({path:"/zclientmodify?id="+id});
+            this.$route.push('/zclientmodify?id='+id);
         },
          fetchData(val) {
-        this.axios.get('http://localhost:50774/api/ClientSupplierShowkh',{
+        this.axios.get('http://localhost:50774/api/AddShopWareShow',{
         params: {
-        svpid:Number(this.svpid),
-        khname:this.khname,
-        lxname:this.lxname
+            stratime:this.vlaue[0],
+            endtime:this.vlaue[1],
+            mdname:this.mdname,
       },
       })
         .then(response => {
         this.tableData = response.data
-        
       })       
       }
-
     },
     resetForm(formName) {
         this.$refs[formName].resetFields();
       },
     created(){
         //显示       
-        this.axios.get('http://localhost:50774/api/ClientSupplierShowkh')
+        this.axios.get('http://localhost:50774/api/AddShopWareShow')
           .then(response=>{
             this.tableData=response.data;
             console.log('ok')
@@ -191,12 +192,10 @@ const delay = (function() {
           .catch(function(error){
             console.log(error);
           })
-            //客户级别
-        this.axios.get('http://localhost:50774/api/ClientGradeSelect')
-        .then(response=>{
-          this.opn=response.data;
-            console.log('ok')
-        })
-    }
+    },
+    components: {
+    'Mdianadd': Mdianadd,
+    'Mdianmodify':Mdianmodify
+  },
   }
 </script>

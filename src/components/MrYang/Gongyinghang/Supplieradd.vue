@@ -5,12 +5,12 @@
       <table>
         <tr>
           <td>
-            <el-form-item label="客户代码">
+            <el-form-item label="供应商编码">
             <el-input v-model="ruleForm.clientSnumber"></el-input>
             </el-form-item>
           </td>
           <td>
-            <el-form-item label="客户名称" prop="fff">
+            <el-form-item label="供应商名称" prop="name">
             <el-input v-model="ruleForm.clientSname"></el-input>
             </el-form-item>
           </td>
@@ -26,34 +26,10 @@
         </tr>
         <tr>
           <td>
-            <el-form-item label="客户级别">
-            <el-select v-model="ruleForm.cgradeId" placeholder="请选择">
-            <el-option
-              v-for="item in opn"
-              :key="item.value"
-              :label="item.cgradeName"
-              :value="item.cgradeId">
-            </el-option>
-             </el-select>
-             </el-form-item>
-          </td>
-          <td>
-            <el-form-item label="客户标签">
-            <el-select v-model="ruleForm.lclientId" placeholder="请选择">
-            <el-option
-              v-for="item in optio"
-              :key="item.value"
-              :label="item.lclientName"
-              :value="item.lclientId">
-            </el-option>
-             </el-select>
-             </el-form-item>
-          </td>
-          <td>
-            <el-form-item label="客户分类">
+            <el-form-item label="供应商分类">
             <el-select v-model="ruleForm.ccsid" placeholder="请选择">
             <el-option
-              v-for="item in opti"
+              v-for="item in opn"
               :key="item.value"
               :label="item.ccsname"
               :value="item.ccsid">
@@ -134,15 +110,12 @@
     data() {
       return {
         options:[],
-        optio:[],
         opti:[],
         opn:[],
         ruleForm: {
          clientSnumber:'',
           clientSname:'',
           aswid:'',
-          cgradeId:'',
-          lclientId:'',
           ccsid:'',
           clientSaddress:'',
           postcode:'',
@@ -153,6 +126,11 @@
           clientSpost:'',
           clientSemail:'',
         },
+        rules: {
+          name: [
+            { required: false,message:'请输入供应商名称'},
+          ]
+        }
       };
     },
     mounted(){
@@ -165,28 +143,10 @@
         .catch(function(error){
             console.log(error);
           }),
-           //客户级别
-        this.axios.get('http://localhost:50774/api/ClientGradeSelect')
+           //供应商分类
+        this.axios.get('http://localhost:50774/api/ClientClassifySelect')
         .then(response=>{
           this.opn=response.data;
-            console.log('ok')
-        })
-        .catch(function(error){
-            console.log(error);
-          })
-           //客户标签
-        this.axios.get('http://localhost:50774/api/LableClientSelct')
-        .then(response=>{
-          this.optio=response.data;
-            console.log('ok')
-        })
-        .catch(function(error){
-            console.log(error);
-          })
-           //客户分类
-        this.axios.get('http://localhost:50774/api/ClientClassifySupp')
-        .then(response=>{
-          this.opti=response.data;
             console.log('ok')
         })
         .catch(function(error){
@@ -198,12 +158,10 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.axios.post("http://localhost:50774/api/ClientSupplierAdd",{
+           this.axios.post("http://localhost:50774/api/ClientSuppliAdd",{
                 clientSnumber:this.ruleForm.clientSnumber,
                 clientSname:this.ruleForm.clientSname,
                 aswid:Number(this.ruleForm.aswid),
-                cgradeId:Number(this.ruleForm.cgradeId),
-                lclientId:Number(this.ruleForm.lclientId),
                 ccsid:Number(this.ruleForm.ccsid),
                 clientSaddress:this.ruleForm.clientSaddress,
                 postcode:this.ruleForm.postcode,
@@ -217,7 +175,7 @@
             this.$alert('添加成功','消息',{
                   confirmButtonText:'确定',
                   callback:action=>{
-                    this.$router.push('/zclient');
+                    this.$router.push('/zsupplier');
                   }
                 })
           } else {
@@ -235,6 +193,3 @@
   }
   
 </script>
-<style>
-    
-</style>

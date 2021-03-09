@@ -32,7 +32,7 @@
         dialogVisible: false,
         reload: this.reload,
        ruleForm:{
-          ccsname:''
+          ccsname:'',
         }
       };
     },
@@ -40,14 +40,14 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.axios.post("http://localhost:50774/api/ClientifySuppAdd",{
+           this.axios.post("http://localhost:50774/api/ClientSuppAdd",{
                 ccsname:this.ruleForm.ccsname,
             })
             this.$message({
                     message: '添加成功',
                    type: 'success',
                 })
-           this.dialogVisible =false,
+            this.dialogVisible =false,
             location.reload()
           } else {
             console.log('error submit!!');

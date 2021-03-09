@@ -1,13 +1,8 @@
 <template>
 <div>
-<el-button type="primary" @click="dialogVisible = true">新增分类</el-button>
-<el-dialog
-  title="新增分类"
-  :visible.sync="dialogVisible"
-  :close-on-click-modal='true'
-  width="35%"
-  :before-close="handleClose">
-  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+<el-button type="text" size="small" @click="upt()">编辑</el-button>
+    <el-dialog title="修改分类"  :modal="false" :visible.sync="dialogFormVisible">
+<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <table style="marginLeft:5%">
     <tr>
       <td><span>分类名称</span></td>
@@ -17,11 +12,11 @@
     </tr>
   </table>
    </el-form>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取消</el-button>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="dialogFormVisible = false">取 消</el-button>
     <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
-  </span>
-</el-dialog>
+  </div>
+        </el-dialog>
 </div>
  
 </template>
@@ -31,20 +26,37 @@
       return {
         dialogVisible: false,
         reload: this.reload,
+        dialogTableVisible: false,
+        dialogFormVisible: false,
+        di:this.id,
        ruleForm:{
           ccsname:''
         }
       };
     },
+    props:{
+        id:{
+            type:Number,
+            Request:true
+        }
+    },
     methods: {
+    async upt(ss)
+    {
+        this.dialogFormVisible =true,
+        await this.axios.get("http://localhost:50774/api/ClientClassifySuppid?id="+this.di).then((res)=>{
+            this.ruleForm.ccsname=res.data.ccsname
+        })
+    },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.axios.post("http://localhost:50774/api/ClientifySuppAdd",{
+           this.axios.post("http://localhost:50774/api/ClientClassifySuppUpt",{
                 ccsname:this.ruleForm.ccsname,
+                ccsid:this.di,
             })
             this.$message({
-                    message: '添加成功',
+                    message: '修改成功',
                    type: 'success',
                 })
            this.dialogVisible =false,
