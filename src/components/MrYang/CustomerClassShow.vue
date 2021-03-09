@@ -138,7 +138,6 @@ export default {
         this.$http.post("http://localhost:50774/api/ClientifySuppDelt?id="+id);
         aler("删除成功");
         location.reload()
-        
       });
     },
     ztai(id){

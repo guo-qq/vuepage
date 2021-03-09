@@ -382,6 +382,7 @@ export default new Router({
 
       ],
     },
+    {
       path: '/AddCheck',
       name: '新增盘点表',
       component: AddCheck
