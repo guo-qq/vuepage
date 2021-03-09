@@ -126,6 +126,8 @@
                 accountBalance:Number(this.ruleForm.accountBalance),
                 aswid:Number(this.ruleForm.aswid),
             })
+
+            
             this.$message({
                     message: '添加成功',
                    type: 'success',
