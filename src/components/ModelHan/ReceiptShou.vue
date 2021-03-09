@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <el-row>
@@ -24,28 +23,29 @@
     </el-input>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <el-button @click="resetForm('ruleForm')">重置</el-button>
-    <el-button type="primary" @click="$router.push('/bwarning')">销售预警</el-button>
-    <el-button type="primary" @click="$router.push('/RepertoryMin')">低于库存下限</el-button>
     <br />
     <br />
-    <el-table 
+    <el-table
       :data="items"
       border
       style="width: 100%"
       row-class-name="tableRowClassName"
     >
-      <el-table-column prop="cargoCoding" label="商品编码" width="180">
+      <el-table-column prop="rCreateTime" label="制单时间" width="180">
       </el-table-column>
-      <el-table-column prop="className" label="商品类别" width="180">
+      <el-table-column prop="danJ" label="单据编号" width="180">
       </el-table-column>
-      <el-table-column prop="cargoName" label="商品名称" width="180">
+      <el-table-column prop="rpPayer" label="客户名称" width="180">
       </el-table-column>
-      <el-table-column prop="unitName" label="单位" width="180">
+      <el-table-column prop="rpHandle" label="联系人" width="180">
       </el-table-column>
-      <el-table-column prop="wname" label="仓库"> </el-table-column>
-      <el-table-column prop="wsize" label="可存储数量"> </el-table-column>
-      <el-table-column prop="cpMaxNumber" label="库存上限"> </el-table-column>
-      <el-table-column prop="cpMinNumber" label="库存下限"> </el-table-column>
+      <el-table-column prop="rpmPayment" label="销售金额(元)" width="180">
+      </el-table-column>
+      <el-table-column prop="rpmDiscount" label="优惠金额(元)"> </el-table-column>
+      <el-table-column prop="rpmPaymentSum" label="应收金额(元)"> </el-table-column>
+      <el-table-column prop="rpmMoney" label="已收金额(元)"> </el-table-column>
+      <el-table-column prop="rpTotalMoney" label="应付款金额(元)"> </el-table-column>
+       <el-table-column prop="rpmRemark" label="备注"> </el-table-column>
     </el-table>
     <div class="block">
       <el-pagination
@@ -77,7 +77,6 @@ const delay = (function () {
 })();
 export default {
   data() {
-    //this.isShow=true;
     return {
       input2: "", //查询输入框
       value: "",
@@ -110,9 +109,8 @@ export default {
   methods: {
     loadAll() {
       return [
-
         this.axios
-          .get("http://localhost:50774/api/RepertoryMax")
+          .get("http://localhost:50774/api/ReceiptShou")
           .then((response) => {
             this.restaurants = response.data;
           })
@@ -129,9 +127,9 @@ export default {
     },
     async fetchData(val) {
       const res = await this.axios
-        .get("http://localhost:50774/api/RepertoryMax", {
+        .get("http://localhost:50774/api/ReceiptShou", {
           params: {
-            wname: this.state,
+            RPPayername: this.state,
             start: this.value[0],
             end: this.value[1],
             pageSize: this.currentPage1,
@@ -142,13 +140,12 @@ export default {
           this.items = response.data;
         });
     },
-
   },
 
   mounted() {
     this.loadAll();
     this.axios
-      .get("http://localhost:50774/api/RepertoryMax")
+      .get("http://localhost:50774/api/ReceiptShou")
       .then((response) => {
         this.items = response.data;
         console.log("ok");
