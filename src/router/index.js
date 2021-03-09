@@ -55,6 +55,7 @@ import CustomerClassShow from '@/components/MrYang/CustomerClassShow'
 import lend from '@/components/Inventory/JieChu'
 import AddJie from '@/components/Inventory/AddJie'
 import ckmanagement from '@/components/Inventory/ckmanagement'
+import ckdetail from '@/components/Inventory/ckdetail'
 
 import App from '@/App'
 import One from '@/One'
@@ -73,6 +74,7 @@ export default new Router({
       name: '注册',
       component: enrollindex,
     },
+    
     {
       path: '/company',
       name: '完善企业资料',
@@ -82,6 +84,11 @@ export default new Router({
       path: '/Home', 
       component: One,
       children: [
+        {
+          path: '/ckdetail',
+          name: '出库明细',
+          component: ckdetail,
+        },
         {
           path: '/AddCheck',
           name: '新增盘点表',
