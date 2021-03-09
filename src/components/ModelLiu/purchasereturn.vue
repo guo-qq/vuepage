@@ -123,6 +123,7 @@ export default {
                     type:"warning",
                     message:"请求成功",
                     })
+                     this.$router.go(0)
                 })
                 .catch(() => {
                 this.$message({

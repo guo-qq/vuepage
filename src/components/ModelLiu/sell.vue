@@ -110,13 +110,14 @@ export default {
               this.$message({
                 type: "warning",
                 message: "请求成功",
-              });
+              })
+               this.$router.go(0)
             })
             .catch(() => {
               this.$message({
                 type: "warning",
                 message: "请求失败，请检查网络设置",
-              });
+              })
             });
         })
         .catch(() => {

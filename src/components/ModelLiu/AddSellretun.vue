@@ -107,7 +107,6 @@
         },
         methods: {
              async add() {
-                alert(true);
                 var oo = 0;
                 var o = {
                   CargoId: "",
@@ -159,10 +158,16 @@
                 }).then((res) => {
                   this.y = [];
                   if (res > 0) {
-                    this.$message({
-                      message: "添加成功",
-                      type: "success",
-                    });
+                    this.$notify({
+                        title:'温馨提示:',
+                        message:'添加成功',
+                    })
+                    this.$router.push('/sellreturn');
+                  }else{
+                    this.$notify({
+                        title:'温馨提示:',
+                        message:'添加失败',
+                    })
                   }
                 });
               });
