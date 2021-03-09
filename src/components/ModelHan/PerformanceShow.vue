@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <el-row>
@@ -17,35 +16,45 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <el-input class="sty" placeholder="请输入内容" v-model="state">
+    <el-input class="sty" placeholder="请输入内容" v-model="states">
       <template #prefix>
         <i class="el-input__icon el-icon-search"></i>
       </template>
     </el-input>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;
     <el-button @click="resetForm('ruleForm')">重置</el-button>
-    <el-button type="primary" @click="$router.push('/bwarning')">销售预警</el-button>
-    <el-button type="primary" @click="$router.push('/RepertoryMin')">低于库存下限</el-button>
+    <div class="sys">
+      <br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span>销售额(元):</span>
+      <label>{{ ssPrice }}</label>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span>销售笔数(元):</span>
+      <label>{{ sscNumber }}</label>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span>销售利润(元):</span>
+      <label>{{ maoLi }}</label>
+    </div>
     <br />
-    <br />
-    <el-table 
+    <el-table
       :data="items"
       border
       style="width: 100%"
+      show-summary
+      :summary-method="getTotal"
       row-class-name="tableRowClassName"
     >
-      <el-table-column prop="cargoCoding" label="商品编码" width="180">
+      <el-table-column prop="ssZdDate" label="制单时间" width="180">
       </el-table-column>
-      <el-table-column prop="className" label="商品类别" width="180">
+      <el-table-column prop="ssNumber" label="单据编号" width="180">
       </el-table-column>
-      <el-table-column prop="cargoName" label="商品名称" width="180">
+      <el-table-column prop="aSWName" label="所属分店"> </el-table-column>
+      <el-table-column prop="ssPrice" label="销售金额(元)">
       </el-table-column>
-      <el-table-column prop="unitName" label="单位" width="180">
+      <el-table-column prop="sscNumber" label="销售笔数">
       </el-table-column>
-      <el-table-column prop="wname" label="仓库"> </el-table-column>
-      <el-table-column prop="wsize" label="可存储数量"> </el-table-column>
-      <el-table-column prop="cpMaxNumber" label="库存上限"> </el-table-column>
-      <el-table-column prop="cpMinNumber" label="库存下限"> </el-table-column>
+      <el-table-column prop="maoLi" label="销售利润(元)"> </el-table-column>
     </el-table>
     <div class="block">
       <el-pagination
@@ -77,20 +86,22 @@ const delay = (function () {
 })();
 export default {
   data() {
-    //this.isShow=true;
     return {
       input2: "", //查询输入框
       value: "",
-      state: "",
+      states: "",
       isCollapse: true,
       items: [],
+      sscNumber: "",
+      ssPrice: "",
+      maoLi: "",
       currentPage1: 1, //分页
       currentPage2: 1,
     };
   },
   watch: {
     //watch title change
-    state() {
+    states() {
       delay(() => {
         this.fetchData();
       }, 300);
@@ -110,9 +121,8 @@ export default {
   methods: {
     loadAll() {
       return [
-
         this.axios
-          .get("http://localhost:50774/api/RepertoryMax")
+          .get("http://localhost:50774/api/PerformanceShow")
           .then((response) => {
             this.restaurants = response.data;
           })
@@ -129,9 +139,9 @@ export default {
     },
     async fetchData(val) {
       const res = await this.axios
-        .get("http://localhost:50774/api/RepertoryMax", {
+        .get("http://localhost:50774/api/PerformanceShow", {
           params: {
-            wname: this.state,
+            aswname: this.states,
             start: this.value[0],
             end: this.value[1],
             pageSize: this.currentPage1,
@@ -142,13 +152,44 @@ export default {
           this.items = response.data;
         });
     },
-
+    getTotal(param) {
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = "合计";
+          return;
+        }
+        const values = data.map((item) => Number(item[column.property]));
+        if (
+          column.property === "ssPrice" ||
+          column.property === "sscNumber" ||
+          column.property === "maoLi"
+        ) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr);
+            if (!isNaN(value)) {
+              return prev + curr;
+            } else {
+              return prev;
+            }
+          }, 0);
+          sums[index];
+        } else {
+          sums[index] = "--";
+        }
+      });
+      this.ssPrice = sums[3];
+      this.sscNumber = sums[4];
+      this.maoLi = sums[5];
+      return sums;
+    },
   },
 
   mounted() {
     this.loadAll();
     this.axios
-      .get("http://localhost:50774/api/RepertoryMax")
+      .get("http://localhost:50774/api/PerformanceShow")
       .then((response) => {
         this.items = response.data;
         console.log("ok");
