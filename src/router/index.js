@@ -210,8 +210,6 @@ export default new Router({
       component:RepertoryTwo,
     },
     
-      component: CustomerClassShow,
-    },
     {
       path: '/zrests',
       name: '其他收支',
@@ -236,9 +234,7 @@ export default new Router({
       path: '/slog',
       name: '操作日志',
       component: slog,
-    }
-
-    
+    },
     {
       path: '/zclassifyadd',
       name: '客户分类添加頁面',

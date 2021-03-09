@@ -58,10 +58,10 @@
       <el-table-column v-if="fales" prop="ccsid" label="id" width="150">
       </el-table-column>
       <el-table-column
-        type="yyyy-dd-mm-ss"
+        type="yyyy-MM-dd-ss"
         prop="ccsdate"
         label="创建时间"
-        width="180"
+        width="200"
       >
       </el-table-column>
       <el-table-column prop="ccsname" label="分类名称" width="180">
@@ -74,16 +74,14 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="upt(scope.row.ccsid)" type="text" size="small"
-            >编辑</el-button
-          >
+          <Clationmodify v-bind:id="scope.row.ccsid"></Clationmodify>
           <span v-if="scope.row.ccsstate == 0"
             ><el-button @click="ztai(scope.row.ccsid)" type="text" size="small"
               >启用</el-button
             ></span
           >
           <span v-if="scope.row.ccsstate == 1"
-            ><el-button @click="ztai(scope.row.ccsid)" type="text" size="small"
+            ><el-button @click="zt(scope.row.ccsid)" type="text" size="small"
               >禁用</el-button
             ></span
           >
@@ -97,6 +95,7 @@
 </template>
 <script>
 import Clationadd from "@/components/MrYang/Gongyinghang/Clationadd";
+import Clationmodify from "@/components/MrYang/Gongyinghang/Clationmodify";
 // 节流函数
 const delay = (function() {
   let timer = 0;
@@ -128,17 +127,31 @@ export default {
     },
     },
   methods: {
+    ztai(id){
+        this.axios.post("http://localhost:50774/api/ClientClassifyZtai?id="+id +"&ztai="+1)
+        this.$message({
+                  message: '启用成功',
+                   type: 'success',
+                })
+                this.$router.go(0)
+    },
+    zt(id){
+        this.axios.post("http://localhost:50774/api/ClientClassifyZtai?id="+id +"&ztai="+0)
+        this.$message({
+                  message: '禁用成功',
+                   type: 'success',
+                })
+               this.$router.go(0)
+    },
     del(id) {
       this.$confirm("确认删除此数据吗？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        this.$http.post("http://localhost:50774/api/LableCDelt?id=" + id);
+        this.$http.post("http://localhost:50774/api/ClientClassifyDelt?id=" + id);
         aler("删除成功");
-        location.reload().catch((res) => {
-          console.log("err");
-        });
+        location.reload()
       });
     },
     upt(id) {
@@ -176,6 +189,7 @@ export default {
   
   components: {
     'Clationadd': Clationadd,
+    'Clationmodify':Clationmodify
   },
   
 };

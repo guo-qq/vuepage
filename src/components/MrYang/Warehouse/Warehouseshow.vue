@@ -96,7 +96,7 @@
       label="操作"
       width="100">
       <template slot-scope="scope">
-        <el-button @click="upt(scope.row.wid)" type="text" size="small">编辑</el-button> 
+        <Warehousemodify v-bind:id="scope.row.wid"></Warehousemodify> 
         <el-button @click="del(scope.row.wid)" type="text" size="small">删除</el-button>        
       </template>
     </el-table-column>
@@ -105,6 +105,7 @@
 </template>
 <script>
 import Warehouseadd from "@/components/MrYang/Warehouse/Warehouseadd";
+import Warehousemodify from "@/components/MrYang/Warehouse/Warehousemodify";
 // 节流函数
 const delay = (function() {
   let timer = 0;
@@ -189,6 +190,7 @@ const delay = (function() {
     },
     components: {
     'Warehouseadd': Warehouseadd,
+    'Warehousemodify':Warehousemodify
   },
   }
 </script>

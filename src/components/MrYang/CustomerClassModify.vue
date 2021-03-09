@@ -1,7 +1,7 @@
 <template>
 <div>
 <el-button type="text" size="small" @click="upt()">编辑</el-button>
-    <el-dialog title="修改分类" :modal="false" :visible.sync="dialogFormVisible">
+    <el-dialog title="修改分类"  :modal="false" :visible.sync="dialogFormVisible">
 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <table style="marginLeft:5%">
     <tr>
@@ -12,10 +12,10 @@
     </tr>
   </table>
    </el-form>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取消</el-button>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="dialogFormVisible = false">取 消</el-button>
     <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
-  </span>
+  </div>
         </el-dialog>
 </div>
  
@@ -26,6 +26,8 @@
       return {
         dialogVisible: false,
         reload: this.reload,
+        dialogTableVisible: false,
+        dialogFormVisible: false,
         di:this.id,
        ruleForm:{
           ccsname:''

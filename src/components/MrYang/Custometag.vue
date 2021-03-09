@@ -66,10 +66,8 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
-          <el-button @click="upt(scope.row.clientSid)" type="text" size="small"
-            >编辑</el-button
-          >
-          <el-button @click="del(scope.row.clientSid)" type="text" size="small"
+          <Custometagmodify v-bind:id="scope.row.lclientId"></Custometagmodify>
+          <el-button @click="del(scope.row.lclientId)" type="text" size="small"
             >删除</el-button
           >
         </template>
@@ -79,6 +77,7 @@
 </template>
 <script>
 import Custometagadd from "@/components/MrYang/Custometagadd";
+import Custometagmodify from "@/components/MrYang/Custometagmodify";
 // 节流函数
 const delay = (function() {
   let timer = 0;
@@ -116,11 +115,9 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        this.$http.post("http://localhost:50774/api/LableCDelt?id=" + id);
+        this.$http.post("http://localhost:50774/api/ClientSupplierDelt?id="+id);
         aler("删除成功");
-        location.reload().catch((res) => {
-          console.log("err");
-        });
+        location.reload();
       });
     },
     upt(id) {
@@ -157,6 +154,7 @@ export default {
   },
   components: {
     'Custometagadd': Custometagadd,
+    'Custometagmodify':Custometagmodify
   },
 };
 </script>

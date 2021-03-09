@@ -150,7 +150,7 @@ const delay = (function() {
               cancelButtonText:'取消',
               type:'warning'
             }).then(()=>{
-              this.$http.post('http://localhost:50774/api/LableCDelt?id='+id)
+              this.$http.post('http://localhost:50774/api/ClientSupplierDelt?id='+id)
               aler("删除成功")
               location.reload()
               .catch(res=>{

@@ -107,7 +107,7 @@
       label="操作"
       width="100">
       <template slot-scope="scope">
-        <el-button @click="upt(scope.row.aswid)" type="text" size="small">编辑</el-button> 
+        <Mdianmodify v-bind:id="scope.row.aswid"></Mdianmodify>
         <el-button @click="del(scope.row.aswid)" type="text" size="small">删除</el-button>        
       </template>
     </el-table-column>
@@ -116,6 +116,7 @@
 </template>
 <script>
 import Mdianadd from "@/components/MrYang/Mendian/Mdianadd";
+import Mdianmodify from "@/components/MrYang/Mendian/Mdianmodify";
 // 节流函数
 const delay = (function() {
   let timer = 0;
@@ -154,7 +155,7 @@ const delay = (function() {
               cancelButtonText:'取消',
               type:'warning'
             }).then(()=>{
-              this.$http.post('http://localhost:50774/api/LableCDelt?id='+id)
+              this.$http.post('http://localhost:50774/api/AddShopWareDelt?id='+id)
               aler("删除成功")
               location.reload()
               .catch(res=>{
@@ -194,6 +195,7 @@ const delay = (function() {
     },
     components: {
     'Mdianadd': Mdianadd,
+    'Mdianmodify':Mdianmodify
   },
   }
 </script>

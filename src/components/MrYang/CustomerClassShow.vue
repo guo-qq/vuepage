@@ -68,8 +68,8 @@
       </el-table-column>
       <el-table-column prop="ccsstate" label="状态" width="600">
         <template scope="scope">
-          <span v-if="scope.row.ccsstate == 1" style="color: black">禁用</span>
-          <span v-if="scope.row.ccsstate == 0" style="color: green">启用</span>
+          <span v-if="scope.row.ccsstate == 0" style="color: black">禁用</span>
+          <span v-if="scope.row.ccsstate == 1" style="color: green">启用</span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
@@ -109,6 +109,8 @@ export default {
     return {
       opn: [],
       isCollapse: true,
+      dialogTableVisible: false,
+        dialogFormVisible: false,
       tableData: [],
       value1:'',
       flname:''
@@ -140,20 +142,20 @@ export default {
       });
     },
     ztai(id){
-        this.axios.post("http://localhost:50774/api/ClientifySuppZtai?id="+id +"&ztai="+0)
+        this.axios.post("http://localhost:50774/api/ClientifySuppZtai?id="+id +"&ztai="+1)
         this.$message({
                   message: '启用成功',
                    type: 'success',
                 })
-                location.reload()
+                this.$router.go(0)
     },
     zt(id){
-        this.axios.post("http://localhost:50774/api/ClientifySuppZtai?id="+id +"&ztai="+1)
+        this.axios.post("http://localhost:50774/api/ClientifySuppZtai?id="+id +"&ztai="+0)
         this.$message({
                   message: '禁用成功',
                    type: 'success',
                 })
-                location.reload()
+               this.$router.go(0)
     },
     upt(id) {
       this.$router.push("/zclientmodify?id=" + id);

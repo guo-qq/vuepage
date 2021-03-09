@@ -66,9 +66,6 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
-          <el-button @click="upt(scope.row.clientSid)" type="text" size="small"
-            >编辑</el-button
-          >
           <el-button @click="del(scope.row.clientSid)" type="text" size="small"
             >删除</el-button
           >

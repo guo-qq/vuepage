@@ -67,9 +67,7 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="upt(scope.row.cgradeId)" type="text" size="small"
-            >编辑</el-button
-          >
+          <ClientgradeModify v-bind:id="scope.row.cgradeId"></ClientgradeModify>
           <el-button @click="del(scope.row.cgradeId)" type="text" size="small"
             >删除</el-button
           >
@@ -80,6 +78,7 @@
 </template>
 <script>
 import Clientgradeadd from "@/components/MrYang/Clientgradeadd";
+import ClientgradeModify from "@/components/MrYang/ClientgradeModify";
 // 节流函数
 const delay = (function() {
   let timer = 0;
@@ -117,11 +116,9 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        this.$http.post("http://localhost:50774/api/ClientGradeDlet?id=" + id);
+        this.$http.post("http://localhost:50774/api/ClientGradeDlet?id="+id);
         aler("删除成功");
-        location.reload().catch((res) => {
-          console.log("err");
-        });
+        this.$router.go(0)
       });
     },
     upt(id) {
@@ -158,6 +155,7 @@ export default {
   },
   components: {
     'Clientgradeadd': Clientgradeadd,
+    'ClientgradeModify': ClientgradeModify
   },
 };
 </script>
