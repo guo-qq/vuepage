@@ -53,7 +53,7 @@
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
         :page-sizes="[1, 2, 3, 4]"
-        :page-size="1"
+        :page-size="3"
         layout="total, sizes, prev, pager, next, jumper"
         :total="10"
       >
@@ -85,7 +85,7 @@ export default {
       isCollapse: true,
       items: [],
       currentPage1: 1, //分页
-      currentPage2: 1,
+      currentPage2: 3,
     };
   },
   watch: {
@@ -112,7 +112,7 @@ export default {
       return [
 
         this.axios
-          .get("http://localhost:50774/api/RepertoryMin")
+          .get("http://localhost:50774/api/Repertorymin")
           .then((response) => {
             this.restaurants = response.data;
           })
@@ -129,7 +129,7 @@ export default {
     },
     async fetchData(val) {
       const res = await this.axios
-        .get("http://localhost:50774/api/RepertoryMin", {
+        .get("http://localhost:50774/api/Repertorymin", {
           params: {
             wname: this.state,
             start: this.value[0],
@@ -147,7 +147,7 @@ export default {
   mounted() {
     this.loadAll();
     this.axios
-      .get("http://localhost:50774/api/RepertoryMin")
+      .get("http://localhost:50774/api/Repertorymin")
       .then((response) => {
         this.items = response.data;
         console.log("ok");

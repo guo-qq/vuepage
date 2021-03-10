@@ -1,9 +1,6 @@
 
 <template>
   <div>
-    <el-row>
-      <!-- <el-button type="primary">导出</el-button> -->
-    </el-row>
     <br />
     &nbsp;&nbsp;<span>业务日期</span>&nbsp;&nbsp;&nbsp;&nbsp;
     <el-date-picker
@@ -22,12 +19,14 @@
         <i class="el-input__icon el-icon-search"></i>
       </template>
     </el-input>
+
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <el-button type="primary" @click="$router.push('/BuyerCollect')">类别</el-button
     >&nbsp;&nbsp;&nbsp;
     <el-button type="primary" @click="$router.push('/BSupplier')">供应商</el-button
     >&nbsp;&nbsp;&nbsp;
     <el-button @click="resetForm('ruleForm')">重置</el-button>
+
     <div class="sys">
       <br />
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -62,8 +61,8 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
-        :page-sizes="[1, 2, 3, 4]"
-        :page-size="1"
+        :page-sizes="[10,20, 30, 40]"
+        :page-size="50"
         layout="total, sizes, prev, pager, next, jumper"
         :total="10"
       >
@@ -96,7 +95,7 @@ export default {
       sscNumber: "",
       ssPrice: "",
       currentPage1: 1, //分页
-      currentPage2: 1,
+      currentPage2: 50,
     };
   },
   watch: {
@@ -175,7 +174,7 @@ export default {
           }, 0);
           sums[index];
         } else {
-          sums[index] = "--";
+          sums[index] = "--"; 
         }
       });
       this.sscNumber = sums[3];
