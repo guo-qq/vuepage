@@ -48,6 +48,7 @@ import ReceiptShou from '@/components/ModelHan/ReceiptShou'
 import ReceiptFu from '@/components/ModelHan/ReceiptFu'
 import PerformanceShow from '@/components/ModelHan/PerformanceShow'
 
+import DiaoXi from '@/components/Inventory/DiaoXi'
 
 import inven from '@/components/Inventory/InventorySels'
 import running from '@/components/Inventory/WaterSel'
@@ -63,6 +64,9 @@ import lend from '@/components/Inventory/JieChu'
 import AddJie from '@/components/Inventory/AddJie'
 import ckmanagement from '@/components/Inventory/ckmanagement'
 import ckdetail from '@/components/Inventory/ckdetail'
+import borrow from '@/components/Inventory/borrow'
+import RuBorrow from '@/components/Inventory/RuBorrow'
+import ZhuanX from '@/components/Inventory/ZhuanX'
 
 import App from '@/App'
 import One from '@/One'
@@ -99,6 +103,7 @@ import shopbqshow from '@/components/MrYang/Shoping/shopbqshow'
 import Shopdanwadd from '@/components/MrYang/Shoping/Shopdanwadd'
 import Shopdanwmodify from '@/components/MrYang/Shoping/Shopdanwmodify'
 import shopdanwshow from '@/components/MrYang/Shoping/shopdanwshow'
+import XqCheck from '@/components/Inventory/XqCheck'
 Vue.use(Router)
 
 export default new Router({
@@ -124,9 +129,34 @@ export default new Router({
       component: One,
       children: [
         {
+          path: '/ZhuanX',
+          name: '转销售',
+          component: ZhuanX,
+        },
+        {
           path: '/ckdetail',
           name: '出库明细',
           component: ckdetail,
+        },
+        {
+          path: '/borrow',
+          name: '借入',
+          component: borrow,
+        },
+        {
+          path: '/DiaoXi',
+          name: '调拨明细',
+          component: DiaoXi,
+        },
+        {
+          path: '/RuBorrow',
+          name: '库存借入',
+          component: RuBorrow,
+        },
+        {
+          path: '/XqCheck',
+          name: '盘点详情',
+          component: XqCheck,
         },
         {
           path: '/AddCheck',

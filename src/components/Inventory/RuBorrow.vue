@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div style="float: lift; font-size: 30px">库存借出</div>
+    <div style="float: lift; font-size: 30px">库存借入</div>
     <div style="float: right">单据编号:{{ datetime }}</div>
     <br />
     <div style="float: left">
-      <span class="demonstration">出库仓库</span>
+      <span class="demonstration">入库库仓库</span>
       <el-cascader
         ref="qqq"
         v-model="value3"
@@ -37,7 +37,7 @@
       </el-date-picker>
     </div>
     <div style="float: right">
-      <choiceshoop :key="timer" v-bind:id="this.m" @signStatus="signStatu"></choiceshoop>
+      <choiceshoop @signStatus="signStatu" :key="timer" v-bind:id="this.m"></choiceshoop>
     </div>
     <div>
       <el-table
@@ -52,18 +52,18 @@
         <el-table-column prop="cargoName" label="商品名称"> </el-table-column>
         <el-table-column prop="cargoCount" label="可用库存数">
         </el-table-column>
-        <el-table-column prop="clbNumber" label="借出数量">
+        <el-table-column prop="clbNumber" label="借入数量">
           <template slot-scope="scope">
             <span
               v-if="
                 scope.row.index === tabClickIndex &&
-                tabClickLabel === '借出数量'
+                tabClickLabel === '借入数量'
               "
             >
               <el-input
                 v-model="scope.row.clbNumber"
                 maxlength="300"
-                placeholder="请输入借出数量"
+                placeholder="请输入借入数量"
                 size="mini"
                 @change="inputBlurs(scope.row)"
               />
@@ -123,14 +123,14 @@ export default {
       inputs: "",
       value1: "",
       value2: "",
-      m:'',
       value: "",
       optiones: [],
       options: [],
       tableData: [],
       input: "",
       y: [],
-      ss:''
+      ss:'',
+      m:''
     };
   },
   mounted() {
@@ -182,11 +182,11 @@ export default {
         if (items.clbNumber == "" || items.clbNumber == null) {
           console.log(items.clbNumber);
           result = false;
-          alert("借出数量不能为空");
+          alert("借入数量不能为空");
         }
         if(items.clbNumber>items.cargoCount){
             result = false;
-          alert("借出数量超过库存数");
+          alert("借入数量超过库存数");
         }
       });
 
@@ -207,7 +207,7 @@ export default {
             LBGhDate: this.value2,
             LBRemark: this.input,
             LBNumber: this.datetime,
-            LBQfj:Number(1)
+            LBQfj:Number(0)
           },
         }).then((res) => {
           this.axios({
@@ -218,7 +218,7 @@ export default {
             this.y = [];
             if (res.status == 200) {
               alert("添加成功");
-              location.href = "/CheckShow#/lend";
+              location.href = "/CheckShow#/borrow";
             }
           });
         });
@@ -242,7 +242,7 @@ export default {
       var month = date.getMonth() + 1;
       var day = date.getDate();
       this.datetime =
-        "JC" + year + month + day + Math.floor(Math.random() * 10000);
+        "JR" + year + month + day + Math.floor(Math.random() * 10000);
     },
     inputBlurs(row) {
       this.tabClickIndex = null;
@@ -250,7 +250,7 @@ export default {
     },
     tabClick(row, column, cell, event) {
       switch (column.label) {
-        case "借出数量":
+        case "借入数量":
           this.tabClickIndex = row.index;
           this.tabClickLabel = column.label;
           break;
