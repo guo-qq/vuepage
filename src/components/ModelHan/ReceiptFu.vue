@@ -52,8 +52,8 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
-        :page-sizes="[1, 2, 3, 4]"
-        :page-size="1"
+        :page-sizes="[1, 2, 3, 5]"
+        :page-size="3"
         layout="total, sizes, prev, pager, next, jumper"
         :total="10"
       >
@@ -84,7 +84,7 @@ export default {
       isCollapse: true,
       items: [],
       currentPage1: 1, //分页
-      currentPage2: 1,
+      currentPage2: 3,
     };
   },
   watch: {
