@@ -7,10 +7,14 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
- 
- 
+import echarts from 'echarts'
+import JsonExcel from 'vue-json-excel'
 import VueRouter from 'vue-router';
+
+Vue.component('downloadExcel', JsonExcel)
+
 Vue.config.productionTip = false
+Vue.prototype.$echarts = echarts
 
 
 Vue.use(ElementUI);
