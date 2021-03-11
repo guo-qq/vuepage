@@ -10,7 +10,7 @@
             </el-form-item>
           </td>
           <td>
-            <el-form-item label="客户名称" prop="name">
+            <el-form-item label="客户名称" prop="fff">
             <el-input v-model="ruleForm.clientSname"></el-input>
             </el-form-item>
           </td>
@@ -153,11 +153,6 @@
           clientSpost:'',
           clientSemail:'',
         },
-        rules: {
-          name: [
-            
-          ]
-        }
       };
     },
     mounted(){
@@ -203,7 +198,6 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-
            this.axios.post("http://localhost:50774/api/ClientSupplierAdd",{
                 clientSnumber:this.ruleForm.clientSnumber,
                 clientSname:this.ruleForm.clientSname,

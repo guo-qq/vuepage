@@ -66,8 +66,14 @@
 
 <script>
 export default {
+  props:{
+    id:{
+      type:Number,
+      Request:true
+    }
+  },
   data() {
-    return {
+    return { 
       gridData: [],
       multipleSelection: [],
       dialogTableVisible: false,
@@ -95,6 +101,7 @@ export default {
         .get("http://localhost:50774/api/ChoiceShoop", {
           params: {
             name: this.Condition,
+            id:this.id
           },
         })
         .then((res) => {

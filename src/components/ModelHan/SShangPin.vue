@@ -67,8 +67,8 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
-        :page-sizes="[1, 2, 3, 4]"
-        :page-size="1"
+        :page-sizes="[10, 20, 30, 50]"
+        :page-size="50"
         layout="total, sizes, prev, pager, next, jumper"
         :total="10"
       >
@@ -102,7 +102,7 @@ export default {
       ssPrice: "",
       xsMaoLi: "",
       currentPage1: 1, //分页
-      currentPage2: 1,
+      currentPage2: 50,
     };
   },
   watch: {
