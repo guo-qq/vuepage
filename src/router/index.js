@@ -17,6 +17,7 @@ import registerindex from '@/components/ModelLiu/registerindex'  //登录
 import enrollindex from '@/components/ModelLiu/enrollindex'  //注册
 import company from '@/components/ModelLiu/company'  //完善企业资料
 import details from '@/components/ModelLiu/details'  //详情页
+import edit from '@/components/ModelLiu/edit'  //修改状态
 
 import receiptPayments from '@/components/ModelGuo/receiptPayments'
 import Addfkd from '@/components/ModelGuo/Addfkd'
@@ -221,6 +222,11 @@ export default new Router({
           path: '/details',
           name: '销售详情页',
           component: details,
+        },
+        {
+          path: '/edit',
+          name: '编辑状态',
+          component: edit,
         },
         {
           path: '/Home',
