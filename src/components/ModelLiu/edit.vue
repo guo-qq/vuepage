@@ -1,3 +1,4 @@
+<!--审核页面-->
 <template>
     <div class="demo-input-size">
         <div>
@@ -27,7 +28,7 @@
         <div>
              <table>
                 <tr>
-                    <td>商品序号:{{CargoId}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <td>商品序号:{{CargoId}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <td>商品编号:{{CargoCoding}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <td>商品名称:{{CargoName}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <td>商品数量:{{SscNumber}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -63,8 +64,8 @@
                 </tr>
                 <br>
                 <tr>
-                    <td><router-link to="/sell"><el-button>返回</el-button></router-link></td>
-                    <td></td>
+                    <td><router-link to="/sell"><el-button>返回</el-button></router-link></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <td> <el-button type="success" @click="pass()">审核通过</el-button>&nbsp;&nbsp;&nbsp;<el-button type="danger" @click="notpass()">审核不通过</el-button></td>
                 </tr>
             </table>
                    
@@ -76,6 +77,7 @@
   export default {
     data() {
         this.axios.get('http://localhost:50774/api/DifSalesSingle?ssid='+this.$route.query.id).then((res)=>{
+                this.ID=this.$route.query.id,
                 this.SsWarehouse=res.data.ssWarehouse,
                 this.SsClient=res.data.ssClient,
                 this.SsHandle=res.data.ssHandle,
@@ -98,6 +100,7 @@
                 this.SScRemark=res.data.sscRemark,
                 this.SsAudit=res.data.ssAudit
          })
+         
         return {
                 SsWarehouse:'',
                 SsClient: '',
@@ -121,12 +124,37 @@
                 SscSubtotal:'',
                 SScRemark:'',
                 SsAudit:'',
+
+                yespass:'1',   //通过
+                nopass:'0',  //不
+                ID:'',
       }
       
 
     },
     methods: {
-     
+        pass(){  //审核成功
+            this.axios.post("http://localhost:50774/api/UpdSsAudit/"+this.ID+"/"+this.yespass)
+                .then((res)=>{
+                    if(res.data>0){
+                        alert("修改成功");
+                        
+                    }else{
+                        alert("修改失败");
+                    }
+                })
+        },
+        notpass(){
+            this.axios.post("http://localhost:50774/api/UpdSsAudit/"+this.ID+"/"+this.nopass)
+                .then((res)=>{
+                    if(res.data>0){
+                        alert("修改成功");
+                        this.$.router.push("/sell")
+                    }else{
+                        alert("修改失败");
+                    }
+                })
+        },
     },
    
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <router-link to="/AddJie"
+      <router-link to="/RuBorrow"
         ><el-button type="primary">新增</el-button></router-link
       >
     </div>
@@ -65,7 +65,7 @@
         </el-table-column>
         <el-table-column
           prop="lbwarehouse"
-          label="调出仓库"
+          label="调入仓库"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -89,7 +89,7 @@
               >归还</el-button
             >
             <el-button type="text" size="small" v-if="scope.row.lbstate == 0"
-              @click="ZhuanX(scope.row)">转销售</el-button
+              >转采购</el-button
             >
           </template>
         </el-table-column>
@@ -154,12 +154,9 @@ export default {
     };
   },
   methods: {
-    ZhuanX(row){
-      this.$router.push({path:'/ZhuanX',query:{id:row.id}})
-    },
     handleClick(row){
       console.log(row)
-      this.axios.post("http://localhost:50774/api/GaiLoan?id="+row.lbid)
+      this.axios.post("http://localhost:50774/api/GaiLoanr?id="+row.lbid)
       .then((res)=>{
         location.reload();
       })
@@ -199,7 +196,7 @@ export default {
     },
     Show() {
       this.axios
-        .get("http://localhost:50774/api/Jie", {
+        .get("http://localhost:50774/api/LoanBowr", {
           params: {
             z: Number(this.value),
             q: this.value2[0],

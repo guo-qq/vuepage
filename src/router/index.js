@@ -17,6 +17,7 @@ import registerindex from '@/components/ModelLiu/registerindex'  //登录
 import enrollindex from '@/components/ModelLiu/enrollindex'  //注册
 import company from '@/components/ModelLiu/company'  //完善企业资料
 import details from '@/components/ModelLiu/details'  //详情页
+import edit from '@/components/ModelLiu/edit'  //修改状态
 
 import receiptPayments from '@/components/ModelGuo/receiptPayments'
 import Addfkd from '@/components/ModelGuo/Addfkd'
@@ -48,6 +49,7 @@ import ReceiptShou from '@/components/ModelHan/ReceiptShou'
 import ReceiptFu from '@/components/ModelHan/ReceiptFu'
 import PerformanceShow from '@/components/ModelHan/PerformanceShow'
 
+import DiaoXi from '@/components/Inventory/DiaoXi'
 
 import inven from '@/components/Inventory/InventorySels'
 import running from '@/components/Inventory/WaterSel'
@@ -63,6 +65,9 @@ import lend from '@/components/Inventory/JieChu'
 import AddJie from '@/components/Inventory/AddJie'
 import ckmanagement from '@/components/Inventory/ckmanagement'
 import ckdetail from '@/components/Inventory/ckdetail'
+import borrow from '@/components/Inventory/borrow'
+import RuBorrow from '@/components/Inventory/RuBorrow'
+import ZhuanX from '@/components/Inventory/ZhuanX'
 
 import App from '@/App'
 import One from '@/One'
@@ -99,6 +104,7 @@ import shopbqshow from '@/components/MrYang/Shoping/shopbqshow'
 import Shopdanwadd from '@/components/MrYang/Shoping/Shopdanwadd'
 import Shopdanwmodify from '@/components/MrYang/Shoping/Shopdanwmodify'
 import shopdanwshow from '@/components/MrYang/Shoping/shopdanwshow'
+import XqCheck from '@/components/Inventory/XqCheck'
 Vue.use(Router)
 
 export default new Router({
@@ -124,9 +130,34 @@ export default new Router({
       component: One,
       children: [
         {
+          path: '/ZhuanX',
+          name: '转销售',
+          component: ZhuanX,
+        },
+        {
           path: '/ckdetail',
           name: '出库明细',
           component: ckdetail,
+        },
+        {
+          path: '/borrow',
+          name: '借入',
+          component: borrow,
+        },
+        {
+          path: '/DiaoXi',
+          name: '调拨明细',
+          component: DiaoXi,
+        },
+        {
+          path: '/RuBorrow',
+          name: '库存借入',
+          component: RuBorrow,
+        },
+        {
+          path: '/XqCheck',
+          name: '盘点详情',
+          component: XqCheck,
         },
         {
           path: '/AddCheck',
@@ -253,6 +284,11 @@ export default new Router({
           path: '/details',
           name: '销售详情页',
           component: details,
+        },
+        {
+          path: '/edit',
+          name: '编辑状态',
+          component: edit,
         },
         {
           path: '/Home',
