@@ -15,7 +15,7 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <br />
-    <span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;销售趋势:</span>
+    <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;销售趋势:</span>
     <br />
     <div class="sys">
       <br />
@@ -39,7 +39,6 @@
       <label>{{ maoLis }}</label>
     </div>
     <br />
-    <div id="myChart" :style="{width: '1000px', height: '500px'}"></div>
     <div>
       <div class="mains">
         <span>商品销售排行</span>
@@ -111,7 +110,6 @@
     </div>
   </div>
 </template>
-
 <style scoped>
 .sty {
   width: 200px;
