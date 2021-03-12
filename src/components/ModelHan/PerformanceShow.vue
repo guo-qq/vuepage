@@ -1,9 +1,19 @@
 <template>
   <div>
     <el-row>
-      <!-- <el-button type="primary">导出</el-button> -->
+      <el-button type="primary"  @click="exportData">导出</el-button>
     </el-row>
     <br />
+    <span>所属门店</span>
+    <el-select v-model="region" placeholder="请选择">
+      <el-option value="">请选择</el-option>
+          <el-option
+                v-for="item in XL"
+                :key="item.aswid"
+                :label="item.aswname"
+                :value="item.aswid">
+        </el-option>
+    </el-select>
     &nbsp;&nbsp;<span>业务日期</span>&nbsp;&nbsp;&nbsp;&nbsp;
     <el-date-picker
       v-model="value"
@@ -49,7 +59,7 @@
       </el-table-column>
       <el-table-column prop="ssNumber" label="单据编号" width="180">
       </el-table-column>
-      <el-table-column prop="aSWName" label="所属分店"> </el-table-column>
+      <el-table-column prop="aswId" label="所属分店"> </el-table-column>
       <el-table-column prop="ssPrice" label="销售金额(元)">
       </el-table-column>
       <el-table-column prop="sscNumber" label="销售笔数">
@@ -61,8 +71,8 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
-        :page-sizes="[1, 2, 3, 4]"
-        :page-size="1"
+        :page-sizes="[10,20, 30, 50]"
+        :page-size="50"
         layout="total, sizes, prev, pager, next, jumper"
         :total="10"
       >
@@ -94,13 +104,20 @@ export default {
       items: [],
       sscNumber: "",
       ssPrice: "",
-      maoLi: "",
+      maoLi: "",XL:'',
+      region:"",
       currentPage1: 1, //分页
-      currentPage2: 1,
+      currentPage2: 50,
+      
     };
   },
   watch: {
     //watch title change
+    region() {
+      delay(() => {
+        this.fetchData();
+      }, 300);
+    },
     states() {
       delay(() => {
         this.fetchData();
@@ -141,11 +158,11 @@ export default {
       const res = await this.axios
         .get("http://localhost:50774/api/PerformanceShow", {
           params: {
-            aswname: this.states,
+            aswid:Number(this.region),
             start: this.value[0],
             end: this.value[1],
-            pageSize: this.currentPage1,
-            pageIndex: this.currentPage2,
+            // pageSize: this.currentPage1,
+            // pageIndex: this.currentPage2,
           },
         })
         .then((response) => {
@@ -174,7 +191,7 @@ export default {
               return prev;
             }
           }, 0);
-          sums[index];
+          sums[index]+="";
         } else {
           sums[index] = "--";
         }
@@ -185,13 +202,21 @@ export default {
       return sums;
     },
   },
-
   mounted() {
     this.loadAll();
     this.axios
       .get("http://localhost:50774/api/PerformanceShow")
       .then((response) => {
         this.items = response.data;
+        console.log("ok");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      this.axios
+      .get("http://localhost:50774/api/AddShopWareShow")
+      .then((response) => {
+        this.XL = response.data;
         console.log("ok");
       })
       .catch(function (error) {

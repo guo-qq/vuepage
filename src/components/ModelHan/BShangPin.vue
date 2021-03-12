@@ -2,7 +2,7 @@
 <template>
   <div>
     <el-row>
-      <!-- <el-button type="primary">导出</el-button> -->
+      <el-button type="primary"  @click="exportData">导出</el-button>
     </el-row>
     <br />
     &nbsp;&nbsp;<span>业务日期</span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -22,12 +22,14 @@
         <i class="el-input__icon el-icon-search"></i>
       </template>
     </el-input>
+
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <el-button type="primary" @click="$router.push('/BuyerCollect')">类别</el-button
     >&nbsp;&nbsp;&nbsp;
     <el-button type="primary" @click="$router.push('/BSupplier')">供应商</el-button
     >&nbsp;&nbsp;&nbsp;
     <el-button @click="resetForm('ruleForm')">重置</el-button>
+
     <div class="sys">
       <br />
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -62,8 +64,8 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
-        :page-sizes="[1, 2, 3, 4]"
-        :page-size="1"
+        :page-sizes="[10,20, 30, 40]"
+        :page-size="50"
         layout="total, sizes, prev, pager, next, jumper"
         :total="10"
       >
@@ -96,7 +98,7 @@ export default {
       sscNumber: "",
       ssPrice: "",
       currentPage1: 1, //分页
-      currentPage2: 1,
+      currentPage2: 50,
     };
   },
   watch: {
@@ -119,6 +121,38 @@ export default {
     },
   },
   methods: {
+    exportData() {
+		this.excelData = this.items;  //将你要导出的数组数据（historyList）赋值给excelDate
+		this.export2Excel(); //调用export2Excel函数，填写表头（clomns里的type）和对应字段(historyList里的属性名)
+	},
+	//表格数据写入excel
+    export2Excel() {
+      var that = this;
+      require.ensure([], () => {
+        const {
+          export_json_to_excel
+        } = require("@/assets/excel/Export2Excel");  
+        //这里使用绝对路径( @表示src文件夹 )，使用@/+存放export2Excel的路径【也可以写成相对于你当前"xxx.vue"文件的相对路径，例如我的页面放在assets文件夹同级下的views文件夹下的“home.vue”里，那这里路径也可以写成"../assets/excel/Export2Excel"】
+        const tHeader = ["商品编码", "商品名称", "单位", "数量","单价(元)","销售金额(元)","销售利润(元)"]; // 导出的excel表头名信息
+            const filterVal = [
+              "cargoCoding",
+              "cargoName",
+              "unitName",
+              "sscNumber",
+              "cpPrice",
+              "ssPrice",
+              "xsMaoLi"
+            ]; // 导出的excel表头字段名，需要导出表格字段名
+        const list = that.excelData;
+        const data = that.formatJson(filterVal, list);
+
+        export_json_to_excel(tHeader, data, "采购商品表"); // 导出的表格名称，根据需要自己命名
+      });
+    },
+    //格式转换，直接复制即可,不需要修改什么
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => v[j]));
+    },
     loadAll() {
       return [
         this.axios
@@ -175,7 +209,7 @@ export default {
           }, 0);
           sums[index];
         } else {
-          sums[index] = "--";
+          sums[index] = "--"; 
         }
       });
       this.sscNumber = sums[3];

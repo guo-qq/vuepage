@@ -3,7 +3,10 @@
         <div>
             <table style="width:100%">
                 <tr>
-                    <td><span>待审核</span></td>
+                    <td>
+                        <span v-if="SsAudit==0">待审核</span>
+                        <span v-if="SsAudit==1">已审核</span>
+                    </td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     <td><span>单据编号:</span>{{SsNumber}}</td>
                 </tr>
@@ -22,17 +25,18 @@
         </div>
         <br>
         <div>
-            <el-table :data="tableData" style="width: 100%" :row-class-name="tableRowClassName">
-                        <el-table-column prop="cargoId" label="序号"  width="50"></el-table-column>
-                        <el-table-column prop="cargoCoding" label="商品编号" width="120"></el-table-column>
-                        <el-table-column prop="cargoPic" label="商品图片" width="120"></el-table-column>
-                        <el-table-column prop="cargoName" label="商品名称" width="120"></el-table-column>
-                        <el-table-column prop="sscNumber" label="数量"  width="100"></el-table-column>
-                        <el-table-column prop="unitName" label="单位"  width="100"></el-table-column>
-                        <el-table-column prop="unitPice" label="销售单价(元)" width="120"></el-table-column>
-                        <el-table-column prop="sscSubtotal" label="小计(元)" width="100"></el-table-column>
-                        <el-table-column prop="sscRemark" label="备注" width="100"></el-table-column>
-            </el-table>
+             <table>
+                <tr>
+                    <td>商品序号:{{CargoId}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <td>商品编号:{{CargoCoding}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <td>商品名称:{{CargoName}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <td>商品数量:{{SscNumber}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <td>商品单位:{{UnitName}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <td>销售单价:{{UnitPice}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <td>小计:{{SscSubtotal}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <td>商品备注:{{SScRemark}}</td>
+                </tr>
+            </table>
         </div>
         <br>
         <div>
@@ -83,10 +87,16 @@
                 this.SsRemark=res.data.ssRemark,
                 this.SsDrawer=res.data.ssDrawer,
                 this.SsZdDate=res.data.ssZdDate,
-                this.SsNumber=res.data.ssNumber
-         }).then((response)=>{
-                this.tableData=response.data;
-                console.log(tableData);
+                this.SsNumber=res.data.ssNumber,
+                this.CargoId=res.data.cargoId,
+                this.CargoCoding=res.data.cargoCoding,
+                this.CargoName=res.data.cargoName,
+                this.SscNumber=res.data.sscNumber,
+                this.UnitName=res.data.unitName,
+                this.UnitPice=res.data.unitPice,
+                this.SscSubtotal=res.data.sscSubtotal,
+                this.SScRemark=res.data.sscRemark,
+                this.SsAudit=res.data.ssAudit
          })
         return {
                 SsWarehouse:'',
@@ -102,9 +112,15 @@
                 SsZdDate:'',
                 SsYwDate: '',   //日期
                 SsNumber:'',
-
-                tableData:[], //表格数据
-                
+                CargoId:'',
+                CargoCoding:'',
+                CargoName:'',
+                SscNumber:'',
+                UnitName:'',
+                UnitPice:'',
+                SscSubtotal:'',
+                SScRemark:'',
+                SsAudit:'',
       }
       
 

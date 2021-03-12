@@ -15,7 +15,7 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <br />
-    <span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;销售趋势:</span>
+    <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;销售趋势:</span>
     <br />
     <div class="sys">
       <br />
@@ -65,8 +65,8 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage4"
-            :page-sizes="[1, 2, 3, 4]"
-            :page-size="1"
+            :page-sizes="[1, 2, 3, 5]"
+            :page-size="3"
             layout="total, sizes, prev, pager, next, jumper"
             :total="10"
           >
@@ -99,8 +99,8 @@
             @size-change="handleSizeChanges"
             @current-change="handleCurrentChanges"
             :current-page="currentPage4s"
-            :page-sizes="[1, 2, 3, 4]"
-            :page-size="1"
+            :page-sizes="[10, 20, 30, 50]"
+            :page-size="50"
             layout="total, sizes, prev, pager, next, jumper"
             :total="10"
           >
@@ -110,7 +110,6 @@
     </div>
   </div>
 </template>
-
 <style scoped>
 .sty {
   width: 200px;
@@ -140,13 +139,13 @@ export default {
       sscNumber: "",
       maoLi: "",
       currentPage1: 1, //分页
-      currentPage2: 1,
+      currentPage2: 50,
       itemss: [],
       ssPrices: "",
       sscNumbers: "",
       maoLis: "",
       currentPage1s: 1, //分页
-      currentPage2s: 1,
+      currentPage2s: 50,
     };
   },
   watch: {
