@@ -58,7 +58,7 @@ export default {
   methods: {
     UptC(){
         this.axios
-        .post("http://localhost:50774/api/UpGai?id=" + this.$route.query.id)
+        .post( this.$api+"/api/UpGai?id=" + this.$route.query.id)
         .then((res) => {
           if(res.data>0)
           {
@@ -72,7 +72,7 @@ export default {
     },
     ZShow() {
       this.axios
-        .get("http://localhost:50774/api/GetDanmo",{params:{"id":this.$route.query.id}})
+        .get( this.$api+"/api/GetDanmo",{params:{"id":this.$route.query.id}})
         .then((res) => {
           console.log(res);
           (this.danju = res.data.danh),
@@ -86,7 +86,7 @@ export default {
     },
     Xiang() {
       this.axios
-        .get("http://localhost:50774/api/GetCuhws?id=" + this.$route.query.id)
+        .get( this.$api+"/api/GetCuhws?id=" + this.$route.query.id)
         .then((res) => {
           console.log(res);
           this.tableData = res.data;

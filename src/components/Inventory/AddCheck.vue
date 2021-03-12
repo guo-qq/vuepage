@@ -167,7 +167,7 @@ export default {
         console.log(this.y);
         this.axios({
           method: "post",
-          url: "http://localhost:50774/api/AddWareCheck",
+          url:  this.$api+"/api/AddWareCheck",
           data: {
             Sttype: Number(1),
             Stnumber: this.datetime,
@@ -185,7 +185,7 @@ export default {
         }).then((res) => {
           this.axios({
             method: "post",
-            url: "http://localhost:50774/api/DuoWare",
+            url:  this.$api+"/api/DuoWare",
             data: this.y,
           }).then((res) => {
             this.y = [];
@@ -245,7 +245,7 @@ export default {
     this.GetNowtime();
     //仓库下拉
     this.axios
-      .get("http://localhost:50774/api/SelectWare")
+      .get( this.$api+"/api/SelectWare")
       .then((response) => {
         this.options = response.data;
         console.log("ok");
