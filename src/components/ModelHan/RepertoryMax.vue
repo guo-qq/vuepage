@@ -112,7 +112,7 @@ export default {
       return [
 
         this.axios
-          .get("http://localhost:50774/api/RepertoryMax")
+          .get(this.$api+"/api/RepertoryMax")
           .then((response) => {
             this.restaurants = response.data;
           })
@@ -129,7 +129,7 @@ export default {
     },
     async fetchData(val) {
       const res = await this.axios
-        .get("http://localhost:50774/api/RepertoryMax", {
+        .get(this.$api+"/api/RepertoryMax", {
           params: {
             wname: this.state,
             start: this.value[0],
@@ -148,7 +148,7 @@ export default {
   mounted() {
     this.loadAll();
     this.axios
-      .get("http://localhost:50774/api/RepertoryMax")
+      .get(this.$api+"/api/RepertoryMax")
       .then((response) => {
         this.items = response.data;
         console.log("ok");
