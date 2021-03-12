@@ -2,18 +2,19 @@
   <div>
     <!-- 新增 -->
     <div style="float: left">
-      <el-button type="primary">新增</el-button>
+      <Addsrole></Addsrole>
     </div>
     <!-- 查询 -->
     <div style="float: left">
-      <el-input v-model="input" placeholder="请输入员工账号"></el-input>
+      <el-input v-model="input9" placeholder="请输入角色名称"></el-input>
     </div>
     <!-- 表格 -->
     <div>
-      <el-table :data="tabledatas" border>
-        <el-table-column label="员工ID">
+      <el-table :data="FilterBooke" border>
+        <el-table-column label="角色ID">
           <template slot-scope="scope">
             <el-input
+              disabled
               placeholder="请输入内容"
               v-show="scope.row.show"
               v-model="scope.row.roleid"
@@ -31,29 +32,29 @@
             <span v-show="!scope.row.show">{{ scope.row.roleidName }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="所属部门">
+        <el-table-column label="角色描述">
           <template slot-scope="scope">
             <el-input
               placeholder="请输入内容"
               v-show="scope.row.show"
-              v-model="scope.row.rolesection"
+              v-model="scope.row.roleiddescribe"
             ></el-input>
-            <span v-show="!scope.row.show">{{ scope.row.rolesection }}</span>
+            <span v-show="!scope.row.show">{{ scope.row.roleiddescribe }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="员工状态">
+        <el-table-column label="角色状态">
           <template scope="scope">
             <el-switch
-              on-text="是"
-              off-text="否"
+              :disabled="!scope.row.show"
               on-color="#5B7BFA"
               off-color="#dadde5"
-              v-model="scope.row.menusstate"
-              @change="change(scope.$index, scope.row)"
+              active-value="1"
+              inactive-value="0"
+              v-model="scope.row.rolestate1"
             >
             </el-switch>
           </template>
-        </el-table-column>         
+        </el-table-column>
         <el-table-column label="时间">
           <template slot-scope="scope">
             <el-input
@@ -64,11 +65,20 @@
             <span v-show="!scope.row.show">{{ scope.row.roleTime }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="300px">
+        <el-table-column label="操作" width="400px">
           <template slot-scope="scope">
-            <el-button @click="scope.row.show = true">编辑</el-button>
-            <el-button @click="scope.row.show = false">保存</el-button>
-            <el-button @click="scope.row.show = false">删除</el-button>
+            <el-button @click="scope.row.show =true">编辑</el-button>
+            <el-button @click="BC(scope.row), (scope.row.show = false)"
+              >保存</el-button
+            >
+            <el-button
+              @click.native.prevent="deleteRow(scope.$index, tabledatas)"
+              >删除</el-button
+            >
+            <el-button              
+              ><FPQX v-bind:id=scope.row.roleid></FPQX></el-button
+            >
+           
           </template>
         </el-table-column>
       </el-table>
@@ -76,7 +86,10 @@
   </div>
 </template>
 <script>
+import FPQX from '@/components/ModelGuo/FPQX'
+import Addsrole from '@/components/ModelGuo/Addsrole'
 export default {
+  
   data() {
     return {
       options: [
@@ -125,12 +138,9 @@ export default {
         },
       ],
       value1: "",
-      tabledatas: [
-        { tab1: "111", tab2: "2222", show: true, value1: true },
-        { tab1: "aaa", tab2: "bbb", show: false, value1: true },
-      ],
+      tabledatas: [],
       value6: true,
-      input:'',
+      input9: "",
     };
   },
   mounted() {
@@ -147,7 +157,66 @@ export default {
           console.log(error);
         });
     },
+    BC(val) {
+      this.axios({
+        method: "post",
+        url: "http://localhost:50774/api/uptRole",
+        data: {
+          Roleid: Number(val.roleid),
+          RoleidName: val.roleidName,
+          Roleiddescribe: val.roleiddescribe,
+          Rolestate: Number(val.rolestate1),
+          RoleTime: val.roleTime,
+          Rolesection: val.rolesection,
+        },
+      }).then((res) => {
+        console.log(res);
+        if (res.data > 0) {
+          this.$message({
+            message: "修改成功",
+            type: "success",
+          });
+        } else {
+          this.$message({
+            message: "修改失败",
+            type: "success",
+          });
+        }
+      });
+    },
+    deleteRow(index, rows) {
+      this.$confirm("是否保存其他数据, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          rows.splice(index, 1);
+          this.$message({
+            message: "删除成功",
+            type: "success",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消操作",
+          });
+        });
+    },
   },
+  computed: {
+    FilterBooke() {
+      const { tabledatas, input9 } = this;
+      let filterArr = new Array();
+      filterArr = tabledatas.filter((p) => p.roleidName.indexOf(input9) !== -1);
+      return filterArr;
+    },
+  },
+  components:{
+    "FPQX":FPQX,
+    "Addsrole":Addsrole
+  }
 };
 </script>
   <style>

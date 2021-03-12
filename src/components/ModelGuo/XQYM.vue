@@ -35,12 +35,7 @@
       label="收款日期">
     </el-table-column>
   
-  </el-table>
-     
-  
-        
-       
-       
+  </el-table>                         
         <br />
         <br /><br />
         <el-table
