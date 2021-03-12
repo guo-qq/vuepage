@@ -4,7 +4,9 @@
       <table style="marginleft: 1%; margintop: 20%">
         <tr>
           <td>
-           <Shopbqadd></Shopbqadd>
+            <el-row>
+                <router-link to="/zcomkuadd"><el-button style="marginLeft:1%;margintop:20%" type="primary">添加</el-button></router-link>
+            </el-row>
           </td>
           <td>
             <el-row>
@@ -15,8 +17,14 @@
           </td>
         </tr>
       </table>
-      <table style="marginLeft:400px;margintop:%">
+      <table style="marginLeft:120px;margintop:%">
         <tr>
+          <td>
+            商品分类
+          </td>
+          <td>
+              <el-cascader :options="option" v-model="value" clearable></el-cascader>
+          </td>
           <td>创建时间</td>
           <td>
             <el-date-picker
@@ -33,7 +41,7 @@
               style="marginleft: 10px"
               placeholder="请输入关键字搜索"
               prefix-icon="el-icon-search"
-              v-model="bname"
+              v-model="flname"
             >
             </el-input>
           </td>
@@ -51,23 +59,37 @@
       :row-class-name="tableRowClassName"
     >
       <el-table-column type="selection" width="55"> </el-table-column>
+      <el-table-column v-if="fales" prop="cgradeId" label="id" width="150">
+      </el-table-column>
       <el-table-column
-        v-if="fales"
-        prop="lclientId"
-        label="客户编号"
-        width="150"
+        type="yyyy-dd-mm-ss"
+        prop="cargoDate"
+        label="创建时间"
+        width="180"
       >
       </el-table-column>
-      <el-table-column prop="lclientDate" label="创建时间" width="200">
+      <el-table-column prop="cargoCoding" label="单据编号" width="120">
       </el-table-column>
-      <el-table-column prop="lclientName" label="标签预览" width="180">
+      <el-table-column prop="cargoName" label="商品名称" width="120">
       </el-table-column>
-      <el-table-column prop="lclientUseNum" label="使用次数" width="600">
+      <el-table-column prop="className" label="商品分类" width="120">
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="100">
+      <el-table-column prop="propertyName" label="属性规格" width="100">
+      </el-table-column>
+      <el-table-column prop="unitName" label="库存单位" width="120">
+      </el-table-column>
+      <el-table-column prop="cpprice" label="销售单价" width="120">
+      </el-table-column>
+      <el-table-column prop="cargoState" label="状态" width="120">
+         <template scope="scope">
+                <span v-if="scope.row.cargoState==0" style="color:black;">下架</span>
+                <span v-if="scope.row.cargoState==1" style="color:green;">上架</span>
+            </template>
+      </el-table-column>
+      <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
-          <shopbqmodify v-bind:id="scope.row.lclientId"></shopbqmodify>
-          <el-button @click="del(scope.row.clientSid)" type="text" size="small"
+          <ClientgradeModify v-bind:id="scope.row.cgradeId"></ClientgradeModify>
+          <el-button @click="del(scope.row.cgradeId)" type="text" size="small"
             >删除</el-button
           >
         </template>
@@ -76,8 +98,6 @@
   </div>
 </template>
 <script>
-import Shopbqadd from "@/components/MrYang/Shoping/Shopbqadd";
-import shopbqmodify from "@/components/MrYang/Shoping/shopbqmodify";
 // 节流函数
 const delay = (function() {
   let timer = 0;
@@ -89,15 +109,15 @@ const delay = (function() {
 export default {
   data() {
     return {
-      opn: [],
+      option: [],
       isCollapse: true,
       tableData: [],
       value1: "",
-      bname:''
+      flname:''
     };
   },
-  watch:{
-     bname(){
+   watch:{
+     flname(){
       delay(()=>{
         this.fetchData();
       },300);
@@ -115,17 +135,18 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        this.$http.post("http://localhost:50774/api/LableCDelt?id=" + id);
+        this.$http.post("http://localhost:50774/api/ClientGradeDlet?id="+id);
         aler("删除成功");
-        location.reload().catch((res) => {
-          console.log("err");
-        });
+        this.$router.go(0)
       });
     },
+    upt(id) {
+      this.$router.push("/zclientmodify?id=" + id);
+    },
     fetchData(val) {
-        this.axios.get('http://localhost:50774/api/LableClientShow',{
+        this.axios.get('http://localhost:50774/api/ClientGradeShow',{
         params: {
-        bname:this.bname,
+        flname:this.flname,
         stratime:this.value1[0],
         endtime:this.value1[1],
       },
@@ -134,15 +155,17 @@ export default {
         this.tableData = response.data
         
       })       
+      
       }
   },
   resetForm(formName) {
     this.$refs[formName].resetFields();
   },
   created() {
+    const _this = this
     //显示
     this.axios
-      .get("http://localhost:50774/api/LableClientShow")
+      .get(this.$api+"/api/ShopShow")
       .then((response) => {
         this.tableData = response.data;
         console.log("ok");
@@ -151,9 +174,6 @@ export default {
         console.log(error);
       });
   },
-  components: {
-    'Shopbqadd': Shopbqadd,
-    'shopbqmodify':shopbqmodify,
-  },
+
 };
 </script>

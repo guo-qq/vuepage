@@ -5,7 +5,7 @@
      
         <el-form :inline="true" :model="ruleForm" :rules="rules"  ref="ruleForm" label-width="100px" class="demo-form-inline">
           <el-form-item label="出货仓库">
-                <el-cascader v-model="ruleForm.SsWarehouse" :options="options" :props="{ expandTrigger: 'hover' }"  @change="handleChange"></el-cascader>
+                <el-cascader ref="add" v-model="value3" :options="options" :props="{ expandTrigger: 'hover' }" @change="handleChange()"></el-cascader>
           </el-form-item>
           <el-form-item label="客户">
                 <el-input v-model="ruleForm.SsClient"  placeholder="客户名称/编码" style="width: 140px"></el-input>
@@ -15,7 +15,7 @@
           </el-form-item>
           <el-form-item>
                 <div style="float: right">
-                  <goods @signStatus="signStatu"></goods>   <!--与子页面名一直,否则没有按钮出现-->
+                  <goods :key="timer" @signStatus="signStatu" v-bind:id="this.m"></goods>   <!--与子页面名一直,否则没有按钮出现-->
                 </div>
                 <div>
                   <el-table :data="tableData"  border style="width: 100%" @cell-click="tabClick" prop="re">
@@ -25,7 +25,7 @@
                         <el-table-column prop="cargoName" label="商品名称" width="120"> </el-table-column>
                         <el-table-column prop="sscNumber" label="数量" width="120"> </el-table-column>
                         <el-table-column prop="unitName" label="单位" width="120"> </el-table-column>
-                        <el-table-column prop="unitPice" label="销售单价(元)" width="120"> </el-table-column>
+                        <el-table-column prop="cpprice" label="销售单价(元)" width="120"> </el-table-column>
                         <el-table-column prop="sscSubtotal" label="小计(元)" width="120"> </el-table-column>
                         <el-table-column prop="sscRemark" label="备注" width="120"> </el-table-column>
                   </el-table>
@@ -62,7 +62,7 @@
           </el-form-item>
           <br>
           <el-form-item >
-                <router-link to="/sellreturn"><el-button>返回</el-button></router-link>
+                <router-link to="/sell"><el-button>返回</el-button></router-link>
                 <el-button type="primary" @click="add()">保存审核</el-button>
           </el-form-item>
     </el-form>
@@ -79,7 +79,6 @@
         data() {
           return {
               ruleForm: {
-                SsWarehouse: '',   //仓库
                 SsClient: '',      //客户
                 SsHandle: '',      //经手人
                 SsDiscount: '',    //折扣率
@@ -92,20 +91,26 @@
 
               },
                 datetime: "",    //销售编号日期
-
+                timer: "",
+                m:'',
                 SsCount:'',
                  CargoId: "",
                   SscNumber: "",
                   SscRemark: "",
                   SscSubtotal: "",
                   UnitPice: "",
-              options: [],
+              options: [],  //存放下拉数据
               sss: [],
               tableData: [],
               y: [],
           };
         },
         methods: {
+                //下拉框该变函数
+              handleChange() {
+                  this.timer = new Date().getTime();
+                  this.m=this.value3[1]
+              },
              async add() {
                 var oo = 0;
                 var o = {
@@ -157,14 +162,14 @@
                   data:this.y,
                 }).then((res) => {
                   this.y = [];
-                  if (res > 0) {
+                  if (res.data > 0) {
                     this.$notify({
                         title:'温馨提示:',
                         message:'添加成功',
                     })
-                    this.$router.push('/sellreturn');
+                    this.$router.push('/sell');
                   }else{
-                    this.$notify({
+                     this.$notify({
                         title:'温馨提示:',
                         message:'添加失败',
                     })

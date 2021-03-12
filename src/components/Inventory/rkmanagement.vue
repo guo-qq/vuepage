@@ -54,15 +54,15 @@ export default {
       options: [
         {
           value: "1",
-          label: "销售出库",
+          label: "采购入库",
         },
         {
           value: "2",
-          label: "采购退货出库",
+          label: "销售退货入库",
         },
         {
           value: "3",
-          label: "调拨出库",
+          label: "调拨入库",
         },
       ],
       value: "",

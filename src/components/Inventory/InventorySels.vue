@@ -59,27 +59,27 @@
           <el-dialog title="库存分布" :visible.sync="dialogTableVisible" :modal='false'> 
             <el-table :data="gridData">
               <el-table-column
-                property="ASWName"
+                property="aswName"
                 label="门店"
               ></el-table-column>
               <el-table-column
-                property="naWnameme"
+                property="wname"
                 label="仓库"
               ></el-table-column>
               <el-table-column
-                property="Wsize"
+                property="wsize"
                 label="库存容量"
               ></el-table-column>
               <el-table-column
-                property="CargoCount"
+                property="cargoCount"
                 label="占用库存"
               ></el-table-column>
               <el-table-column
-                property="KYongK"
+                property="kYongK"
                 label="可用库存"
               ></el-table-column>
               <el-table-column
-                property="CargoCost"
+                property="cargoCost"
                 label="库存成本"
               ></el-table-column>
             </el-table>
@@ -138,7 +138,7 @@ export default {
   methods: {
     sel: function (event) {
       this.axios
-        .get("http://localhost:50774/api/InventorySels", {
+        .get( this.$api+"/api/InventorySels", {
           params: {
             WId: this.value3[1],
             q: this.value2[0],
@@ -157,12 +157,13 @@ export default {
     handleClick(row) {
       this.dialogTableVisible = true;
       this.axios
-        .get("http://localhost:50774/api/InventoryDistribute", {
+        .get( this.$api+"/api/InventoryDistribute", {
           params: {
             name: row.CargoName,
           },
         })
         .then((response) => {
+          console.log(response)
           this.gridData = response.data;
         })
         .catch(function (error) {
@@ -173,7 +174,7 @@ export default {
   mounted() {
     //显示
     this.axios
-      .get("http://localhost:50774/api/InventorySels")
+      .get( this.$api+"/api/InventorySels")
       .then((response) => {
         this.tableData = response.data;
         console.log("ok");
@@ -183,7 +184,7 @@ export default {
       }),
       //仓库下拉
       this.axios
-        .get("http://localhost:50774/api/SelectWare")
+        .get( this.$api+"/api/SelectWare")
         .then((response) => {
           this.options = response.data;
           console.log("ok");

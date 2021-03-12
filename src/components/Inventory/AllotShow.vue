@@ -147,7 +147,7 @@ export default {
     Schang(row, o) {
       this.axios
         .post(
-          "http://localhost:50774/api/ChangDiao?id=" + row.rtid + "&start=" + o
+          this.$api+"/api/ChangDiao?id=" + row.rtid + "&start=" + o
         )
         .then(function (res) {
           console.log(res);
@@ -165,7 +165,7 @@ export default {
         params.push(item.rtid); // 添加所有需要删除数据的id到一个数组，post提交过去
       });
       console.log(params);
-      this.axios.post("http://localhost:50774/api/DelDiao",params)
+      this.axios.post( this.$api+"/api/DelDiao",params)
       .then(function(res){
         if(res.data>0)
         {
@@ -183,7 +183,7 @@ export default {
     show: function () {
       //显示
       this.axios
-        .get("http://localhost:50774/api/AllotShow")
+        .get( this.$api+"/api/AllotShow")
         .then((response) => {
           this.tableData = response.data;
           console.log("ok");
@@ -205,7 +205,7 @@ export default {
 
     sel: function () {
       this.axios
-        .get("http://localhost:50774/api/ShowWareCheck", {
+        .get( this.$api+"/api/ShowWareCheck", {
           params: {
             q: this.value2[0],
             h: this.value2[1],

@@ -132,7 +132,7 @@
               "
               >保存</el-button
             >
-            <el-button @click="Delete(scope.row.opid)">删除</el-button>
+            <el-button    @click.native.prevent="deleteRow(scope.$index, tabledatas)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -240,6 +240,25 @@ export default {
       });
       
     },
+     deleteRow(index, rows) {
+        this.$confirm('是否删除该文件', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+            rows.splice(index, 1);
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+      
+      }
   },
   mounted() {
     this.Show();

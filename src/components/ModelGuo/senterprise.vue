@@ -3,17 +3,16 @@
     <!-- 企业信息 -->
     <div>企业信息</div>
     <!-- 表单 -->
-    <div>
-      <el-form
-        :model="ruleForm"
-        :rules="rules"
-        ref="ruleForm"
+    <div>      
+      <el-form               
         label-width="100px"
         class="demo-ruleForm"
+        :disabled=enen
       >
         <el-form-item label="企业Logo:" prop="name1">
+
           <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="F:\vuepage\src\assets\logo.png"
             list-type="picture-card"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
@@ -26,10 +25,11 @@
           </el-dialog>
         </el-form-item>
         <el-form-item label="企业名称" prop="name2">
-          <el-input v-model="ruleForm.name"></el-input>
+          <el-input v-model="handleRemove.epriseName"></el-input>
+
         </el-form-item>
         <el-form-item label="企业账户" prop="name3">
-          <el-input v-model="ruleForm.name"></el-input>
+          <el-input v-model="handleRemove.epriseAccount"></el-input>
         </el-form-item>
         <el-form-item label="所属行业" prop="region">
           <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
@@ -43,24 +43,27 @@
           </el-select>
         </el-form-item>
         <el-form-item label="到期时间:" prop="name4">
-          <el-input v-model="ruleForm.name"></el-input>
+          <el-input v-model="handleRemove.epriseDqDate"></el-input>
         </el-form-item>
         <el-form-item label="联系人姓名:" prop="name5">
-          <el-input v-model="ruleForm.name"></el-input>
+          <el-input v-model="handleRemove.linkman"></el-input>
         </el-form-item>
         <el-form-item label="公司地址:" prop="name6">
-          <el-input v-model="ruleForm.name"></el-input>
+          <el-input v-model="handleRemove.epriseAddress"></el-input>
         </el-form-item>
         <el-form-item label="备注信息:" prop="name7">
-          <el-input v-model="ruleForm.name"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')"
-            >立即创建</el-button
-          >
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
-        </el-form-item>
+          <el-input v-model="handleRemove.epriseRemark"></el-input>
+        </el-form-item>                
       </el-form>
+    </div>
+    <div>
+           <el-button type="primary"  
+            ><span v-if="enen==true" @click="enen=false">修改</span>
+            <span v-if="enen!==true" @click="update(),enen=true">保存</span>
+            </el-button
+          >
+          <el-button @click="resetForm()">返回</el-button>
+ 
     </div>
   </div>
 </template>
@@ -70,6 +73,8 @@ export default {
     return {
       dialogImageUrl: "",
       dialogVisible: false,
+      handleRemove:[],
+      enen:true,
       ruleForm: {
         name: "",
         region: "",
@@ -127,7 +132,7 @@ export default {
       });
     },
     resetForm(formName) {
-      this.$refs[formName].resetFields();
+       location.reload();
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -139,6 +144,48 @@ export default {
     handleAvatarChange(file, filelist) {
       this.imageUrl = URL.createObjectURL(file.raw);
     },
+    update(){
+         this.axios({
+            method: "post",
+            url: "http://localhost:50774/api/uptenterprises",
+            data: {
+                EnterpriseId:this.handleRemove.enterpriseId,
+                EpriseLogo:this.handleRemove.epriseLogo,
+                EpriseName:this.handleRemove.epriseName,
+                EpriseAccount:this.handleRemove.epriseAccount,
+                EpriseBusiness:this.handleRemove.epriseBusiness,
+                EpriseDqDate:this.handleRemove.epriseDqDate,
+                Linkman:this.handleRemove.linkman,
+                LinkPhone:this.handleRemove.linkPhone,
+                EpriseAddress:this.handleRemove.epriseAddress,
+                EpriseRemark:this.handleRemove.epriseRemark
+            },
+          }).then((res) => {
+            if (res.status == 200) {
+                this.$message({
+                  message: "修改成功",
+                  type: "success",
+                });
+              } else {
+                this.$message({
+                  message: "修改失败",
+                  type: "success",
+                });
+              }
+          });
+          
+      
+    }
   },
+  mounted(){
+       this.axios
+        .get("http://localhost:50774/api/enterprises")
+        .then((response) => { 
+          this.handleRemove = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+  }
 };
 </script>

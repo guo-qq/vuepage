@@ -59,8 +59,8 @@ export default {
     return {
       isCollapse: true,
       items: [],
-      name:0,
-      pwd:0,
+      name:'',
+      pwd:'',
     };
   },
   methods: {
@@ -70,12 +70,9 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     },
-     
-    DL()
+    DL(name,pwd)
     {
-      alert(this.name);
-      alert(this.pwd);
-      this.axios.get('http://localhost:50774/api/Carte?name='+18325401161+'&pwd='+123)
+      this.axios.get('http://localhost:50774/api/Carte?name='+localStorage.getItem('name')+'&pwd='+JSON.parse(localStorage.getItem('pwd')))
       .then(response => {
         this.items = response.data
         
@@ -88,19 +85,14 @@ export default {
   },
    created(){
       eventBus.$on("userDefinedEvent", function (sev) {      
-      
-       this.name = sev.data[0].usernumber
-       this.pwd = sev.data[0].userpwd   
-      
-     });
-     this.DL();
-     
-   },
-  mounted() {    
-       this.HQ();
-       this.DL();
-      
+         localStorage.setItem('name',sev.data[0].usernumber);
+         localStorage.setItem('pwd',sev.data[0].userpwd);     
     
+     });    
+   },
+  mounted() {         
+       
+      this.DL();    
   },
   computed: {
     onRoutes() {

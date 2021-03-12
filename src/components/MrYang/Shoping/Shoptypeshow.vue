@@ -1,109 +1,95 @@
 <template>
     <div class="custom-tree-container">
   <div class="block">
+    <Shoptypetian></Shoptypetian>
     <el-tree
       :data="data"
-      show-checkbox
-      node-key="id"
+      node-key="classId"
       default-expand-all
+      :render-content="renderContent"
       :expand-on-click-node="false">
-      <span class="custom-tree-node" slot-scope="{ node, data }">
-        <span>{{ node.label }}</span>
+      <span class="custom-tree-node" slot-scope="{data }">
+        <span>{{data.className }}</span>
         <span>
-          <el-button
+          <table>
+            <tr>
+              <td>
+                  <Shoptypeadd v-bind:id="data.classId"></Shoptypeadd>
+              </td>
+              <td>
+                  <Shopmodify v-bind:id="data.classId"></Shopmodify>
+              </td>
+              <td>
+                 <el-button
             type="text"
             size="mini"
-            @click="() => append(data)">
-            Append
+            @click="del(data)">
+            删除
           </el-button>
-          <el-button
-            type="text"
-            size="mini"
-            @click="() => remove(node, data)">
-            Delete
-          </el-button>
+              </td>
+            </tr>
+          </table>
         </span>
       </span>
     </el-tree>
   </div>
 </div>
 </template>
-
 <script>
-  let id = 1000;
-
+  import Shoptypeadd from "@/components/MrYang/Shoping/Shoptypeadd";
+  import Shopmodify from "@/components/MrYang/Shoping/Shopmodify";
+  import Shoptypetian from "@/components/MrYang/Shoping/Shoptypetian";
   export default {
     data() {
-      const data = [{
-        id: 1,
-        label: '一级 1',
-        children: [{
-          id: 4,
-          label: '二级 1-1',
-          children: [{
-            id: 9,
-            label: '三级 1-1-1'
-          }, {
-            id: 10,
-            label: '三级 1-1-2'
-          }]
-        }]
-      }, {
-        id: 2,
-        label: '一级 2',
-        children: [{
-          id: 5,
-          label: '二级 2-1'
-        }, {
-          id: 6,
-          label: '二级 2-2'
-        }]
-      }, {
-        id: 3,
-        label: '一级 3',
-        children: [{
-          id: 7,
-          label: '二级 3-1'
-        }, {
-          id: 8,
-          label: '二级 3-2'
-        }]
-      }];
+      const data = [];
       return {
         data: JSON.parse(JSON.stringify(data)),
-        data: JSON.parse(JSON.stringify(data))
+        data: JSON.parse(JSON.stringify(data)),
+        classId:"",
+        className:"",
       }
     },
-
+     created() {
+    //显示
+    this.axios
+      .get("http://localhost:50774/api/ClassifySelect")
+      .then((response) => { 
+        this.data = response.data;
+        console.log("ok");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
     methods: {
-      append(data) {
-        const newChild = { id: id++, label: 'testtest', children: [] };
-        if (!data.children) {
-          this.$set(data, 'children', []);
+      del(id) {
+      this.$confirm("确认删除此数据吗？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        console.log(id);
+        if(id.children.length==0)
+        {
+          this.$http.post("http://localhost:50774/api/ClassifyDelt?id="+id.classId);
+        aler("删除成功");
+        location.reload();
         }
-        data.children.push(newChild);
-      },
-
-      remove(node, data) {
-        const parent = node.parent;
-        const children = parent.data.children || parent.data;
-        const index = children.findIndex(d => d.id === data.id);
-        children.splice(index, 1);
-      },
-
-      renderContent(h, { node, data, store }) {
-        return (
-          <span class="custom-tree-node">
-            <span>{node.label}</span>
-            <span>
-            <span>dfsf</span>
-              <el-button size="mini" type="text" on-click={ () => this.append(data) }>添加子类</el-button>
-              <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }>编辑</el-button>
-               <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }>删除</el-button>
-            </span>
-          </span>);
-      }
+        else{
+            this.$message({
+          showClose: true,
+          message: '！该节点有子节点,不能删除。',
+          type: 'error'
+        });
+        }
+      });
     }
+    },
+    components: {
+    'Shoptypeadd': Shoptypeadd,
+    'Shopmodify':Shopmodify,
+    'Shoptypetian':Shoptypetian
+  },
   };
 </script>
 <style>

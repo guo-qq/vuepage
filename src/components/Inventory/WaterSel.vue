@@ -139,7 +139,7 @@ export default {
   methods: {
     sel: function (event) {
       this.axios
-        .get("http://localhost:50774/api/stockTaking", {
+        .get( this.$api+"/api/stockTaking", {
           params: {
             
             TypeName: this.value,
@@ -159,7 +159,7 @@ export default {
   mounted() {
     //显示
     this.axios
-      .get("http://localhost:50774/api/stockTaking")
+      .get( this.$api+"/api/stockTaking")
       .then((response) => {
         this.tableData = response.data;
         console.log("ok");

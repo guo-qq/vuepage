@@ -80,7 +80,7 @@ export default {
     },
     Getshoop() {
       this.axios
-        .get("http://localhost:50774/api/ChoiceShoop", {
+        .get( this.$api+"/api/ChoiceShoop", {
           params: {
             name: this.Condition,
           },
