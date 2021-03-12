@@ -59,27 +59,27 @@
           <el-dialog title="库存分布" :visible.sync="dialogTableVisible" :modal='false'> 
             <el-table :data="gridData">
               <el-table-column
-                property="ASWName"
+                property="aswName"
                 label="门店"
               ></el-table-column>
               <el-table-column
-                property="naWnameme"
+                property="wname"
                 label="仓库"
               ></el-table-column>
               <el-table-column
-                property="Wsize"
+                property="wsize"
                 label="库存容量"
               ></el-table-column>
               <el-table-column
-                property="CargoCount"
+                property="cargoCount"
                 label="占用库存"
               ></el-table-column>
               <el-table-column
-                property="KYongK"
+                property="kYongK"
                 label="可用库存"
               ></el-table-column>
               <el-table-column
-                property="CargoCost"
+                property="cargoCost"
                 label="库存成本"
               ></el-table-column>
             </el-table>
@@ -163,6 +163,7 @@ export default {
           },
         })
         .then((response) => {
+          console.log(response)
           this.gridData = response.data;
         })
         .catch(function (error) {
