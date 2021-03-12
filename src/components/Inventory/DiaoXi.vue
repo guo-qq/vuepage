@@ -61,7 +61,7 @@ export default {
   methods: {
     ZShow() {
       this.axios
-        .get("http://localhost:50774/api/RepXiang",{params:{"id":this.$route.query.id}})
+        .get( this.$api+"/api/RepXiang",{params:{"id":this.$route.query.id}})
         .then((res) => {
           console.log(res);
           (this.danju = res.data.reSerial),
@@ -76,7 +76,7 @@ export default {
 
     Xiang() {
       this.axios
-        .get("http://localhost:50774/api/Duoxian?id=" + this.$route.query.id)
+        .get( this.$api+"/api/Duoxian?id=" + this.$route.query.id)
         .then((res) => {
              console.log(res);
           this.tableData = res.data;

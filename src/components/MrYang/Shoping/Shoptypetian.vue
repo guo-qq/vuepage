@@ -1,7 +1,7 @@
 <template>
     <div>
-        <el-button type="text" size="small" @click="dd()">添加子类</el-button>
-<el-dialog title="添加子类" :modal="false" :visible.sync="dialogFormVisible">
+        <el-button type="primary" size="small" @click="dd()">添加分类</el-button>
+<el-dialog title="添加分类" :modal="false" :visible.sync="dialogFormVisible">
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <table style="marginLeft:5%">
     <tr>
@@ -30,27 +30,22 @@
         di:this.id,
        ruleForm:{
           className:'',
-          classId:''
+          recursionId:'0',
+          aswid:'1'
         }
       };
     },
-    props:{
-        id:{
-            type:Number,
-            Request:true
-        }
-    },
     methods: {
-      async dd(ss)
-    {
-        this.dialogFormVisible =true
-    },
+        dd(){
+            this.dialogFormVisible =true
+        },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
            this.axios.post("http://localhost:50774/api/ClassifyAdd",{
-                recursionId:Number(this.di),
                 className:this.ruleForm.className,
+                recursionId:Number(this.ruleForm.recursionId),
+                aswid:Number(this.ruleForm.aswid)
             })
             this.$message({
                     message: '添加成功',

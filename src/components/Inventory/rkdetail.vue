@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="float: left">
-      出库类型
+      入库类型
       <el-select v-model="value" placeholder="请选择">
         <el-option
           v-for="item in options"
@@ -36,15 +36,15 @@
         <el-table-column fixed prop="tTime" label="提交时间"> </el-table-column>
         <el-table-column prop="danju" label="单据编号"> </el-table-column>
         <el-table-column prop="name" label="客户名称"> </el-table-column>
-        <el-table-column prop="cType" label="出库类型">
+        <el-table-column prop="cType" label="入库类型">
           <template scope="scope">
-            <span v-if="scope.row.cType == 1">销售出库</span>
-            <span v-if="scope.row.cType == 2">采购退货库</span>
-            <span v-if="scope.row.cType == 3">调拨出库</span>
+            <span v-if="scope.row.cType == 1">采购入库</span>
+            <span v-if="scope.row.cType == 2">销售退货入库</span>
+            <span v-if="scope.row.cType == 3">调拨入库</span>
           </template>
         </el-table-column>
-        <el-table-column prop="cKu" label="出库仓库"> </el-table-column>
-        <el-table-column prop="number" label="实际出库"> </el-table-column>
+        <el-table-column prop="cKu" label="入库仓库"> </el-table-column>
+        <el-table-column prop="number" label="实际入库"> </el-table-column>
         <el-table-column fixed="right" label="操作">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row)" type="text" size="small"
@@ -66,15 +66,15 @@ export default {
       options: [
         {
           value: "1",
-          label: "销售出库",
+          label: "采购入库",
         },
         {
           value: "2",
-          label: "采购退货出库",
+          label: "销售退货入库",
         },
         {
           value: "3",
-          label: "调拨出库",
+          label: "调拨入库",
         },
       ],
       value: "",

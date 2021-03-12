@@ -1,10 +1,9 @@
 {
   "ExpandedNodes": [
     "",
+    "\\config",
     "\\src",
-    "\\src\\components",
-    "\\src\\components\\Img"
+    "\\src\\components"
   ],
-  "SelectedNode": "\\src\\components\\Img",
   "PreviewInSolutionExplorer": false
 }

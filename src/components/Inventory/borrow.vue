@@ -89,7 +89,7 @@
               >归还</el-button
             >
             <el-button type="text" size="small" v-if="scope.row.lbstate == 0"
-              >转采购</el-button
+              @click="cai(scope.row)">转采购</el-button
             >
           </template>
         </el-table-column>
@@ -156,11 +156,14 @@ export default {
   methods: {
     handleClick(row){
       console.log(row)
-      this.axios.post("http://localhost:50774/api/GaiLoanr?id="+row.lbid)
+      this.axios.post( this.$api+"/api/GaiLoanr?id="+row.lbid)
       .then((res)=>{
         location.reload();
       })
 
+    },
+    cai(row){
+      this.$router.push({path:'/ZCai',query:{id:row.lbid}})
     },
     multiDelete() {
       this.multiDeleteVisible = false;
@@ -171,7 +174,7 @@ export default {
         params.push(item.lbid); // 添加所有需要删除数据的id到一个数组，post提交过去
       });
       console.log(params);
-      this.axios.post("http://localhost:50774/api/DelLoan",params)
+      this.axios.post( this.$api+"/api/DelLoan",params)
       .then(function(res){
         if(res.data>0)
         {
@@ -196,7 +199,7 @@ export default {
     },
     Show() {
       this.axios
-        .get("http://localhost:50774/api/LoanBowr", {
+        .get( this.$api+"/api/LoanBowr", {
           params: {
             z: Number(this.value),
             q: this.value2[0],

@@ -170,7 +170,7 @@ export default {
         console.log(this.y);
         this.axios({
           method: "post",
-          url: "http://localhost:50774/api/AddAllot",
+          url: this.$api+"/api/AddAllot",
           data: {
             RTDcWarehouse: Number(this.value3[1]),
             RTDrWarehouse: Number(this.value4[1]),
@@ -184,7 +184,7 @@ export default {
         }).then((res) => {
           this.axios({
             method: "post",
-            url: "http://localhost:50774/api/addDuoAllot",
+            url:  this.$api+"/api/addDuoAllot",
             data: this.y,
           }).then((res) => {
             this.y = [];
@@ -233,7 +233,7 @@ export default {
     },
     Xia() {
       this.axios
-        .get("http://localhost:50774/api/SelectWare")
+        .get( this.$api+"/api/SelectWare")
         .then((response) => {
           this.options = response.data;
           this.optionsa = response.data;
