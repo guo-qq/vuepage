@@ -67,7 +67,7 @@
         </el-table-column>
         <el-table-column label="操作" width="400px">
           <template slot-scope="scope">
-            <el-button @click="scope.row.show =true">编辑</el-button>
+            <el-button @click="scope.row.show = true">编辑</el-button>
             <el-button @click="BC(scope.row), (scope.row.show = false)"
               >保存</el-button
             >
