@@ -14,8 +14,6 @@ import AddSellretun from '@/components/ModelLiu/AddSellretun'  //新增销售退
 import Addpurchase from '@/components/ModelLiu/Addpurchase'  //新增采购
 import Addpurchaseretun from '@/components/ModelLiu/Addpurchaseretun'  //新增采购退货
 import registerindex from '@/components/ModelLiu/registerindex'  //登录
-import enrollindex from '@/components/ModelLiu/enrollindex'  //注册
-import company from '@/components/ModelLiu/company'  //完善企业资料
 import details from '@/components/ModelLiu/details'  //详情页
 import edit from '@/components/ModelLiu/edit'  //修改状态
 
@@ -113,17 +111,6 @@ export default new Router({
       path: '/',     
       component: registerindex,   
    
-    },
-    {
-      path: '/enrollindex',
-      name: '注册',
-      component: enrollindex,
-    },
-    
-    {
-      path: '/company',
-      name: '完善企业资料',
-      component: company,
     },
     {
       path: '/Home', 

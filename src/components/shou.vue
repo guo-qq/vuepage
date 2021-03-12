@@ -37,7 +37,7 @@
     </div>
     <div class="div3">
             <el-card shadow="always" style="height:500px">
-              <div id="main" style="width:900px ;height:300px;"></div>
+              <div id="myChart2" style="width:100%;height:450px;float:left;"></div>
             </el-card>
     </div>
     <div class="div4">
@@ -63,14 +63,19 @@
                 SellSum:0,    //销售笔数
                 SellIngprofit:0, //销售利润
                 ReceiPtsum:0,  //收款笔数
-                msg: 'Welcome to Your Vue.js App'
+                msg: 'Welcome to Your Vue.js App',
+                 myChart: '',
+                opinionData2: [
+                    { value: 10, name: '箱包', itemStyle: 'red' },
+                    { value: 50, name: '日用百货', itemStyle: '#1FC48D' },
+                    { value: 30, name: '服装', itemStyle: '#6DC8EC' },
+                    { value: 10, name: '食品', itemStyle: '#3F8FFF' }
+                ]
             }
         },
         mounted(){
             this.drawLine();
-			 this.$nextTick(function() {
-				this.getPie()
-			 });
+			 this.drawLine2()
                 this.GetTotalSum();  //总金额
                 this.GetReceiPtsum();  //收款笔数
                 this.GetSellIngprofit();  //收款笔数
@@ -80,7 +85,7 @@
             GetTotalSum(){
                 this.axios.get("http://localhost:50774/api/GetSsSjMoney").then((res)=>{
                         res.data.forEach(element => {
-                            console.log(element);
+                           
                             this.TotalSum=this.TotalSum+ Number(element.ssSjMoney);
                             this.SellSum++;
                         });
@@ -90,7 +95,7 @@
             GetReceiPtsum(){
                  this.axios.get("http://localhost:50774/api/receiptPayments").then((res)=>{
                         res.data.forEach(element => {
-                            console.log(element);
+                        
                             this.ReceiPtsum++;
                         });
                 })
@@ -99,7 +104,7 @@
             GetSellIngprofit(){
                 this.axios.get("http://localhost:50774/api/SalesSingleShow").then((res)=>{
                         res.data.forEach(element => {
-                            console.log(element);
+                          
                            this.SellIngprofit=this.SellIngprofit+Number(element.maoLi)
                         });
                 })
@@ -117,9 +122,6 @@
                     tooltip: {
                         trigger: 'axis'
                     },
-                    legend: {
-                        data:['最高','最低']
-                    },
                     toolbox: {
                         show: true,
                         feature: {
@@ -135,7 +137,7 @@
                     xAxis:  {
                         type: 'category',
                         boundaryGap: false,
-                        data: ['2019-02-25','2019-03-04','2019-03-18','2019-03-26','2019-04-16','2019-04-26','2019-05-04']
+                        data: ['1','2','3','4','5','6','7']
                     },
                     yAxis: {
                         type: 'value',
@@ -145,13 +147,11 @@
                     },
                     series: [
                         {
-                            name:'最高',
                             type:'line',
-                            data:[11, 11, 15, 13, 12, 13, 10],
+                            data:[5, 8, 15, 13, 12, 13, 10],
                             markPoint: {
                                 data: [
                                     {type: 'max', name: '最大值'},
-                                    {type: 'min', name: '最小值'}
                                 ]
                             },
                             markLine: {
@@ -160,110 +160,58 @@
                                 ]
                             }
                         },
-                        {
-                            name:'最低',
-                            type:'line',
-                            data:[1, -2, 2, 5, 3, 2, 0],
-                            markPoint: {
-                                data: [
-                                    {name: '周最低', value: 2, xAxis: 1, yAxis: 1.5}
-                                ]
-                            },
-                            markLine: {
-                                data: [
-                                    {type: 'average', name: '平均值'},
-                                    [{
-                                        symbol: 'none',
-                                        x: '90%',
-                                        yAxis: 'max'
-                                    }, {
-                                        symbol: 'circle',
-                                        label: {
-                                            normal: {
-                                                position: 'start',
-                                                formatter: '最大值'
-                                            }
-                                        },
-                                        type: 'max',
-                                        name: '最高点'
-                                    }]
-                                ]
-                            }
-                        }
                     ]
                 });
             },
-            //饼图
-			getPie() {
-				// 绘制图表
-				var myChart = echarts.init(document.getElementById('main'))
-				// 指定图表的配置项和数据
-				var option = {
-				//标题
-				title: {
-					text: '各品类销售额占比',
-					x: 'left' ,              //标题位置
-					// textStyle: { //标题内容的样式
-					//   color: '#000',
-					//   fontStyle: 'normal',
-					//   fontWeight: 100,
-					//   fontSize: 16 //主题文字字体大小，默认为18px
-					// },
-				},
-				// stillShowZeroSum: true,
-				//鼠标划过时饼状图上显示的数据
-				tooltip: {
-					trigger: 'item',
-					formatter: '{a}<br/>{b}:{c} ({d}%)'
-				},
-				//图例
-				legend: {//图例  标注各种颜色代表的模块
-					// orient: 'vertical',//图例的显示方式  默认横向显示
-					bottom: 0,//控制图例出现的距离  默认左上角
-					left: 'center',//控制图例的位置
-					 // 水平安放位置，默认为左侧，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
-					//x: 'center',
-					// 垂直安放位置，默认为全图顶端，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-					//y: 'bottom',
-					// itemWidth: 16,//图例颜色块的宽度和高度
-					// itemHeight: 12,
-					textStyle: {//图例中文字的样式
-					color: '#000',
-					fontSize: 16
-					},
-					data: ['未领取', '处理中', '已完成']//图例上显示的饼图各模块上的名字
-				},
-				//饼图中各模块的颜色
-				color: ['#32dadd', '#b6a2de', '#5ab1ef'],
-				// 饼图数据
-				series: {
-					// name: 'bug分布',
-					type: 'pie',             //echarts图的类型   pie代表饼图
-					radius: '70%',           //饼图中饼状部分的大小所占整个父元素的百分比
-					center: ['50%', '50%'],  //整个饼图在整个父元素中的位置
-					// data:''               //饼图数据
-					data: [                  //每个模块的名字和值
-					{ name: '未领取', value: 10 },
-					{ name: '处理中', value: 30},
-					{ name: '已完成', value: 50 }
-					],
-					itemStyle: {
-					normal: {
-						label: {
-						show: true,//饼图上是否出现标注文字 标注各模块代表什么  默认是true
-						// position: 'inner',//控制饼图上标注文字相对于饼图的位置  默认位置在饼图外
-						},
-						labelLine: {
-						show: true//官网demo里外部标注上的小细线的显示隐藏    默认显示
-						}
-					}
-					},
-				}
+            drawLine2 () {
+      this.myChart = this.$echarts.init(document.getElementById('myChart2'))
+      this.myChart.setOption({
+        title: {
+          text: '各品类销售额占比', // 主标题
+          subtext: '', // 副标题
+          x: 'left' // x轴方向对齐方式
+        },
+        grid: { containLabel: true },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {d}%'
+        },
+        // color: ['#1FC48D', '#F5A60A', '#6DC8EC', '#3F8FFF'],
+        color: ['red', '#1FC48D', '#6DC8EC', '#3F8FFF'],
+        // backgroundColor: '#ffffff',
+        legend: {
+          orient: 'vertical',
+          icon: 'circle',
+          align: 'left',
+          x: 'right',
+          y: 'bottom',
+          data: ['箱包', '日用百货', '服装', '食品']
+        },
+        series: [
+          {
+            name: '课堂行为',
+            type: 'pie',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            center: ['40%', '50%'],
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              },
+              color: function (params) {
+                // 自定义颜色
+                var colorList = ['red', '#1FC48D', '#6DC8EC', '#3F8FFF']
+                return colorList[params.dataIndex]
+              }
+            },
+            data: this.opinionData2
+          }
+        ]
+      })
+    }
 
-				}
-				// 使用刚指定的配置项和数据显示图表。
-				myChart.setOption(option)
-			}
         }
     }
 </script>
