@@ -15,7 +15,7 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <br />
-    <span><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;销售趋势:</span>
+    <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;销售趋势:</span>
     <br />
     <div class="sys">
       <br />
@@ -110,7 +110,6 @@
     </div>
   </div>
 </template>
-
 <style scoped>
 .sty {
   width: 200px;
