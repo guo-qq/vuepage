@@ -2,7 +2,7 @@
 <template>
   <div>
     <el-row>
-      <!-- <el-button type="primary">导出</el-button> -->
+      <el-button type="primary"  @click="exportData">导出</el-button>
     </el-row>
     <br />
     &nbsp;&nbsp;<span>业务日期</span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -126,6 +126,47 @@ export default {
     },
   },
   methods: {
+        //触发按钮点击下载事件
+	exportData() {
+		this.excelData = this.items;  //将你要导出的数组数据（historyList）赋值给excelDate
+		this.export2Excel(); //调用export2Excel函数，填写表头（clomns里的type）和对应字段(historyList里的属性名)
+	},
+	//表格数据写入excel
+    export2Excel() {
+      var that = this;
+      require.ensure([], () => {
+        const {
+          export_json_to_excel
+        } = require("@/assets/excel/Export2Excel");  
+        //这里使用绝对路径( @表示src文件夹 )，使用@/+存放export2Excel的路径【也可以写成相对于你当前"xxx.vue"文件的相对路径，例如我的页面放在assets文件夹同级下的views文件夹下的“home.vue”里，那这里路径也可以写成"../assets/excel/Export2Excel"】
+        const tHeader = ["制单时间", "单据编号", "客户名称", "门店","仓库","结算方式","商品编码","商品名称","单位","数量","单价(元)","销售金额(元)","销售毛利(元)","经办人","备注"]; // 导出的excel表头名信息
+            const filterVal = [
+              "ssZdDate",
+              "ssNumber",
+              "ssClient",
+              "aswName",
+              "ssWarehouse",
+              "ssMode",
+              "cargoCoding",
+              "cargoName",
+              "unitName",
+              "sscNumber",
+              "cpPrice",
+              "sscSubtotal",
+              "maoLi",
+              "ssHandle",
+              "sscRemark"
+            ]; // 导出的excel表头字段名，需要导出表格字段名
+        const list = that.excelData;
+        const data = that.formatJson(filterVal, list);
+
+        export_json_to_excel(tHeader, data, "学生报名信息汇总"); // 导出的表格名称，根据需要自己命名
+      });
+    },
+    //格式转换，直接复制即可,不需要修改什么
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => v[j]));
+    },
     loadAll() {
       return [
         this.axios

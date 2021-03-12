@@ -9,10 +9,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 // 引入echarts
 import echarts from 'echarts'
-Vue.prototype.$echarts = echarts;
- 
- 
 import VueRouter from 'vue-router';
+Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false
 
 
