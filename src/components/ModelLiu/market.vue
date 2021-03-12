@@ -112,6 +112,8 @@
                   this.m=this.value3[1]
               },
              async add() {
+               var data1 = JSON.parse(localStorage.getItem('hou'));
+               var name=data1.UserName;
                 var oo = 0;
                 var o = {
                   CargoId: "",
@@ -146,7 +148,7 @@
                     SsWarehouse:"上海仓库",   //仓库
                     SsClient:this.ruleForm.SsClient,    //客户
                     SsHandle:this.ruleForm.SsHandle,   //经手人
-                    SsDrawer:"李四",    //制单人
+                    SsDrawer:name,    //制单人
                     SsMode:this.ruleForm.SsMode,   //结算方式
                     SsFjMoney:Number(this.ruleForm.SsFjMoney),  //附加金额
                     SsZkMoney:Number(this.ruleForm.SsZkMoney),   //折扣金额
@@ -156,6 +158,9 @@
                     QfjCg:Number(1),     //区分键
                     Tui:Number(1),       //增/退区分键
               }).then((res) => {
+                if(this.y==null){
+                    alert("未选择商品");
+                }
                  this.axios({
                   method: "post",
                   url: "http://localhost:50774/api/AddSalesSingleCargo",

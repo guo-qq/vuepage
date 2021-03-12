@@ -55,8 +55,13 @@ export default {
            
             if(res.data.length>0){               
                   this.send(res);
-                 alert("登录成功"); 
-                   
+                    const info = {
+                        Userid: res.data[0].userid,
+                        Usernumber: res.data[0].usernumber,
+                        Userpwd: res.data[0].userpwd,
+                        UserName:res.data[0].userName,
+                    };
+                    localStorage.setItem('hou', JSON.stringify(info));
                   this.$router.push("/Home");
                  
                   
