@@ -78,7 +78,7 @@ export default {
     show() {
       this.dialogFormVisible = true;
       this.axios
-        .get("http://localhost:50774/api/Carte")
+        .get("http://localhost:50774/api/Carte?name="+18325401161+'&pwd='+123)
         .then((val) => {
           this.data = val.data;
         })
