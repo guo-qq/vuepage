@@ -1,7 +1,7 @@
 <template>
 <div>
 <el-button type="text" size="small" @click="upt()">编辑</el-button>
-<el-dialog title="修改仓库" :visible.sync="dialogFormVisible">
+<el-dialog title="修改仓库" :modal="false" :visible.sync="dialogFormVisible">
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <table style="marginLeft:5%">
     <tr>
@@ -93,6 +93,7 @@
         reload: this.reload,
         dialogTableVisible: false,
         dialogFormVisible: false,
+        di:this.id,
         options:[],
        ruleForm:{
           wname:'',
@@ -107,18 +108,33 @@
         }
       };
     },
+    props:{
+        id:{
+          type:Number,
+          Request:true
+        }
+    },
     methods: {
         async upt(ss)
     {
         this.dialogFormVisible =true,
         await this.axios.get("http://localhost:50774/api/WarehouseByid?id="+this.di).then((res)=>{
-            this.ruleForm.lclientName=res.data.lclientName
+            this.ruleForm.wname=res.data.wname
+            this.ruleForm.waddress=res.data.waddress
+            this.ruleForm.wlink=res.data.wlink
+            this.ruleForm.wiphone=res.data.wiphone
+            this.ruleForm.wemail=res.data.wemail
+            this.ruleForm.wqq=res.data.wqq
+            this.ruleForm.wstate=res.data.wstate
+            this.ruleForm.wremark=res.data.wremark
+            this.ruleForm.aswid=res.data.aswid
         })
     },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
            this.axios.post("http://localhost:50774/api/WarehouseUpt",{
+                wid:di,
                 wname:this.ruleForm.wname,
                 waddress:this.ruleForm.waddress,
                 wlink:this.ruleForm.wlink,
@@ -151,7 +167,6 @@
           })
           .catch(_ => {});
       },
-      
     },
     mounted(){
          //仓库下拉

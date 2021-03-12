@@ -37,7 +37,7 @@
       <br />
       <br />
       <div>
-        备注：{{ beizhu }} <br /><br /><br />
+        备注：{{ this.beizhu }} <br /><br /><br />
          制单日期：{{zhiriqi}}
       </div>
     </div>
@@ -71,6 +71,7 @@ export default {
     Xiang(){
         this.axios.get("http://localhost:50774/api/HuPan?id="+this.$route.query.id)
         .then((res)=>{
+          console.log(res)
           this.tableData=res.data
       })
     }

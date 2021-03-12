@@ -89,7 +89,7 @@
               >归还</el-button
             >
             <el-button type="text" size="small" v-if="scope.row.lbstate == 0"
-              >转采购</el-button
+              @click="cai(scope.row)">转采购</el-button
             >
           </template>
         </el-table-column>
@@ -161,6 +161,9 @@ export default {
         location.reload();
       })
 
+    },
+    cai(row){
+      this.$router.push({path:'/ZCai',query:{id:row.lbid}})
     },
     multiDelete() {
       this.multiDeleteVisible = false;
