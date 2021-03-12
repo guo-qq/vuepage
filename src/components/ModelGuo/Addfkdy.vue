@@ -246,9 +246,10 @@ export default {
        reversedMessage: function () {
       // `this` 指向 vm 实例
          this.SF=this.JE-this.YH
-         if (this.YH>=this.JE) {
+        
+         if (this.YH>this.JE) {
                 this.$message({
-                 message: '你妈的呀!瞎输',
+                 message: '优惠金额过大请重新输入',
                   type: 'warning'
                 });
                 this.YH=null;

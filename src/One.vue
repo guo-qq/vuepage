@@ -11,8 +11,7 @@
 
 <script>
 import Hand from './components/Hand'
-import DH from './components/DH'
-import WB from './components/WB'
+import DH from './components/DH' 
 import MBX from './components/views/MBX'
  
 export default {
@@ -24,8 +23,7 @@ export default {
   },
   components:{
     "Hand":Hand,
-    "DH":DH,
-    "WB":WB,
+    "DH":DH,    
     "MBX":MBX
   }  
 }

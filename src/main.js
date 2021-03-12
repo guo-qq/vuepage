@@ -7,11 +7,14 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
- 
+// 引入echarts
+import echarts from 'echarts'
+import api from "./interface/indexxx"
  
 import VueRouter from 'vue-router';
+Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false
-
+Vue.prototype.$api=api.commonUrl
 
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios)

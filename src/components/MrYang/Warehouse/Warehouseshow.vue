@@ -97,6 +97,10 @@
       width="100">
       <template slot-scope="scope">
         <Warehousemodify v-bind:id="scope.row.wid"></Warehousemodify> 
+        <span v-if="scope.row.wstate ==0"
+        ><el-button @click="ztai(scope.row.wid)" type="text" size="small">启用</el-button></span>
+        <span v-if="scope.row.wstate ==1"
+        ><el-button @click="zt(scope.row.wid)" type="text" size="small">禁用</el-button></span>
         <el-button @click="del(scope.row.wid)" type="text" size="small">删除</el-button>        
       </template>
     </el-table-column>
@@ -144,6 +148,23 @@ const delay = (function() {
     }
     },
     methods: {
+
+        ztai(id){
+        this.axios.post("http://localhost:50774/api/WarehouseZtai?id="+id +"&ztai="+1)
+        this.$message({
+                  message:'启用成功',
+                   type: 'success',
+                })
+                this.$router.go(0)
+    },
+    zt(id){
+        this.axios.post("http://localhost:50774/api/WarehouseZtai?id="+id +"&ztai="+0)
+        this.$message({
+                  message:'禁用成功',
+                   type:'success',
+                })
+               this.$router.go(0)
+    },
         del(id){
             this.$confirm('确认删除此数据吗？','提示',{
               confirmButtonText:'确定',

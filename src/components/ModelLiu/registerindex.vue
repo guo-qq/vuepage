@@ -5,55 +5,79 @@
         <span class="ss">欢迎来到ERP进销存系统</span>
       </div>
       <div class="div2">
-        <h3 class="h">欢迎登录</h3>
-        <el-form ref="form" :model="form" label-width="80px" class="fm">
-          <el-form-item label="账号">
-            <el-input
-              placeholder="请输入账号"
-              v-model="form.Usernumber"
-              class="in"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="密码">
-            <el-input
-              placeholder="请输入密码"
-              v-model="form.Userpwd"
-              show-password
-              class="in"
-            ></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="Login()" class="bt"
-              >登录</el-button
-            >
-            <router-link to="/Home"></router-link>
-          </el-form-item>
-        </el-form>
-        <router-link to="/enrollindex" class="li1"
-          >没有账号,现在去注册</router-link
-        >
+        <el-card shadow="always" style="height:600px">
+              <h3 class="h">欢迎登录</h3>
+            <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="fm">
+              <el-form-item label="账号" prop="Usernumber">
+                <el-input
+                  placeholder="请输入账号"
+                  v-model="form.Usernumber"
+                  class="in"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="密码" prop="Userpwd">
+                <el-input
+                  placeholder="请输入密码"
+                  v-model="form.Userpwd"
+                  show-password
+                  class="in"
+                ></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="Login()" class="bt">登录</el-button>
+              </el-form-item>
+            </el-form>
+       </el-card>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+ import eventBus from '@/eventBus'
+export default { 
   data() {
     return {
       form: {
         Usernumber: "",
         Userpwd: "",
       },
+      rules:{
+        Usernumber :[{required: true, message: '请输入账号', trigger: 'blur'}],
+        Userpwd :[{required: true, message: '请输入密码', trigger: 'blur'}]
+      },
+      enen:[],
     };
   },
   methods: {
     Login() {
-       this.$router.push({path:'/Home'})
+        this.axios.get("http://localhost:50774/api/Carte?name="+this.form.Usernumber+"&&pwd="+this.form.Userpwd).then((res)=>{
+           
+            if(res.data.length>0){               
+                  this.send(res);
+                    const info = {
+                        Userid: res.data[0].userid,
+                        Usernumber: res.data[0].usernumber,
+                        Userpwd: res.data[0].userpwd,
+                        UserName:res.data[0].userName,
+                    };
+                    localStorage.setItem('hou', JSON.stringify(info));
+                  this.$router.push("/Home");
+                 
+                  
+            }else{
+                alert("登录失败");
+            }
+        })
     },
+    send(res)
+    {
+        eventBus.$emit("userDefinedEvent",res)
+    }
   },
 };
 </script>
+
 
 <style scoped>
 .li1 {
@@ -68,6 +92,7 @@ export default {
 .ss {
   font-size: 50px;
   color: blanchedalmond;
+  opacity: 0.9;
 }
 .h {
   padding-left: 45%;
@@ -85,10 +110,10 @@ export default {
 }
 .div3 {
   float: left;
-  background: blue;
   width: 550px;
   height: 600px;
-  opacity: 0.3;
+  opacity: 0.5;
+  background-image: url(../../components/Img/31.jpg);
 }
 .div2 {
   float: left;

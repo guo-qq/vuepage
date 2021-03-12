@@ -14,9 +14,8 @@ import AddSellretun from '@/components/ModelLiu/AddSellretun'  //新增销售退
 import Addpurchase from '@/components/ModelLiu/Addpurchase'  //新增采购
 import Addpurchaseretun from '@/components/ModelLiu/Addpurchaseretun'  //新增采购退货
 import registerindex from '@/components/ModelLiu/registerindex'  //登录
-import enrollindex from '@/components/ModelLiu/enrollindex'  //注册
-import company from '@/components/ModelLiu/company'  //完善企业资料
 import details from '@/components/ModelLiu/details'  //详情页
+import edit from '@/components/ModelLiu/edit'  //修改状态
 
 import receiptPayments from '@/components/ModelGuo/receiptPayments'
 import Addfkd from '@/components/ModelGuo/Addfkd'
@@ -110,6 +109,13 @@ import Shopdanwadd from '@/components/MrYang/Shoping/Shopdanwadd'
 import Shopdanwmodify from '@/components/MrYang/Shoping/Shopdanwmodify'
 import shopdanwshow from '@/components/MrYang/Shoping/shopdanwshow'
 import XqCheck from '@/components/Inventory/XqCheck'
+import Shuxinkuadd from '@/components/MrYang/Shoping/Shuxinkuadd'
+import Shuxinkumodify from '@/components/MrYang/Shoping/Shuxinkumodify'
+import Shuxinkushow from '@/components/MrYang/Shoping/Shuxinkushow'
+import Shoptypetian from '@/components/MrYang/Shoping/Shoptypetian'
+import Shopkuadd from '@/components/MrYang/Shoping/Shopkuadd'
+import Shopkumodify from '@/components/MrYang/Shoping/Shopkumodify'
+import Shopkushow from '@/components/MrYang/Shoping/Shopkushow'
 Vue.use(Router)
 
 export default new Router({
@@ -118,17 +124,6 @@ export default new Router({
       path: '/',     
       component: registerindex,   
    
-    },
-    {
-      path: '/enrollindex',
-      name: '注册',
-      component: enrollindex,
-    },
-    
-    {
-      path: '/company',
-      name: '完善企业资料',
-      component: company,
     },
     {
       path: '/Home', 
@@ -291,6 +286,221 @@ export default new Router({
           component: CustomerClassShow,
         },
         {
+          path: '/zclient',
+          name: '客户管理',
+          component: ClientShow,
+        },
+        {
+          path: '/zclientadd',
+          name: '客户管理添加页面',
+          component: Client,
+        },
+        {
+          path: '/zclientmodify',
+          name: '客户管理修改页面',
+          component: ClientModify,
+        },
+        {
+          path: '/zclassify',
+          name: '客户分类',
+          component:CustomerClassShow,
+        },
+        {
+          path: '/zclassifyadd',
+          name: '客户分类添加頁面',
+          component:CustomerClass,
+        } ,
+        {
+          path: '/zclassifymodify',
+          name: '客户分类修改页面',
+          component:CustomerClassModify,
+        } ,
+        {
+          path: '/zlevel',
+          name: '客户等級',
+          component:ClientgradeShow,
+        },
+        {
+          path:'/zleveladd',
+          name:'客户等級添加页面',
+          component:Clientgradeadd,
+        },
+        {
+          path:'/zlevelmodify',
+          name:'客户等級修改页面',
+          component:ClientgradeModify,
+        } ,
+        {
+          path: '/zlabel',
+          name: '客户标签',
+          component:Custometag,
+        },
+        {
+          path:'/zlabeladd',
+          name:'客户标添加页面',
+          component:Custometagadd,
+        },
+        {
+          path:'/zlabelmodify',
+          name:'客户标签修改页面',
+          component:Custometagmodify,
+        },
+        {
+          path:'/zsupplier',
+          name:'供应商管理',
+          component:GongyingshangShow,
+        },
+        {
+          path:'/zsupplieradd',
+          name:'供应商管理添加',
+          component:Supplieradd,
+        },
+        {
+          path:'/zsuppliermodify',
+          name:'供应商管理修改',
+          component:Gongyingshangmodify,
+        },
+        {
+          path:'/zsupplierclassifyadd',
+          name:'供应商管理修改',
+          component:Clationadd,
+        },
+        {
+          path:'/zsupplierclassify',
+          name:'供应商管理修改',
+          component:Clationshow,
+        },
+        {
+          path:'/zsupplierclassifymodify',
+          name:'供应商管理修改',
+          component:Clationmodify,
+        },
+        {
+          path:'/zoutlet',
+          name:'门店管理',
+          component:Mdianshow,
+        },
+        {
+          path:'/zoutletadd',
+          name:'门店管理添加',
+          component:Mdianadd,
+        },
+        {
+          path:'/zoutletmodify',
+          name:'门店管理修改',
+          component:Mdianmodify,
+        },
+        {
+          path:'/zwarehouse',
+          name:'门店管理修改',
+          component:Warehouseshow,
+        },
+        {
+          path:'/zwarehouseadd',
+          name:'门店管理修改',
+          component:Warehouseadd,
+        },
+        {
+          path:'/zwarehousemodify',
+          name:'门店管理修改',
+          component:Warehousemodify,
+        },
+        {
+          path:'/zaccount',
+          name:'账户管理',
+          component:Accountshow,
+        },
+        {
+          path:'/zaccountadd',
+          name:'账户管理添加',
+          component:Accountadd,
+        },
+        {
+          path:'/zaccountmodify',
+          name:'账户管理修改',
+          component:Accountmodify,
+        },
+        {
+          path:'/zclass',
+          name:'商品分类显示',
+          component:Shoptypeshow,
+        },
+        {
+          path:'/zclassifyadd',
+          name:'商品分类添加子类',
+          component:Shoptypeadd,
+        },
+        {
+          path:'/zclassifymodify',
+          name:'商品分类修改',
+          component:Shopmodify,
+        },
+        {
+          path:'/zclasaddd',
+          name:'商品分类添加',
+          component:Shoptypetian,
+        },
+        {
+          path:'/zcommodity',
+          name:'商品标签',
+          component:shopbqshow,
+        },
+        {
+          path:'/zcommodityadd',
+          name:'商品标签添加',
+          component:Shopbqadd,
+        },
+        {
+          path:'/zcommoditymodify',
+          name:'商品标签修改',
+          component:shopbqmodify,
+        },
+        {
+          path:'/zunit',
+          name:'单位库显示',
+          component:shopdanwshow,
+        },
+        {
+          path:'/zunitadd',
+          name:'单位库添加',
+          component:Shopdanwadd,
+        },
+        {
+          path:'/zunitmodify',
+          name:'单位库修改',
+          component:Shopdanwmodify,
+        },
+        {
+          path:'/zprop',
+          name:'属性库显示',
+          component:Shuxinkushow,
+        },
+        {
+          path:'/zpropadd',
+          name:'属性库添加',
+          component:Shuxinkuadd,
+        },
+        {
+          path:'/zpropmodify',
+          name:'属性库修改',
+          component:Shuxinkumodify,
+        },
+        {
+          path:'/zcomku',
+          name:'商品库显示',
+          component:Shopkushow,
+        },
+        {
+          path:'/zcomkuadd',
+          name:'商品库添加',
+          component:Shopkuadd,
+        },
+        {
+          path:'/zcomkumodify',
+          name:'商品库修改',
+          component:Shopkumodify,
+        },
+        {
           path: '/market',
           name: '新增销售单',
           component: market,
@@ -314,6 +524,11 @@ export default new Router({
           path: '/details',
           name: '销售详情页',
           component: details,
+        },
+        {
+          path: '/edit',
+          name: '编辑状态',
+          component: edit,
         },
         {
           path: '/Home',
@@ -514,26 +729,6 @@ export default new Router({
       component: SKeHu,
     },
     {
-      path: '/zclient',
-      name: '客户管理',
-      component: ClientShow,
-    },
-    {
-      path: '/zclientadd',
-      name: '客户管理添加页面',
-      component: Client,
-    },
-    {
-      path: '/zclientmodify',
-      name: '客户管理修改页面',
-      component: ClientModify,
-    },
-    {
-      path: '/zclassify',
-      name: '客户分类',
-      component:CustomerClassShow,
-    },
-    {
       path: '/bprocurement',
       name: '采购明细表',
       component:BSalesSingleShow,
@@ -599,166 +794,5 @@ export default new Router({
       name: '操作日志',
       component: slog,
     },
-    {
-      path: '/zclassifyadd',
-      name: '客户分类添加頁面',
-      component:CustomerClass,
-    } ,
-    {
-      path: '/zclassifymodify',
-      name: '客户分类修改页面',
-      component:CustomerClassModify,
-    } ,
-    {
-      path: '/zlevel',
-      name: '客户等級',
-      component:ClientgradeShow,
-    },
-    {
-      path:'/zleveladd',
-      name:'客户等級添加页面',
-      component:Clientgradeadd,
-    },
-    {
-      path:'/zlevelmodify',
-      name:'客户等級修改页面',
-      component:ClientgradeModify,
-    } ,
-    {
-      path: '/zlabel',
-      name: '客户标签',
-      component:Custometag,
-    },
-    {
-      path:'/zlabeladd',
-      name:'客户标添加页面',
-      component:Custometagadd,
-    },
-    {
-      path:'/zlabelmodify',
-      name:'客户标签修改页面',
-      component:Custometagmodify,
-    },
-    {
-      path:'/zsupplier',
-      name:'供应商管理',
-      component:GongyingshangShow,
-    },
-    {
-      path:'/zsupplieradd',
-      name:'供应商管理添加',
-      component:Supplieradd,
-    },
-    {
-      path:'/zsuppliermodify',
-      name:'供应商管理修改',
-      component:Gongyingshangmodify,
-    },
-    {
-      path:'/zsupplierclassifyadd',
-      name:'供应商管理修改',
-      component:Clationadd,
-    },
-    {
-      path:'/zsupplierclassify',
-      name:'供应商管理修改',
-      component:Clationshow,
-    },
-    {
-      path:'/zsupplierclassifymodify',
-      name:'供应商管理修改',
-      component:Clationmodify,
-    },
-    {
-      path:'/zoutlet',
-      name:'门店管理',
-      component:Mdianshow,
-    },
-    {
-      path:'/zoutletadd',
-      name:'门店管理添加',
-      component:Mdianadd,
-    },
-    {
-      path:'/zoutletmodify',
-      name:'门店管理修改',
-      component:Mdianmodify,
-    },
-    {
-      path:'/zwarehouse',
-      name:'门店管理修改',
-      component:Warehouseshow,
-    },
-    {
-      path:'/zwarehouseadd',
-      name:'门店管理修改',
-      component:Warehouseadd,
-    },
-    {
-      path:'/zwarehousemodify',
-      name:'门店管理修改',
-      component:Warehousemodify,
-    },
-    {
-      path:'/zaccount',
-      name:'账户管理',
-      component:Accountshow,
-    },
-    {
-      path:'/zaccountadd',
-      name:'账户管理添加',
-      component:Accountadd,
-    },
-    {
-      path:'/zaccountmodify',
-      name:'账户管理修改',
-      component:Accountmodify,
-    },
-    {
-      path:'/zclass',
-      name:'商品分类显示',
-      component:Shoptypeshow,
-    },
-    {
-      path:'/zclassifyadd',
-      name:'商品分类添加',
-      component:Shoptypeadd,
-    },
-    {
-      path:'/zclassifymodify',
-      name:'商品分类修改',
-      component:Shopmodify,
-    },
-    {
-      path:'/zcommodity',
-      name:'商品标签',
-      component:shopbqshow,
-    },
-    {
-      path:'/zcommodityadd',
-      name:'商品分类修改',
-      component:Shopbqadd,
-    },
-    {
-      path:'/zcommoditymodify',
-      name:'商品分类修改',
-      component:shopbqmodify,
-    },
-    {
-      path:'/zunit',
-      name:'单位库显示',
-      component:shopdanwshow,
-    },
-    {
-      path:'/zunitadd',
-      name:'单位库添加',
-      component:Shopdanwadd,
-    },
-    {
-      path:'/zunitmodify',
-      name:'单位库修改',
-      component:Shopdanwmodify,
-    }
-
   ]
 })

@@ -1,9 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\config",
     "\\src",
-    "\\src\\components"
+    "\\src\\components",
+    "\\src\\components\\ModelGuo"
   ],
+  "SelectedNode": "\\src\\components\\ModelGuo\\Addfkd.vue",
   "PreviewInSolutionExplorer": false
 }

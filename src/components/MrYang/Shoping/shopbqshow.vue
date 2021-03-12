@@ -66,6 +66,7 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
+          <shopbqmodify v-bind:id="scope.row.lclientId"></shopbqmodify>
           <el-button @click="del(scope.row.clientSid)" type="text" size="small"
             >删除</el-button
           >
@@ -76,6 +77,7 @@
 </template>
 <script>
 import Shopbqadd from "@/components/MrYang/Shoping/Shopbqadd";
+import shopbqmodify from "@/components/MrYang/Shoping/shopbqmodify";
 // 节流函数
 const delay = (function() {
   let timer = 0;
@@ -120,9 +122,6 @@ export default {
         });
       });
     },
-    upt(id) {
-      this.$router.push("/zclientmodify?id=" + id);
-    },
     fetchData(val) {
         this.axios.get('http://localhost:50774/api/LableClientShow',{
         params: {
@@ -154,6 +153,7 @@ export default {
   },
   components: {
     'Shopbqadd': Shopbqadd,
+    'shopbqmodify':shopbqmodify,
   },
 };
 </script>

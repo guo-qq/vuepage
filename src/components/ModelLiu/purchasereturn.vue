@@ -84,7 +84,7 @@
         label="操作"
         width="200">
         <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">审核</el-button>          
+            <el-button @click="handleClick(scope.row.ssId)" type="text" size="small">审核</el-button>          
             <el-button @click="editData(scope.row.ssId)" type="text" size="small">详情</el-button>   
             <el-button @click="removeData(scope.row.ssId)" type="text" size="small">删除</el-button>      
         </template>
@@ -143,8 +143,10 @@ export default {
         editData(id) {
         this.$router.push({ path:"/details?id=" + id });
         },
-
-
+        //修改状态页
+        handleClick(id) {
+          this.$router.push({ path:"/edit?id=" + id });
+        },
     },
     mounted () {    //表格显示
     this.axios.get('http://localhost:50774/api/PurchaseReturn')

@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <!-- <el-button type="primary">导出</el-button> -->
+      <el-button type="primary"  @click="exportData">导出</el-button>
     </el-row>
     <br />
     &nbsp;&nbsp;<span>业务日期</span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -52,8 +52,8 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
-        :page-sizes="[1, 2, 3, 5]"
-        :page-size="3"
+        :page-sizes="[10, 20, 30, 50]"
+        :page-size="10"
         layout="total, sizes, prev, pager, next, jumper"
         :total="10"
       >
@@ -84,7 +84,7 @@ export default {
       isCollapse: true,
       items: [],
       currentPage1: 1, //分页
-      currentPage2: 3,
+      currentPage2: 10,
     };
   },
   watch: {

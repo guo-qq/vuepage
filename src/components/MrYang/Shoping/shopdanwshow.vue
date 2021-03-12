@@ -70,12 +70,7 @@
     </el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
-          <el-button @click="upt(scope.row.clientSid)" type="text" size="small"
-            >编辑</el-button
-          >
-          <el-button @click="del(scope.row.clientSid)" type="text" size="small"
-            >删除</el-button
-          >
+          <Shopdanwmodify v-bind:id="scope.row.unitId"></Shopdanwmodify>
         </template>
       </el-table-column>
     </el-table>
@@ -83,6 +78,7 @@
 </template>
 <script>
 import Shopdanwadd from "@/components/MrYang/Shoping/Shopdanwadd";
+import Shopdanwmodify from "@/components/MrYang/Shoping/Shopdanwmodify";
 // 节流函数
 const delay = (function() {
   let timer = 0;
@@ -161,6 +157,7 @@ export default {
   },
   components: {
     'Shopdanwadd': Shopdanwadd,
+    'Shopdanwmodify':Shopdanwmodify
   },
 };
 </script>
