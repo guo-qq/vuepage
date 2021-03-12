@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <!-- <el-button type="primary">导出</el-button> -->
+      <el-button type="primary"  @click="exportData">导出</el-button>
     </el-row>
     <br />
     <span>所属门店</span>
