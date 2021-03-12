@@ -7,6 +7,9 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+// 引入echarts
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts;
  
  
 import VueRouter from 'vue-router';

@@ -1,41 +1,45 @@
 <template>
   <div>
-    <div style="float: lift; font-size: 30px">库存调拨</div>
+    <div style="float: lift; font-size: 30px">库存借出</div>
     <div style="float: right">单据编号:{{ datetime }}</div>
+    <br />
     <div style="float: left">
       <span class="demonstration">出库仓库</span>
       <el-cascader
+        ref="qqq"
         v-model="value3"
         :options="options"
         :props="{ expandTrigger: 'hover' }"
-        @change="handleChange"
+        @change="handleChange()"
       ></el-cascader>
       &nbsp;&nbsp;&nbsp;
     </div>
     <div style="float: left">
-      <el-select v-model="value" placeholder="请选择客户">
+      <el-select v-model="value" placeholder="请选择" @change="changeLocationValue">
         <el-option
           v-for="item in optiones"
           :key="item.clientSid"
+          ref="selection"
           :label="item.clientSname"
           :value="item.clientSid"
         >
         </el-option>
       </el-select>
+      &nbsp;&nbsp;&nbsp;
     </div>
     <div style="float: left">
-      <el-input v-model="input" placeholder="请输入经手人"></el-input>
+      <el-input v-model="inputs" placeholder="经手人"></el-input>
+      &nbsp;&nbsp;&nbsp;
     </div>
-    <div style="float: left">
-      <span class="demonstration">业务时间</span>
+    <div class="block">
+      <span class="demonstration">业务日期</span>
       <el-date-picker v-model="value1" type="date" placeholder="选择日期">
       </el-date-picker>
     </div>
-    <br />
     <div style="float: right">
-      <choiceshoop @signStatus="signStatu"></choiceshoop>
+      <choiceshoop :key="timer" v-bind:id="this.m" @signStatus="signStatu"></choiceshoop>
     </div>
-    <div style="float: left">
+    <div>
       <el-table
         :data="tableData"
         border
@@ -43,15 +47,12 @@
         @cell-click="tabClick"
         prop="re"
       >
-        <el-table-column prop="cargoId" label="序号" width="180">
+        <el-table-column fixed prop="cargoId" label="序号"> </el-table-column>
+        <el-table-column prop="cargoCoding" label="商品编号"> </el-table-column>
+        <el-table-column prop="cargoName" label="商品名称"> </el-table-column>
+        <el-table-column prop="cargoCount" label="可用库存数">
         </el-table-column>
-        <el-table-column prop="cargoCoding" label="商品编号" width="180">
-        </el-table-column>
-        <el-table-column prop="cargoName" label="商品名称" width="180">
-        </el-table-column>
-        <el-table-column prop="cargoCount" label="可用库存数量" width="180">
-        </el-table-column>
-        <el-table-column prop="cLBNumber" label="借出数量" width="180">
+        <el-table-column prop="clbNumber" label="借出数量">
           <template slot-scope="scope">
             <span
               v-if="
@@ -60,17 +61,17 @@
               "
             >
               <el-input
-                v-model="scope.row.cLBNumber"
+                v-model="scope.row.clbNumber"
                 maxlength="300"
                 placeholder="请输入借出数量"
                 size="mini"
-                @change="inputBlur"
+                @change="inputBlurs(scope.row)"
               />
             </span>
-            <span v-else>{{ scope.row.cLBNumber }}</span>
+            <span v-else>{{ scope.row.clbNumber }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="cLBRemark" label="备注" width="180">
+        <el-table-column prop="clbRemark" label="备注">
           <template slot-scope="scope">
             <span
               v-if="
@@ -78,27 +79,28 @@
               "
             >
               <el-input
-                v-model="scope.row.cLBRemark"
+                v-model="scope.row.clbRemark"
                 maxlength="300"
                 placeholder="请输入备注"
                 size="mini"
                 @blur="inputBlur"
               />
             </span>
-            <span v-else>{{ scope.row.cLBRemark }}</span>
+            <span v-else>{{ scope.row.clbRemark }}</span>
           </template>
         </el-table-column>
       </el-table>
     </div>
     <br />
-    <div style="width: 500px; float: left">
-      <span class="demonstration">预计归还时间</span>
-      <el-date-picker v-model="value6" type="date" placeholder="选择日期">
+    <br />
+    <div class="block" style="float: left">
+      <span class="demonstration">归还日期</span>
+      <el-date-picker v-model="value2" type="date" placeholder="选择日期">
       </el-date-picker>
       &nbsp;&nbsp;&nbsp;
     </div>
     <div style="width: 500px; float: left">
-      <el-input v-model="inputs" placeholder="备注"></el-input>
+      <el-input v-model="input" placeholder="备注"></el-input>
       &nbsp;&nbsp;&nbsp;
     </div>
     <div style="float: right">
@@ -114,72 +116,32 @@ export default {
   },
   data() {
     return {
+      value3: "",
       tabClickIndex: null, // 点击的单元格
       tabClickLabel: "", // 当前点击的列名
       datetime: "",
-      options: [],
-      optiones: [],
-      value: "",
-      value3:'',
-      input: "",
-      tableData: [],
-      value6: "",
       inputs: "",
       value1: "",
-      zlist: [],
+      value2: "",
+      m:'',
+      value: "",
+      optiones: [],
+      options: [],
+      tableData: [],
+      input: "",
+      y: [],
+      ss:''
     };
   },
-  tableRowClassName({ row, rowIndex }) {
-    // 把每一行的索引放进row
-    row.index = rowIndex;
-  },
-  signStatu(item) {
-    this.tableData = item;
-
-    console.log(item);
+  mounted() {
+    this.Xia();
+    this.GetNowtime();
+    this.GetKeHu();
   },
   methods: {
-    inputBlur(row) {
-      this.tabClickIndex = null;
-      this.tabClickLabel = "";
-    },
-    wan() {
-      var list = {
-        CLBNumber: "",
-        CargoId: "",
-        CLBRemark: "",
-      };
-      this.tableData.forEach((items, index) => {
-        list.CLBNumber =Number(items.cLBNumber);
-        list.CargoId = Number(items.cargoId);
-        list.CLBRemark = items.cLBRemark;
-        this.zlist.push(list);
-      }),
-        this.axios({
-          methods: "post",
-          URL: "http://localhost:50774/api/AddKu",
-          data: {
-            Lbwarehouse: this.value3,
-            Lbclient: this.value,
-            Lbhandle: this.input,
-            LbywDate: this.value1,
-            LbghDate: this.value6,
-            Lbremark: this.inputs,
-            Lbnumber: this.datetime,
-            Lbstate: 0,
-          },
-        }).then((res) => {
-          this.axios({
-            methods: "post",
-            URL: "http://localhost:50774/api/AddKu",
-            data: this.zlist,
-          }).then((res) => {
-            if (res.data > 0) {
-              alert("添加成功");
-              location.reload();
-            }
-          });
-        });
+    handleChange() {
+      this.timer = new Date().getTime();
+      this.m = this.value3[1];
     },
     GetKeHu() {
       this.axios
@@ -191,24 +153,88 @@ export default {
           console.log(error);
         });
     },
-    tableRowClassName({ row, rowIndex }) {
-      // 把每一行的索引放进row
-      row.index = rowIndex;
+    signStatu(item) {
+      this.tableData = item;
+      console.log(item);
     },
-    tabClick(row, column, cell, event) {
-      switch (column.label) {
-        case "备注":
-          this.tabClickIndex = row.index;
-          this.tabClickLabel = column.label;
-          break;
-        case "实际库存":
-          this.tabClickIndex = row.index;
-          this.tabClickLabel = column.label;
+    changeLocationValue(val)
+    {
+      let obj={};
+      obj=this.optiones.find((item)=>{
+        return item.clientSid===val;
+      })
+      this.ss=obj.clientSname;
+    },
+    async wan() {
+      var result = true;
+      var o = {
+        CargoId: "",
+        CLBNumber: "",
+        CLBRemark: "",
+        CLBQfj:'',
+      };
+      this.tableData.forEach((items, index) => {
+        o.CargoId = Number(items.cargoId);
+        o.CLBNumber = Number(items.clbNumber);
+        o.CLBRemark = items.clbRemark;
+        o.CLBQfj=Number(1);
+        this.y.push(o);
+        if (items.clbNumber == "" || items.clbNumber == null) {
+          console.log(items.clbNumber);
+          result = false;
+          alert("借出数量不能为空");
+        }
+        if(items.clbNumber>items.cargoCount){
+            result = false;
+          alert("借出数量超过库存数");
+        }
+      });
 
-          break;
-        default:
-          return;
+
+
+      if (result) {
+        this.axios({
+          method: "post",
+          url: "http://localhost:50774/api/AddKu",
+          data: {
+            LBWarehouse: String(
+              this.$refs["qqq"].getCheckedNodes()[0].pathLabels[1]
+            ),
+            
+            LBClient: this.ss,
+            LBHandle: this.inputs,
+            LBYwDate: this.value1,
+            LBGhDate: this.value2,
+            LBRemark: this.input,
+            LBNumber: this.datetime,
+            LBQfj:Number(1)
+          },
+        }).then((res) => {
+          this.axios({
+            method: "post",
+            url: "http://localhost:50774/api/AddCbl",
+            data: this.y,
+          }).then((res) => {
+            this.y = [];
+            if (res.status == 200) {
+              alert("添加成功");
+              location.href = "/CheckShow#/lend";
+            }
+          });
+        });
       }
+    },
+    Xia() {
+      this.axios
+        .get("http://localhost:50774/api/SelectWare")
+        .then((response) => {
+          this.options = response.data;
+          this.optionsa = response.data;
+          console.log("ok");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
     GetNowtime() {
       var date = new Date();
@@ -218,22 +244,28 @@ export default {
       this.datetime =
         "JC" + year + month + day + Math.floor(Math.random() * 10000);
     },
-    Xia() {
-      this.axios
-        .get("http://localhost:50774/api/SelectWare")
-        .then((response) => {
-          this.options = response.data;
-          console.log("ok");
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+    inputBlurs(row) {
+      this.tabClickIndex = null;
+      this.tabClickLabel = "";
     },
-  },
-  mounted() {
-    this.Xia();
-    this.GetNowtime();
-    this.GetKeHu();
+    tabClick(row, column, cell, event) {
+      switch (column.label) {
+        case "借出数量":
+          this.tabClickIndex = row.index;
+          this.tabClickLabel = column.label;
+          break;
+        case "备注":
+          this.tabClickIndex = row.index;
+          this.tabClickLabel = column.label;
+          break;
+        default:
+          return;
+      }
+    },
+    inputBlur(row) {
+      this.tabClickIndex = null;
+      this.tabClickLabel = "";
+    },
   },
 };
 </script>

@@ -15,13 +15,14 @@
                 </td>
               </tr>
             </table>
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <table style="marginLeft:570px;margintop:%">
                 <tr>
                   <td>
                     客户等级
                   </td>
                     <td>
-                        <el-select v-model="valuee" style="marginLeft:5px" placeholder="请选择">
+                        <el-select v-model="svpid" style="marginLeft:5px" placeholder="请选择">
                         <el-option
                           v-for="item in opn"
                           :key="item.value"
@@ -35,7 +36,7 @@
                       style="marginLeft:10px"
                       placeholder="请输入关键字搜索"
                       prefix-icon="el-icon-search"
-                      v-model="input2">
+                      v-model="khname">
                       </el-input>
                     </td>
                     <td>
@@ -43,6 +44,7 @@
                     </td>
                 </tr>
             </table>
+            </el-form>
         </div>
     <el-table
     :data="tableData"
@@ -110,15 +112,41 @@
   </div>
 </template>
 <script>
+// 节流函数
+const delay = (function() {
+  let timer = 0;
+  return function(callback, ms) {
+    clearTimeout(timer);
+    timer = setTimeout(callback,ms);
+  };
+})();
   export default {
-    name:"ClientShow",
     data() {
       return {
         opn:[],
         isCollapse: true,
         tableData: [],
-        valuee:''
+        svpid:'',
+        khname:'',
+        lxname:''
       }
+    },
+    watch:{
+       svpid(){
+      delay(()=>{
+        this.fetchData();
+      },300);
+    },
+     khname(){
+      delay(()=>{
+        this.fetchData();
+      },300);
+    },
+     lxname(){
+      delay(()=>{
+        this.fetchData();
+      },300);
+    },
     },
     methods: {
         del(id){
@@ -130,14 +158,24 @@
               this.$http.post('http://localhost:50774/api/LableCDelt?id='+id)
               aler("删除成功")
               location.reload()
-              .catch(res=>{
-                console.log("err");
-              })
             })
         },
         upt(id){
-            this.$router.push('/zclientmodify?id='+id);
-        }
+             this.$router.push({path:"/zclientmodify?id="+id});
+        },
+         fetchData(val) {
+        this.axios.get('http://localhost:50774/api/ClientSupplierShowkh',{
+        params: {
+        svpid:Number(this.svpid),
+        khname:this.khname,
+        lxname:this.lxname
+      },
+      })
+        .then(response => {
+        this.tableData = response.data
+        
+      })       
+      }
 
     },
     resetForm(formName) {

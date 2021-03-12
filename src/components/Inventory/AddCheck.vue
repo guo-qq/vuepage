@@ -7,10 +7,11 @@
       <div style="float: left">
         <span class="demonstration">盘点仓库</span>
         <el-cascader
+          ref="add"
           v-model="value3"
           :options="options"
           :props="{ expandTrigger: 'hover' }"
-          @change="handleChange"
+          @change="handleChange()"
         ></el-cascader>
         &nbsp;&nbsp;&nbsp;
       </div>
@@ -26,7 +27,11 @@
     </div>
     <br />
     <div style="float: right">
-      <choiceshoop @signStatus="signStatu"></choiceshoop>
+      <choiceshoop
+        :key="timer"
+        @signStatus="signStatu"
+        v-bind:id="this.m"
+      ></choiceshoop>
     </div>
     <div>
       <el-table
@@ -104,6 +109,7 @@ export default {
   },
   data() {
     return {
+      timer: "",
       tabClickIndex: null, // 点击的单元格
       tabClickLabel: "", // 当前点击的列名
       datetime: "",
@@ -111,11 +117,11 @@ export default {
       sss: [],
       value1: "",
       input: "",
+      m:'',
       tableData: [],
       sTCRemark: "",
       cargoCount: "",
       y: [],
-
       sTCYkNum: "",
       sTCYkPrice: "",
       inputs: "",
@@ -123,7 +129,11 @@ export default {
   },
 
   methods: {
-   async wan() {
+    handleChange() {
+      this.timer = new Date().getTime();
+      this.m=this.value3[1]
+    },
+    async wan() {
       var shu = 0;
       var jin = 0;
       var result = true;
@@ -136,15 +146,14 @@ export default {
         STCRemark: "",
       };
       this.tableData.forEach((items, index) => {
-
         shu = shu + items.stcYkNum;
         jin = jin + items.stcYkPrice;
         this.sss = items;
         let no = index + 1;
         o.CargoId = items.cargoId;
         o.STCPractical = Number(items.sTCPractical);
-        o.STCYkNum =Number(items.stcYkNum) ;
-        o.STCYkPrice =Number(items.stcYkPrice)  ;
+        o.STCYkNum = Number(items.stcYkNum);
+        o.STCYkPrice = Number(items.stcYkPrice);
         o.STCRemark = items.sTCRemark;
         this.y.push(o);
         oo = oo + 1;
@@ -154,16 +163,17 @@ export default {
           alert("实际库存不能为空");
         }
       });
-      console.log(this.y);
       if (result) {
-        console.log(this.tableData);
-       this.axios({
+        console.log(this.y);
+        this.axios({
           method: "post",
           url: "http://localhost:50774/api/AddWareCheck",
           data: {
             Sttype: Number(1),
             Stnumber: this.datetime,
-            Stwarehouse: "上海仓库",
+            Stwarehouse: String(
+              this.$refs["add"].getCheckedNodes()[0].pathLabels[1]
+            ),
             Sttitle: this.inputs,
             Stdate: new Date(),
             Stremark: this.input,
@@ -173,15 +183,17 @@ export default {
             StzdDate: new Date(),
           },
         }).then((res) => {
-         this.axios({
+          this.axios({
             method: "post",
             url: "http://localhost:50774/api/DuoWare",
-            data:this.y,
+            data: this.y,
           }).then((res) => {
-              this.y = [];
-                alert(添加成功);
-                location.reload();
-            });
+            this.y = [];
+            if (res.status == 200) {
+              alert("添加成功");
+              location.href = "/CheckShow#/point";
+            }
+          });
         });
       }
     },
@@ -195,7 +207,6 @@ export default {
         case "实际库存":
           this.tabClickIndex = row.index;
           this.tabClickLabel = column.label;
-
           break;
         default:
           return;
@@ -207,9 +218,6 @@ export default {
     },
 
     inputBlurs(row) {
-      console.log(row.stcPractical);
-      console.log(row.stcYkNum);
-      console.log(row);
       row.stcYkNum = row.cargoCount - row.sTCPractical;
       row.stcYkPrice = (
         row.sTCPractical * row.cpPrice -

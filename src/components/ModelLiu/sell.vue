@@ -60,7 +60,7 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="200">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small"
+          <el-button @click="handleClick(scope.row.ssId)" type="text" size="small"
             >审核</el-button
           >
           <el-button @click="editData(scope.row.ssId)" type="text" size="small"
@@ -110,13 +110,14 @@ export default {
               this.$message({
                 type: "warning",
                 message: "请求成功",
-              });
+              })
+               this.$router.go(0)
             })
             .catch(() => {
               this.$message({
                 type: "warning",
                 message: "请求失败，请检查网络设置",
-              });
+              })
             });
         })
         .catch(() => {
@@ -129,6 +130,10 @@ export default {
     //详情页
     editData(id) {
       this.$router.push({ path:"/details?id=" + id });
+    },
+    //修改状态页
+    handleClick(id) {
+      this.$router.push({ path:"/edit?id=" + id });
     },
     resetForm(formName) {   //重置按钮
       console.log(this.$refs[formName]);

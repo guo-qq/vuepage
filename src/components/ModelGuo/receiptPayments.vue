@@ -214,7 +214,7 @@ export default {
         })
         .then((response) => {
           this.items = response.data;
-        });
+        }); 
     },
      handleEdit(index, row) {
           this.rpidt=row.rpid
