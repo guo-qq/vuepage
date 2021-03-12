@@ -77,6 +77,7 @@
           <template scope="scope">
             <span v-if="scope.row.lbstate == 0">未归还</span>
             <span v-if="scope.row.lbstate == 1">已归还</span>
+            <span v-if="scope.row.lbstate == 2">已销售</span>
           </template>
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
@@ -155,7 +156,7 @@ export default {
   },
   methods: {
     ZhuanX(row){
-      this.$router.push({path:'/ZhuanX',query:{id:row.id}})
+      this.$router.push({path:'/ZhuanX',query:{id:row.lbid}})
     },
     handleClick(row){
       console.log(row)

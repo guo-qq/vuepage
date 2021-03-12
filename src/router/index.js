@@ -49,6 +49,10 @@ import PerformanceShow from '@/components/ModelHan/PerformanceShow'
 
 import DiaoXi from '@/components/Inventory/DiaoXi'
 
+import rkdetail from '@/components/Inventory/rkdetail'
+import rXiang from '@/components/Inventory/rXiang'
+
+import rkmanagement from '@/components/Inventory/rkmanagement'
 import inven from '@/components/Inventory/InventorySels'
 import running from '@/components/Inventory/WaterSel'
 import point from '@/components/Inventory/CheckShow'
@@ -61,11 +65,13 @@ import ClientModify from '@/components/MrYang/ClientModify'
 import CustomerClassShow from '@/components/MrYang/CustomerClassShow'
 import lend from '@/components/Inventory/JieChu'
 import AddJie from '@/components/Inventory/AddJie'
+import ZCai from '@/components/Inventory/ZCai'
 import ckmanagement from '@/components/Inventory/ckmanagement'
 import ckdetail from '@/components/Inventory/ckdetail'
 import borrow from '@/components/Inventory/borrow'
 import RuBorrow from '@/components/Inventory/RuBorrow'
 import ZhuanX from '@/components/Inventory/ZhuanX'
+import XiangC from '@/components/Inventory/XiangC'
 
 import App from '@/App'
 import One from '@/One'
@@ -124,9 +130,34 @@ export default new Router({
       component: One,
       children: [
         {
+          path: '/rXiang',
+          name: '入库详情',
+          component: rXiang,
+        },
+        {
+          path: '/XiangC',
+          name: '转销售',
+          component: XiangC,
+        },
+        {
+          path: '/rkdetail',
+          name: '入库明细',
+          component: rkdetail,
+        },
+        {
+          path: '/rkmanagement',
+          name: '入库管理',
+          component: rkmanagement,
+        },
+        {
           path: '/ZhuanX',
           name: '转销售',
           component: ZhuanX,
+        },
+        {
+          path: '/ZCai',
+          name: '转采购',
+          component: ZCai,
         },
         {
           path: '/ckdetail',
