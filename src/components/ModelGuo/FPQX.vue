@@ -42,7 +42,7 @@ export default {
     Cha() {
       
       this.axios
-        .get("http://localhost:50774/api/RoleMenus?id=" + this.idd)
+        .get(this.$api+"/api/RoleMenus?id=" + this.idd)
         .then((val) => {
              
             this.$refs.tree.setCheckedKeys(val.data);
@@ -78,7 +78,7 @@ export default {
     show() {
       this.dialogFormVisible = true;
       this.axios
-        .get("http://localhost:50774/api/Carte?name="+18325401161+'&pwd='+123)
+        .get(this.$api+"/api/Carte?name="+18325401161+'&pwd='+123)
         .then((val) => {
           this.data = val.data;
         })
@@ -103,7 +103,7 @@ export default {
       rids = arr.join(","); // 把数组转换成字符串
 
       this.axios
-        .get("http://localhost:50774/api/FQX?id=" + this.idd + "&Fid=" + rids)
+        .get(this.$api+"/api/FQX?id=" + this.idd + "&Fid=" + rids)
         .then((val) => {
           this.$message({
             message: "添加成功",

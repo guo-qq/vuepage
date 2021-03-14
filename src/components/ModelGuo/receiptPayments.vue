@@ -157,7 +157,7 @@ export default {
     loadAll() {
       return [
         this.axios
-          .get("http://localhost:50774/api/ClientSupplier")
+          .get(this.$api+"/api/ClientSupplier")
           .then((response) => {
             this.restaurants = response.data;
           })
@@ -202,7 +202,7 @@ export default {
     },
     async fetchData(val) {
       const res = await this.axios
-        .get("http://localhost:50774/api/receiptPayments", {
+        .get(this.$api+"/api/receiptPayments", {
           params: {
             FKF: this.state,
             value: this.value[0],
@@ -224,7 +224,7 @@ export default {
   mounted() {
     this.loadAll();
     this.axios
-      .get("http://localhost:50774/api/receiptPayments")
+      .get(this.$api+"/api/receiptPayments")
       .then((response) => {
         this.items = response.data;
         console.log("ok");
