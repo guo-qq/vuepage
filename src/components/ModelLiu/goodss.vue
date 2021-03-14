@@ -26,17 +26,13 @@
             @selection-change="handleSelectionChange"
           >
             <el-table-column type="selection" width="55"> </el-table-column>
+            <el-table-column prop="cargoCoding" label="商品编号" width="120">
+            </el-table-column>
             <el-table-column prop="cargoName" label="商品名称" width="120">
             </el-table-column>
-            <el-table-column prop="unitPice" label="采购价格" width="120">
+            <el-table-column prop="cargoDate" label="上架时间" width="120">
             </el-table-column>
-            <el-table-column prop="className" label="商品分类" width="120">
-            </el-table-column>
-            <el-table-column
-              prop="cargoCount"
-              label="库存"
-              show-overflow-tooltip
-            >
+            <el-table-column prop="cargoDetails" label="商品详情" width="120">
             </el-table-column>
           </el-table>
         </div>
@@ -98,7 +94,7 @@ export default {
     },
     Getshoop() {
       this.axios
-        .get(this.$api+"/api/GetGoods", {
+        .get(this.$api+"/api/GetGoodss", {
           params: {
             name: this.Condition,
             id:this.id

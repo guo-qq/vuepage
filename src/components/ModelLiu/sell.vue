@@ -3,30 +3,17 @@
     <!-- 表单查询 -->
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
       <el-form-item label="状态">
-        <el-select v-model="formInline.region" placeholder="请选择">
+        <el-select v-model="formInline.SsAudit" placeholder="请选择">
+          <el-option label="请选择" value="-1"></el-option>
+          <el-option label="已审核" value="1"></el-option>
+          <el-option label="未审核" value="0"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="业务日期">
-        <el-date-picker
-          v-model="value1"
-          type="daterange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+      <el-form-item>
+        <el-button type="primary" @click="sou()">搜索</el-button>
+        <router-link to="/market"
+          ><el-button type="primary" plain>新增</el-button></router-link
         >
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item>
-        <el-input
-          v-model="formInline.user"
-          prefix-icon="el-icon-search"
-          placeholder="请输入关键词搜索"
-        ></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">搜索</el-button>
-        <el-button @click="resetForm('ruleForm')" type="danger">重置</el-button>
-        <router-link to="/market"><el-button type="primary" plain>新增</el-button></router-link>
       </el-form-item>
     </el-form>
 
@@ -60,7 +47,10 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="200">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row.ssId)" type="text" size="small"
+          <el-button
+            @click="handleClick(scope.row.ssId)"
+            type="text"
+            size="small"
             >审核</el-button
           >
           <el-button @click="editData(scope.row.ssId)" type="text" size="small"
@@ -87,6 +77,7 @@ export default {
         //表单
         user: "",
         region: "",
+        SsAudit: "",
       },
       value1: "", //时间
     };
@@ -105,19 +96,19 @@ export default {
       })
         .then(() => {
           this.$http
-            .post("http://localhost:50774/api/DelSalesSingles?id=" + id)
+            .post(this.$api + "/api/DelSalesSingles?id=" + id)
             .then((response) => {
               this.$message({
                 type: "warning",
                 message: "请求成功",
-              })
-               this.$router.go(0)
+              });
+              this.$router.go(0);
             })
             .catch(() => {
               this.$message({
                 type: "warning",
                 message: "请求失败，请检查网络设置",
-              })
+              });
             });
         })
         .catch(() => {
@@ -129,21 +120,23 @@ export default {
     },
     //详情页
     editData(id) {
-      this.$router.push({ path:"/details?id=" + id });
+      this.$router.push({ path: "/details?id=" + id });
     },
     //修改状态页
     handleClick(id) {
-      this.$router.push({ path:"/edit?id=" + id });
+      this.$router.push({ path: "/edit?id=" + id });
     },
-    resetForm(formName) {   //重置按钮
+    resetForm(formName) {
+      //重置按钮
       console.log(this.$refs[formName]);
       this.$refs[formName].resetFields();
     },
-  },
-    mounted() {
-      //表格显示
+    sou() {
+      //搜索
       this.axios
-        .get("http://localhost:50774/api/GetSalesSingles")
+        .get(
+          this.$api + "/api/GetSalesSingles?ssAudit=" + this.formInline.SsAudit
+        )
         .then((response) => {
           this.items = response.data;
           console.log("ok");
@@ -152,6 +145,19 @@ export default {
           console.log(error);
         });
     },
+  },
+  mounted() {
+    //表格显示
+    this.axios
+      .get(this.$api + "/api/GetSalesSingles")
+      .then((response) => {
+        this.items = response.data;
+        console.log("ok");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
 };
 </script>
 
