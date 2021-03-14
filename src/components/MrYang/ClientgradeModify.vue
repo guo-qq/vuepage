@@ -5,9 +5,17 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <table style="marginLeft:5%">
     <tr>
-      <td><span>等级名称</span></td>
+      
       <td>
+        <el-form-item  label="等级名称"
+        prop="cgradeName"
+        :rules="[
+      { required: true, message: '请输入等级名称', trigger: 'blur' },
+      { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+    ]"
+        >
         <el-input v-model="ruleForm.cgradeName" placeholder="请输入名称"></el-input>
+        </el-form-item>
       </td>
     </tr>
     <tr>
@@ -50,7 +58,7 @@
       async dd(ss)
     {
         this.dialogFormVisible =true,
-        await this.axios.get("http://localhost:50774/api/ClientGradeByid?id="+this.di).then((res)=>{
+        await this.axios.get(this.$api+"/api/ClientGradeByid?id="+this.di).then((res)=>{
             this.ruleForm.cgradeName=res.data.cgradeName,
             this.ruleForm.cgradeDiscount=res.data.cgradeDiscount
         })
@@ -58,7 +66,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.axios.post("http://localhost:50774/api/ClientGradeUpt",{
+           this.axios.post(this.$api+"/api/ClientGradeUpt",{
                 cgradeId:this.di,
                 cgradeName:this.ruleForm.cgradeName,
                 cgradeDiscount:Number(this.ruleForm.cgradeDiscount)

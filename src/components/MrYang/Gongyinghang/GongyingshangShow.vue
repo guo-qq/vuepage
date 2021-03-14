@@ -150,7 +150,7 @@ const delay = (function() {
               cancelButtonText:'取消',
               type:'warning'
             }).then(()=>{
-              this.$http.post('http://localhost:50774/api/ClientSupplierDelt?id='+id)
+              this.$http.post(this.$api+'/api/ClientSupplierDelt?id='+id)
               aler("删除成功")
               location.reload()
               .catch(res=>{
@@ -159,10 +159,10 @@ const delay = (function() {
             })
         },
         upt(id){
-            this.$route.push('/zclientmodify?id='+id);
+            this.$router.push('/zsuppliermodify?id='+id);
         },
          fetchData(val) {
-        this.axios.get('http://localhost:50774/api/ClientSupplierShowde',{
+        this.axios.get(this.$api+'/api/ClientSupplierShowde',{
         params: {
         flid:Number(this.flid),
         gname:gname,
@@ -179,7 +179,7 @@ const delay = (function() {
       },
     created(){
         //显示       
-        this.axios.get('http://localhost:50774/api/ClientSupplierShowde')
+        this.axios.get(this.$api+'/api/ClientSupplierShowde')
           .then(response=>{
             this.tableData=response.data;
             console.log('ok')
@@ -188,7 +188,7 @@ const delay = (function() {
             console.log(error);
           })
             //供应商分类
-        this.axios.get('http://localhost:50774/api/ClientClassifySelect')
+        this.axios.get(this.$api+'/api/ClientClassifySelect')
         .then(response=>{
           this.opn=response.data;
             console.log('ok')

@@ -43,14 +43,14 @@
       async dd(ss)
     {
         this.dialogFormVisible =true,
-        await this.axios.get("http://localhost:50774/api/ClassifySeltcByid?id="+this.di).then((res)=>{
+        await this.axios.get(this.$api+"/api/ClassifySeltcByid?id="+this.di).then((res)=>{
             this.ruleForm.className=res.data.className
         })
     },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.axios.post("http://localhost:50774/api/ClassifyUpt",{
+           this.axios.post(this.$api+"/api/ClassifyUpt",{
                 classId:this.di,
                 className:this.ruleForm.className,
             })

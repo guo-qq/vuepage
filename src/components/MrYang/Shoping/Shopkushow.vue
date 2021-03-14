@@ -41,7 +41,7 @@
               style="marginleft: 10px"
               placeholder="请输入关键字搜索"
               prefix-icon="el-icon-search"
-              v-model="flname"
+              v-model="sname"
             >
             </el-input>
           </td>
@@ -59,7 +59,7 @@
       :row-class-name="tableRowClassName"
     >
       <el-table-column type="selection" width="55"> </el-table-column>
-      <el-table-column v-if="fales" prop="cgradeId" label="id" width="150">
+      <el-table-column v-if="fales" prop="cargoId" label="jj" width="150">
       </el-table-column>
       <el-table-column
         type="yyyy-dd-mm-ss"
@@ -88,8 +88,10 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
-          <ClientgradeModify v-bind:id="scope.row.cgradeId"></ClientgradeModify>
-          <el-button @click="del(scope.row.cgradeId)" type="text" size="small"
+          <el-button @click="upt(scope.row.cargoId)" type="text" size="small"
+            >编辑</el-button
+          >
+          <el-button @click="delt(scope.row.cargoId)" type="text" size="small"
             >删除</el-button
           >
         </template>
@@ -112,12 +114,18 @@ export default {
       option: [],
       isCollapse: true,
       tableData: [],
-      value1: "",
-      flname:''
+      value: "",
+      value1:'',
+      sname:''
     };
   },
    watch:{
-     flname(){
+     sname(){
+      delay(()=>{
+        this.fetchData();
+      },300);
+    },
+    value(){
       delay(()=>{
         this.fetchData();
       },300);
@@ -128,27 +136,40 @@ export default {
       },300);
     },
     },
+    mounted(){
+      //商品分类下拉
+        this.axios.get(this.$api+'/api/ShopTypeSelectAll')
+        .then(response=>{
+            this.option=response.data;
+            console.log('ok')
+        })
+        .catch(function(error){
+            console.log(error);
+          })
+    },
   methods: {
-    del(id) {
+    delt(id) {
       this.$confirm("确认删除此数据吗？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        this.$http.post("http://localhost:50774/api/ClientGradeDlet?id="+id);
+        this.axios.post(this.$api+"/api/ShopDelt?id="+id);
         aler("删除成功");
         this.$router.go(0)
       });
     },
     upt(id) {
-      this.$router.push("/zclientmodify?id=" + id);
+      this.$router.push("/zcomkumodify?id="+id);
     },
     fetchData(val) {
-        this.axios.get('http://localhost:50774/api/ClientGradeShow',{
+        this.axios.get(this.$api+'/api/ShopShow',{
         params: {
-        flname:this.flname,
+        flid:Number(this.value),
+        sname:this.sname,
         stratime:this.value1[0],
         endtime:this.value1[1],
+
       },
       })
         .then(response => {
@@ -162,7 +183,6 @@ export default {
     this.$refs[formName].resetFields();
   },
   created() {
-    const _this = this
     //显示
     this.axios
       .get(this.$api+"/api/ShopShow")

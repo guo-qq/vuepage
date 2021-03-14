@@ -150,7 +150,7 @@ const delay = (function() {
     methods: {
 
         ztai(id){
-        this.axios.post("http://localhost:50774/api/WarehouseZtai?id="+id +"&ztai="+1)
+        this.axios.post(this.$api+"/api/WarehouseZtai?id="+id +"&ztai="+1)
         this.$message({
                   message:'启用成功',
                    type: 'success',
@@ -158,7 +158,7 @@ const delay = (function() {
                 this.$router.go(0)
     },
     zt(id){
-        this.axios.post("http://localhost:50774/api/WarehouseZtai?id="+id +"&ztai="+0)
+        this.axios.post(this.$api+"/api/WarehouseZtai?id="+id +"&ztai="+0)
         this.$message({
                   message:'禁用成功',
                    type:'success',
@@ -171,7 +171,7 @@ const delay = (function() {
               cancelButtonText:'取消',
               type:'warning'
             }).then(()=>{
-              this.$http.post('http://localhost:50774/api/LableCDelt?id='+id)
+              this.$http.post(this.$api+'/api/LableCDelt?id='+id)
               aler("删除成功")
               location.reload()
               .catch(res=>{
@@ -183,7 +183,7 @@ const delay = (function() {
             this.$route.push('/zclientmodify?id='+id);
         },
          fetchData(val) {
-        this.axios.get('http://localhost:50774/api/WarehouseShow',{
+        this.axios.get(this.$api+'/api/WarehouseShow',{
         params: {
             phone:this.ckname[0],
             lxrname:this.ckname[1],
@@ -200,7 +200,7 @@ const delay = (function() {
       },
     created(){
         //显示       
-        this.axios.get('http://localhost:50774/api/WarehouseShow')
+        this.axios.get(this.$api+'/api/WarehouseShow')
           .then(response=>{
             this.tableData=response.data;
             console.log('ok')

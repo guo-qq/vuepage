@@ -155,16 +155,16 @@ const delay = (function() {
               cancelButtonText:'取消',
               type:'warning'
             }).then(()=>{
-              this.$http.post('http://localhost:50774/api/LableCDelt?id='+id)
+              this.$http.post(this.$api+'/api/LableCDelt?id='+id)
               aler("删除成功")
-              location.reload()
+              location.reload();
             })
         },
         upt(id){
              this.$router.push({path:"/zclientmodify?id="+id});
         },
          fetchData(val) {
-        this.axios.get('http://localhost:50774/api/ClientSupplierShowkh',{
+        this.axios.get(this.$api+'/api/ClientSupplierShowkh',{
         params: {
         svpid:Number(this.svpid),
         khname:this.khname,
@@ -183,7 +183,7 @@ const delay = (function() {
       },
     created(){
         //显示       
-        this.axios.get('http://localhost:50774/api/ClientSupplierShowkh')
+        this.axios.get(this.$api+'/api/ClientSupplierShowkh')
           .then(response=>{
             this.tableData=response.data;
             console.log('ok')
@@ -192,7 +192,7 @@ const delay = (function() {
             console.log(error);
           })
             //客户级别
-        this.axios.get('http://localhost:50774/api/ClientGradeSelect')
+        this.axios.get(this.$api+'/api/ClientGradeSelect')
         .then(response=>{
           this.opn=response.data;
             console.log('ok')

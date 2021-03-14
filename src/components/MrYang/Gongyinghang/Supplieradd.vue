@@ -10,9 +10,28 @@
             </el-form-item>
           </td>
           <td>
-            <el-form-item label="供应商名称" prop="name">
-            <el-input v-model="ruleForm.clientSname"></el-input>
-            </el-form-item>
+            <el-form-item
+                label="供应商名称"
+                prop="clientSname"
+                :rules="[
+                  {
+                    required: true,
+                    message: '请输供应商名称',
+                    trigger: 'blur',
+                  },
+                  {
+                    min: 3,
+                    max: 5,
+                    message: '长度在 3 到 5 个字符',
+                    trigger: 'blur',
+                  },
+                ]"
+              >
+                <el-input
+                  v-model="ruleForm.clientSname"
+                  placeholder="供应商名称"
+                ></el-input>
+              </el-form-item>
           </td>
           <td>
             <el-form-item label="默认仓库">
@@ -75,12 +94,31 @@
       <table>
         <tr>
           <td>
-            <el-form-item label="姓名">
-            <el-input v-model="ruleForm.clientSlinkman"></el-input>
-            </el-form-item>
+            <el-form-item
+                label="联系人名称"
+                prop="clientSlinkman"
+                :rules="[
+                  {
+                    required: true,
+                    message: '请输联系人名称',
+                    trigger: 'blur',
+                  },
+                  {
+                    min: 3,
+                    max: 5,
+                    message: '长度在 3 到 5 个字符',
+                    trigger: 'blur',
+                  },
+                ]"
+              >
+                <el-input
+                  v-model="ruleForm.clientSlinkman"
+                  placeholder="联系人名称"
+                ></el-input>
+              </el-form-item>
           </td>
           <td>
-            <el-form-item label="手机号">
+            <el-form-item prop="clientSphone" label="手机号">
             <el-input v-model="ruleForm.clientSphone"></el-input>
             </el-form-item>
           </td>
@@ -92,7 +130,20 @@
             </el-form-item>
           </td>
           <td>
-            <el-form-item label="E-mail">
+            <el-form-item prop="clientSemail" label="E-mail"
+            :rules="[
+                  {
+                    required: true,
+                    message: '请输入邮箱地址',
+                    trigger: 'blur',
+                  },
+                  {
+                    type: 'email',
+                    message: '请输入正确的邮箱地址',
+                    trigger: ['blur', 'change'],
+                  },
+                ]"
+            >
             <el-input v-model="ruleForm.clientSemail"></el-input>
             </el-form-item>
           </td>
@@ -108,6 +159,17 @@
 <script>
   export default {
     data() {
+      var checkphone = (rule, value, callback) => {
+      // let phoneReg = /(^1[3|4|5|6|7|8|9]\d{9}$)|(^09\d{8}$)/;
+      if (value == "") {
+        callback(new Error("请输入手机号"));
+      } else if (!this.isCellPhone(value)) {
+        //引入methods中封装的检查手机格式的方法
+        callback(new Error("请输入正确的手机号!"));
+      } else {
+        callback();
+      }
+    };
       return {
         options:[],
         opti:[],
@@ -127,15 +189,13 @@
           clientSemail:'',
         },
         rules: {
-          name: [
-            { required: false,message:'请输入供应商名称'},
-          ]
-        }
+        clientSphone: [{ required: true, validator: checkphone, trigger: "blur" }], //validator: checkphone是验证手机的引入checkphone函数
+      },
       };
     },
     mounted(){
         //仓库下拉
-        this.axios.get('http://localhost:50774/api/SelectWare')
+        this.axios.get(this.$api+'/api/SelectWare')
         .then(response=>{
           this.options=response.data;
             console.log('ok')
@@ -144,7 +204,7 @@
             console.log(error);
           }),
            //供应商分类
-        this.axios.get('http://localhost:50774/api/ClientClassifySelect')
+        this.axios.get(this.$api+'/api/ClientClassifySelect')
         .then(response=>{
           this.opn=response.data;
             console.log('ok')
@@ -155,10 +215,18 @@
       },
 
     methods: {
+      //检查手机号
+    isCellPhone(val) {
+      if (!/^1(3|4|5|6|7|8)\d{9}$/.test(val)) {
+        return false;
+      } else {
+        return true;
+      }
+    },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.axios.post("http://localhost:50774/api/ClientSuppliAdd",{
+           this.axios.post(this.$api+"/api/ClientSuppliAdd",{
                 clientSnumber:this.ruleForm.clientSnumber,
                 clientSname:this.ruleForm.clientSname,
                 aswid:Number(this.ruleForm.aswid),

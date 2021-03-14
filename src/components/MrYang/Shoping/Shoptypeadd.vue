@@ -31,6 +31,7 @@
        ruleForm:{
           className:'',
           classId:''
+          
         }
       };
     },
@@ -48,7 +49,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.axios.post("http://localhost:50774/api/ClassifyAdd",{
+           this.axios.post(this.$api+"/api/ClassifyAdd",{
                 recursionId:Number(this.di),
                 className:this.ruleForm.className,
             })

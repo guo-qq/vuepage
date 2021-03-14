@@ -52,7 +52,7 @@
      created() {
     //显示
     this.axios
-      .get("http://localhost:50774/api/ClassifySelect")
+      .get(this.$api+"/api/ClassifySelect")
       .then((response) => { 
         this.data = response.data;
         console.log("ok");
@@ -71,7 +71,7 @@
         console.log(id);
         if(id.children.length==0)
         {
-          this.$http.post("http://localhost:50774/api/ClassifyDelt?id="+id.classId);
+          this.$http.post(this.$api+"/api/ClassifyDelt?id="+id.classId);
         aler("删除成功");
         location.reload();
         }

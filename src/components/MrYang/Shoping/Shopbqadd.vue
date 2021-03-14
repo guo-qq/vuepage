@@ -10,9 +10,17 @@
   <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <table style="marginLeft:5%">
     <tr>
-      <td><span>标签名称</span></td>
+      <td></td>
       <td>
+       <el-form-item  label="标签名称"
+        prop="lclientName"
+        :rules="[
+      { required: true, message: '请输入标签名称', trigger: 'blur' },
+      { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+    ]"
+        >
         <el-input v-model="ruleForm.lclientName" placeholder="请输入名称"></el-input>
+         </el-form-item>
       </td>
     </tr>
   </table>
@@ -40,7 +48,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.axios.post("http://localhost:50774/api/LableClientAdd",{
+           this.axios.post(this.$api+"/api/LableClientAdd",{
                 lclientName:this.ruleForm.lclientName,
             })
             this.$message({
