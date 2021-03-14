@@ -44,16 +44,18 @@
 <script>
 export default {
   data() {
-    (rucangku = ""),
-      (jingshou = ""),
-      (danju = ""),
-      (cangku = ""),
-      (biaoti = ""),
-      kehu='',
-      (riqi = ""),
-      (tableData = []),
-      (beizhu = ""),
-      (zhiriqi = "");
+    return{
+      rucangku : "",
+      jingshou : "",
+      danju : "",
+      cangku : "",
+      biaoti : "",
+      kehu:'',
+      riqi : "",
+      tableData : [],
+      beizhu : "",
+      zhiriqi : ""
+    }
   },
   methods: {
     UptC(){

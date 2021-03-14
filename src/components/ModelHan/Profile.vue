@@ -180,7 +180,7 @@ export default {
     loadAll() {
       return [
         this.axios
-          .get("http://localhost:50774/api/ProfileShow")
+          .get(this.$api+"/api/ProfileShow")
           .then((response) => {
             this.restaurants = response.data;
           })
@@ -197,7 +197,7 @@ export default {
     },
     async fetchData(val) {
       const res = await this.axios
-        .get("http://localhost:50774/api/ProfileShow", {
+        .get(this.$api+"/api/ProfileShow", {
           params: {
             start: this.value[0],
             end: this.value[1],
@@ -213,7 +213,7 @@ export default {
     loadAlls() {
       return [
         this.axios
-          .get("http://localhost:50774/api/ProfileTK")
+          .get(this.$api+"/api/ProfileTK")
           .then((response) => {
             this.restaurants = response.data;
           })
@@ -231,7 +231,7 @@ export default {
     
     async fetchData(val) {
       const res = await this.axios
-        .get("http://localhost:50774/api/ProfileTK", {
+        .get(this.$api+"/api/ProfileTK", {
           params: {
             start: this.value[0],
             end: this.value[1],
@@ -309,7 +309,7 @@ export default {
     },
      aa() {
        this.axios
-        .get("http://localhost:50774/api/ProfileTK")
+        .get(this.$api+"/api/ProfileTK")
         .then((response) => {
           this.itemss = response.data;
           console.log("ok");
@@ -320,7 +320,7 @@ export default {
     },
      bb() {
        this.axios
-        .get("http://localhost:50774/api/ProfileShow")
+        .get(this.$api+"/api/ProfileShow")
         .then((response) => {
           this.items = response.data;
           console.log("ok");
