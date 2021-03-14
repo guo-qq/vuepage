@@ -101,7 +101,7 @@ export default {
       this.dialogFormVisible=true
       
       await this.axios
-      .get("http://localhost:50774/api/CCCC?id="+this.wocap)
+      .get(this.$api+"/api/CCCC?id="+this.wocap)
       .then((response) => {
         this.item = response.data;       
         this.tableData=response.data;

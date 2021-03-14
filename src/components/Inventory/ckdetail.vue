@@ -90,14 +90,14 @@ export default {
     },
     Del(row) {
       this.axios
-        .post("http://localhost:50774/api/Del?id="+row.cId)
+        .post( this.$api+"/api/Del?id="+row.cId)
         .then((res) => {
           location.reload();
         });
     },
     sel() {
       this.axios
-        .get("http://localhost:50774/api/XiangSelB", {
+        .get( this.$api+"/api/XiangSelB", {
           params: {
             n: this.input,
             ctype: Number(this.value),
@@ -111,7 +111,7 @@ export default {
     },
     Show() {
       this.axios
-        .get("http://localhost:50774/api/XiangSelB", {
+        .get( this.$api+"/api/XiangSelB", {
           params: {
             n: this.input,
             ctype: Number(1),

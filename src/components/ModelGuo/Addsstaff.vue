@@ -11,41 +11,46 @@
         label-width="100px"
         class="demo-ruleForm"
       >
-        <el-form-item label="账号" prop="usernumber" style="width: 350px">
-          <el-input v-model="ruleForm.usernumber"></el-input>
+        <el-form-item label="账号" prop="zhanghao" style="width: 350px">
+          <el-input v-model="ruleForm.zhanghao"></el-input>
         </el-form-item>
-        <el-form-item label="员工姓名" prop="userName" style="width: 350px">
-          <el-input v-model="ruleForm.userName"></el-input>
+        <el-form-item label="员工姓名" prop="xingming" style="width: 350px">
+          <el-input v-model="ruleForm.xingming"></el-input>
         </el-form-item>
-        <el-form-item label="登录密码" prop="userpwd" style="width: 350px">
-          <el-input v-model="ruleForm.userpwd"></el-input>
+        <el-form-item label="登录密码" prop="mima" style="width: 350px">
+          <el-input v-model="ruleForm.mima"></el-input>
         </el-form-item>
 
         <el-divider></el-divider>
 
-      
         <el-form-item label="所属门店" prop="">
-          <el-select v-model="ruleForm" placeholder="请选择活动区域">
-            <el-option label="王五百货商城" value="shanghai"></el-option>
-            <el-option label="上海门店" value="beijing"></el-option>
-            <el-option label="江苏门店" value="beijing"></el-option>
+          <el-select v-model="mendian" placeholder="请选择活动区域">
+            <el-option
+              v-for="item in region"
+              :key="item.aswid"
+              :label="item.aswname"
+              :value="item.aswid"
+            >
+            </el-option>
           </el-select>
         </el-form-item>
 
         <el-form-item label="选择角色" prop="">
-          <el-select v-model="ruleForm" placeholder="请选择活动区域">
-            <el-option label="采购员" value="shanghai"></el-option>
-            <el-option label="销售员" value="beijing"></el-option>
-            <el-option label="财务" value="beijing"></el-option>
+          <el-select v-model="jiaose" placeholder="请选择活动区域">
+            <el-option
+              v-for="item in region1"
+              :key="item.roleid"
+              :label="item.roleidName"
+              :value="item.roleid"
+            >
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="员工状态" prop="userstate">
-          <el-switch v-model="ruleForm.userstate"></el-switch>
+          <el-switch v-model="zhuangtai"></el-switch>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')"
-            >立即创建</el-button
-          >
+          <el-button type="primary" @click="submitForm">立即创建</el-button>
           <el-button @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -58,45 +63,83 @@ export default {
     return {
       dialogFormVisible: false,
       ruleForm: {
-        usernumber: "",
-        userpwd: "",
-        userName: "",
-        userstate: "",
-        userTime: "",
-        resource: "",
-        userphoto: "",
-        usershop: "",
+        zhanghao: "",
+        xingming: "",
+        mima: "",
       },
-      region:[],
+      region: [],
+      region1: [],
       rules: {
-        usernumber: [
+        zhanghao: [
           { required: true, message: "请输账号", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
+          { min: 3, max: 25, message: "长度在 3 到 5 个字符", trigger: "blur" },
         ],
-        userName: [
+        xingming: [
           { required: true, message: "请输入员工姓名", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
+          { min: 3, max: 25, message: "长度在 3 到 5 个字符", trigger: "blur" },
         ],
-        userpwd: [
+        mima: [
           { required: true, message: "请输入登录密码", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
-        ],
-        aswName: [
-          { required: true, message: "请选择所属门店", trigger: "change" },
+          { min: 3, max: 25, message: "长度在 3 到 5 个字符", trigger: "blur" },
         ],
       },
       formLabelWidth: "120px",
+
+      mendian: "",
+      jiaose: "",
+      zhuangtai: "",
+      Data: this.getProjectNum(),
     };
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
+    // 获取当前日期的方法
+    getProjectNum() {
+      const projectTime = new Date(); // 当前中国标准时间
+      const Year = projectTime.getFullYear(); // 获取当前年份 支持IE和火狐浏览器.
+      const Month = projectTime.getMonth() + 1; // 获取中国区月份
+      const Day = projectTime.getDate(); // 获取几号
+      var CurrentDate = Year;
+      if (Month >= 10) {
+        // 判断月份和几号是否大于10或者小于10
+        CurrentDate += Month;
+      } else {
+        CurrentDate += "0" + Month;
+      }
+      if (Day >= 10) {
+        CurrentDate += Day;
+      } else {
+        CurrentDate += "0" + Day;
+      }
+      return CurrentDate;
+    },
+    submitForm() {
+     
+      this.axios({
+        method: "post",
+        url: this.$api + "/api/AddUser",
+        data: {
+          Usernumber: this.ruleForm.zhanghao,
+          Userpwd: this.ruleForm.mima,
+          UserName: this.ruleForm.xingming,
+          Usershop: Number(this.mendian),
+          Userstate: Number(this.zhuangtai),
+          UserTime :this.Data,
+          Roleid:Number(this.jiaose),
+        },
+      }).then((res) => {
+        alert(this.jiaose);
+        this.axios({
+          method: "post",
+          url: this.$api + "/api/AddUserRole",
+          data: {
+           Roleid:Number(this.jiaose)
+          },
+        }).then((res) => {
+          this.$message({
+            message: "添加成功",
+            type: "success",
+          });
+        });
       });
     },
     resetForm(formName) {
@@ -104,9 +147,19 @@ export default {
     },
     staff() {
       this.axios
-        .get("http://localhost:50774/api/AddShopWareSelect")
-        .then((response) => {         
-          this.region = response.data;          
+        .get(this.$api + "/api/AddShopWareSelect")
+        .then((response) => {
+          this.region = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    roles() {
+      this.axios
+        .get(this.$api + "/api/roles")
+        .then((response) => {
+          this.region1 = response.data;
         })
         .catch(function (error) {
           console.log(error);
@@ -115,6 +168,7 @@ export default {
   },
   mounted() {
     this.staff();
+    this.roles();
   },
 };
 </script>

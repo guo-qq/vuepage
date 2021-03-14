@@ -139,7 +139,7 @@ export default {
     loadAll() {
       return [
         this.axios
-          .get("http://localhost:50774/api/PerformanceShow")
+          .get(this.$api+"/api/PerformanceShow")
           .then((response) => {
             this.restaurants = response.data;
           })
@@ -156,7 +156,7 @@ export default {
     },
     async fetchData(val) {
       const res = await this.axios
-        .get("http://localhost:50774/api/PerformanceShow", {
+        .get(this.$api+"/api/PerformanceShow", {
           params: {
             aswid:Number(this.region),
             start: this.value[0],
@@ -205,7 +205,7 @@ export default {
   mounted() {
     this.loadAll();
     this.axios
-      .get("http://localhost:50774/api/PerformanceShow")
+      .get(this.$api+"/api/PerformanceShow")
       .then((response) => {
         this.items = response.data;
         console.log("ok");
@@ -214,7 +214,7 @@ export default {
         console.log(error);
       });
       this.axios
-      .get("http://localhost:50774/api/AddShopWareShow")
+      .get(this.$api+"/api/AddShopWareShow")
       .then((response) => {
         this.XL = response.data;
         console.log("ok");

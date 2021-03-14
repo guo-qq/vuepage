@@ -172,7 +172,7 @@ export default {
    async loadAll() {
       return [
       await  this.axios
-          .get("http://localhost:50774/api/SalesSingleShow")
+          .get(this.$api+"/api/SalesSingleShow")
           .then((response) => {
             this.restaurants = response.data;
           })
@@ -189,7 +189,7 @@ export default {
     },
     async fetchData(val) {
       const res = await this.axios
-        .get("http://localhost:50774/api/SalesSingleShow", {
+        .get(this.$api+"/api/SalesSingleShow", {
           params: {
             clientName: this.state,
             start: this.value[0],
@@ -239,7 +239,7 @@ export default {
 async  mounted() {
     this.loadAll();
   await  this.axios
-      .get("http://localhost:50774/api/SalesSingleShow")
+      .get(this.$api+"/api/SalesSingleShow")
       .then((response) => {
         this.items = response.data;
         console.log("ok");

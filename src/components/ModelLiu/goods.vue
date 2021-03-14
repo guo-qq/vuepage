@@ -98,7 +98,7 @@ export default {
     },
     Getshoop() {
       this.axios
-        .get("http://localhost:50774/api/GetGoods", {
+        .get(this.$api+"/api/GetGoods", {
           params: {
             name: this.Condition,
             id:this.id

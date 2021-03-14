@@ -11,18 +11,8 @@
       >
         <el-form-item label="企业Logo:" prop="name1">
 
-          <el-upload
-            action="F:\vuepage\src\assets\logo.png"
-            list-type="picture-card"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove"
-            :on-change="handleAvatarChange"
-          >
-            <i class="el-icon-plus"></i>
-          </el-upload>
-          <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt="" />
-          </el-dialog>
+         <img :src="bookImg" style="width:100px;height:130px">
+          
         </el-form-item>
         <el-form-item label="企业名称" prop="name2">
           <el-input v-model="handleRemove.epriseName"></el-input>
@@ -71,6 +61,8 @@
 export default {
   data() {
     return {
+      bookImg: require('@/components/Img/gamersky_01origin_01_20181020160FA4.jpg'),
+ 
       dialogImageUrl: "",
       dialogVisible: false,
       handleRemove:[],
@@ -147,7 +139,7 @@ export default {
     update(){
          this.axios({
             method: "post",
-            url: "http://localhost:50774/api/uptenterprises",
+            url: this.$api+"/api/uptenterprises",
             data: {
                 EnterpriseId:this.handleRemove.enterpriseId,
                 EpriseLogo:this.handleRemove.epriseLogo,
@@ -179,7 +171,7 @@ export default {
   },
   mounted(){
        this.axios
-        .get("http://localhost:50774/api/enterprises")
+        .get(this.$api+"/api/enterprises")
         .then((response) => { 
           this.handleRemove = response.data;
         })

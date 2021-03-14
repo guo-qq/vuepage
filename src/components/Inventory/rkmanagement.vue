@@ -77,7 +77,7 @@ export default {
     Show() {
       this.axios
         .get(
-          "http://localhost:50774/api/SelCB?n=" +
+           this.$api+"/api/SelCB?n=" +
             this.input +
             "&ctype=" +
             Number(this.value)
@@ -91,7 +91,7 @@ export default {
   mounted() {
     this.axios
       .get(
-        "http://localhost:50774/api/SelCB?n=" +
+         this.$api+"/api/SelCB?n=" +
           this.input +
           "&ctype=" +
           Number(1)

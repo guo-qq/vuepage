@@ -83,7 +83,7 @@
         methods:{
             //获取已审核销售单的总价格
             GetTotalSum(){
-                this.axios.get("http://localhost:50774/api/GetSsSjMoney").then((res)=>{
+                this.axios.get(this.$api+"/api/GetSsSjMoney").then((res)=>{
                         res.data.forEach(element => {
                            
                             this.TotalSum=this.TotalSum+ Number(element.ssSjMoney);
@@ -93,7 +93,7 @@
             },
             //获取收款单的单数
             GetReceiPtsum(){
-                 this.axios.get("http://localhost:50774/api/receiptPayments").then((res)=>{
+                 this.axios.get(this.$api+"/api/receiptPayments").then((res)=>{
                         res.data.forEach(element => {
                         
                             this.ReceiPtsum++;
@@ -102,7 +102,7 @@
             },
             //获取销售利润
             GetSellIngprofit(){
-                this.axios.get("http://localhost:50774/api/SalesSingleShow").then((res)=>{
+                this.axios.get(this.$api+"/api/SalesSingleShow").then((res)=>{
                         res.data.forEach(element => {
                           
                            this.SellIngprofit=this.SellIngprofit+Number(element.maoLi)

@@ -138,7 +138,7 @@ export default {
   methods: {
     sel: function (event) {
       this.axios
-        .get("http://localhost:50774/api/InventorySels", {
+        .get( this.$api+"/api/InventorySels", {
           params: {
             WId: this.value3[1],
             q: this.value2[0],
@@ -157,7 +157,7 @@ export default {
     handleClick(row) {
       this.dialogTableVisible = true;
       this.axios
-        .get("http://localhost:50774/api/InventoryDistribute", {
+        .get( this.$api+"/api/InventoryDistribute", {
           params: {
             name: row.CargoName,
           },
@@ -174,7 +174,7 @@ export default {
   mounted() {
     //显示
     this.axios
-      .get("http://localhost:50774/api/InventorySels")
+      .get( this.$api+"/api/InventorySels")
       .then((response) => {
         this.tableData = response.data;
         console.log("ok");
@@ -184,7 +184,7 @@ export default {
       }),
       //仓库下拉
       this.axios
-        .get("http://localhost:50774/api/SelectWare")
+        .get( this.$api+"/api/SelectWare")
         .then((response) => {
           this.options = response.data;
           console.log("ok");

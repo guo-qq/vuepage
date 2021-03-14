@@ -140,6 +140,7 @@ export default {
         sjs:'KF',
         i:0,
         id:'',
+   
   
     }
   },
@@ -183,7 +184,7 @@ export default {
          async  onSubmit(){
           await  this.axios({
             method:"post",
-           url:"http://localhost:50774/api/AddReceiptPayment",
+           url:this.$api+"/api/AddReceiptPayment",
            data:{
                DanJ:this.sjs,
                ASWId:Number(1),
@@ -204,7 +205,7 @@ export default {
                  
            })
             
-           await this.axios.get('http://localhost:50774/api/ChaX?t='+this.sjs)
+           await this.axios.get(this.$api+'/api/ChaX?t='+this.sjs)
              .then(response => {
               this.id=response.data              
                })
@@ -214,7 +215,7 @@ export default {
 
            await  this.axios({
             method:"post",
-           url:"http://localhost:50774/api/AddReceiptPaymentMoney",
+           url:this.$api+"/api/AddReceiptPaymentMoney",
            data:{
                  RPMId:Number(0),
                  RPMPayment:Number(this.JE),
