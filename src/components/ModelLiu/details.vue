@@ -30,11 +30,8 @@
                     <td>商品序号:{{CargoId}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <td>商品编号:{{CargoCoding}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <td>商品名称:{{CargoName}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <td>商品数量:{{SscNumber}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <td>商品单位:{{UnitName}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <td>销售单价:{{UnitPice}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <td>小计:{{SscSubtotal}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <td>商品备注:{{SScRemark}}</td>
                 </tr>
             </table>
         </div>
@@ -75,7 +72,7 @@
 <script>
   export default {
     data() {
-        this.axios.get('http://localhost:50774/api/DifSalesSingle?ssid='+this.$route.query.id).then((res)=>{
+        this.axios.get(this.$api+'/api/DifSalesSingle?ssid='+this.$route.query.id).then((res)=>{
                 this.SsWarehouse=res.data.ssWarehouse,
                 this.SsClient=res.data.ssClient,
                 this.SsHandle=res.data.ssHandle,

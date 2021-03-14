@@ -48,37 +48,41 @@
 <script>
 export default {
   data() {
-    (rucangku = ""),
-      (jingshou = ""),
-      (danju = ""),
-      (cangku = ""),
-      (biaoti = ""),
-      (riqi = ""),
-      (tableData = []),
-      (beizhu = ""),
-      (zhiriqi = "");
+    return {
+      rucangku: "",
+      jingshou: "",
+      danju: "",
+      cangku: "",
+      biaoti: "",
+      riqi: "",
+      tableData: [],
+      beizhu: "",
+      zhiriqi: "",
+    };
   },
   methods: {
     ZShow() {
       this.axios
-        .get("http://localhost:50774/api/RepXiang",{params:{"id":this.$route.query.id}})
+        .get(this.$api + "/api/RepXiang", {
+          params: { id: this.$route.query.id },
+        })
         .then((res) => {
           console.log(res);
           (this.danju = res.data.reSerial),
-           this.cangku=res.data.cangkuc,
-           this.rucangku=res.data.cangkur,
-           this.jingshou=res.data.rthandle,
-           this.riqi=res.data.rtywDate,
-           this.beizhu=res.data.reRemark,
-           this.zhiriqi=res.data.rtywDate
+            (this.cangku = res.data.cangkuc),
+            (this.rucangku = res.data.cangkur),
+            (this.jingshou = res.data.rthandle),
+            (this.riqi = res.data.rtywDate),
+            (this.beizhu = res.data.reRemark),
+            (this.zhiriqi = res.data.rtywDate);
         });
     },
 
     Xiang() {
       this.axios
-        .get("http://localhost:50774/api/Duoxian?id=" + this.$route.query.id)
+        .get(this.$api + "/api/Duoxian?id=" + this.$route.query.id)
         .then((res) => {
-             console.log(res);
+          console.log(res);
           this.tableData = res.data;
         });
     },

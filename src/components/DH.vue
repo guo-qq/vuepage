@@ -72,7 +72,7 @@ export default {
     },
     DL(name,pwd)
     {
-      this.axios.get('http://localhost:50774/api/Carte?name='+localStorage.getItem('name')+'&pwd='+JSON.parse(localStorage.getItem('pwd')))
+      this.axios.get(this.$api+'/api/Carte?name='+localStorage.getItem('name')+'&pwd='+JSON.parse(localStorage.getItem('pwd')))
       .then(response => {
         this.items = response.data
         

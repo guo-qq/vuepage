@@ -1,3 +1,46 @@
+<script>
+export default {
+  data() {
+    return {
+      danju: "",
+      cangku: "",
+      biaoti: "",
+      riqi: "",
+      tableData: [],
+      beizhu: "",
+      zhiriqi: "",
+    };
+  },
+  methods: {
+    async ZShow() {
+      await this.axios
+        .get(this.$api + "/api/MxPan?id=" + this.$route.query.id)
+        .then((res) => {
+          console.log(res);
+          (this.danju = res.data.stnumber),
+            (this.cangku = res.data.stwarehouse),
+            (this.biaoti = res.data.sttitle),
+            (this.riqi = res.data.stdate),
+            (this.beizhu = res.data.stremark),
+            (this.zhiriqi = res.data.stzdDate);
+        });
+    },
+
+    async Xiang() {
+      await this.axios
+        .get(this.$api + "/api/HuPan?id=" + this.$route.query.id)
+        .then((res) => {
+          console.log(res);
+          this.tableData = res.data;
+        });
+    },
+  },
+  created() {
+    this.ZShow();
+    this.Xiang();
+  },
+};
+</script>
 <template>
   <div>
     <div style="float: lift; font-size: 30px">库存盘点单</div>
@@ -38,47 +81,8 @@
       <br />
       <div>
         备注：{{ this.beizhu }} <br /><br /><br />
-         制单日期：{{zhiriqi}}
+        制单日期：{{ zhiriqi }}
       </div>
     </div>
   </div>
 </template>
-<script>
-export default {
-  data() {
-    (danju = ""),
-      (cangku = ""),
-      (biaoti =""),
-      (riqi = ""),
-      (tableData = []),
-      (beizhu = ""),
-      (zhiriqi = "");
-  },
-  methods: {
-    ZShow() {
-      this.axios.get("http://localhost:50774/api/MxPan?id="+this.$route.query.id)
-      .then((res)=>{
-          console.log(res)
-          this.danju = res.data.stnumber,
-          this.cangku=res.data.stwarehouse,
-          this.biaoti=res.data.sttitle,
-          this.riqi=res.data.stdate,
-          this.beizhu=res.data.stremark,
-          this.zhiriqi=res.data.stzdDate
-      })
-    },
-
-    Xiang(){
-        this.axios.get("http://localhost:50774/api/HuPan?id="+this.$route.query.id)
-        .then((res)=>{
-          console.log(res)
-          this.tableData=res.data
-      })
-    }
-  },
-  created() {
-      this.ZShow();
-      this.Xiang();
-  },
-};
-</script>

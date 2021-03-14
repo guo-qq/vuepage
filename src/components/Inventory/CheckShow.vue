@@ -158,11 +158,11 @@ export default {
       console.log(row)
       if (o == 1) {
         this.axios
-          .post("http://localhost:50774/api/uptCShu?stid="+row.stid)
+          .post( this.$api+"/api/uptCShu?stid="+row.stid)
           .then(function (res) {});
       }
       this.axios
-        .post("http://localhost:50774/api/StateC?id=" + row.stid + "&o=" + o)
+        .post( this.$api+"/api/StateC?id=" + row.stid + "&o=" + o)
         .then(function (res) {
           if (res.data > 0) {
             location.reload();
@@ -178,7 +178,7 @@ export default {
       });
       console.log(params);
       this.axios
-        .post("http://localhost:50774/api/DelWareChecks", params)
+        .post( this.$api+"/api/DelWareChecks", params)
         .then(function (res) {
           if (res.data > 0) {
             self.$message({
@@ -201,7 +201,7 @@ export default {
     show: function () {
       //显示
       this.axios
-        .get("http://localhost:50774/api/ShowWareCheck")
+        .get( this.$api+"/api/ShowWareCheck")
         .then((response) => {
           this.tableData = response.data;
           console.log("ok");
@@ -223,7 +223,7 @@ export default {
 
     sel: function () {
       this.axios
-        .get("http://localhost:50774/api/ShowWareCheck", {
+        .get( this.$api+"/api/ShowWareCheck", {
           params: {
             q: this.value2[0],
             h: this.value2[1],

@@ -145,7 +145,7 @@ export default {
     },
     GetKeHu() {
       this.axios
-        .get("http://localhost:50774/api/clientShow")
+        .get( this.$api+"/api/clientShow")
         .then((res) => {
           this.optiones = res.data;
         })
@@ -195,7 +195,7 @@ export default {
       if (result) {
         this.axios({
           method: "post",
-          url: "http://localhost:50774/api/AddKu",
+          url:  this.$api+"/api/AddKu",
           data: {
             LBWarehouse: String(
               this.$refs["qqq"].getCheckedNodes()[0].pathLabels[1]
@@ -212,7 +212,7 @@ export default {
         }).then((res) => {
           this.axios({
             method: "post",
-            url: "http://localhost:50774/api/AddCbl",
+            url:  this.$api+"/api/AddCbl",
             data: this.y,
           }).then((res) => {
             this.y = [];
@@ -226,7 +226,7 @@ export default {
     },
     Xia() {
       this.axios
-        .get("http://localhost:50774/api/SelectWare")
+        .get( this.$api+"/api/SelectWare")
         .then((response) => {
           this.options = response.data;
           this.optionsa = response.data;

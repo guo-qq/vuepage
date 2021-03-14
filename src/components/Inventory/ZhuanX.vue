@@ -132,7 +132,7 @@
                 });
                 console.log(this.y);
               console.log(this.tableData);
-              this.axios.post("http://localhost:50774/api/AddSalesSingles",{
+              this.axios.post( this.$api+"/api/AddSalesSingles",{
                     //给销售表数据添加
                     SsNumber:this.datetime,   //单据编号
                     SsCount:Number(this.SsCount),     //商品总数量
@@ -154,7 +154,7 @@
               }).then((res) => {
                  this.axios({
                   method: "post",
-                  url: "http://localhost:50774/api/AddSalesSingleCargo",
+                  url:  this.$api+"/api/AddSalesSingleCargo",
                   data:this.y,
                 }).then((res) => {
                   this.y = [];
@@ -196,7 +196,7 @@
           //反填方法
           Fan()
           {
-            this.axios.get("http://localhost:50774/api/JXiao?id="+this.$route.query.id)
+            this.axios.get( this.$api+"/api/JXiao?id="+this.$route.query.id)
             .then((res)=>{
               this.ruleForm.SsWarehouse=res.data.cname;
               this.ruleForm.SsClient=res.data.kname;
@@ -204,7 +204,7 @@
             })
           },
           FanH(){
-            this.axios.get("http://localhost:50774/api/Fxan?id="+this.$route.query.id)
+            this.axios.get( this.$api+"/api/Fxan?id="+this.$route.query.id)
             .then((res)=>{
               this.tableData=res.data;
             })
@@ -216,7 +216,7 @@
           this.GetNowtime();
           //仓库下拉
           this.axios
-            .get("http://localhost:50774/api/SelectWare")
+            .get( this.$api+"/api/SelectWare")
             .then((response) => {
               this.options = response.data;
               console.log("ok");

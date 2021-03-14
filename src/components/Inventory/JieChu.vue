@@ -160,7 +160,7 @@ export default {
     },
     handleClick(row){
       console.log(row)
-      this.axios.post("http://localhost:50774/api/GaiLoan?id="+row.lbid)
+      this.axios.post( this.$api+"/api/GaiLoan?id="+row.lbid)
       .then((res)=>{
         location.reload();
       })
@@ -175,7 +175,7 @@ export default {
         params.push(item.lbid); // 添加所有需要删除数据的id到一个数组，post提交过去
       });
       console.log(params);
-      this.axios.post("http://localhost:50774/api/DelLoan",params)
+      this.axios.post( this.$api+"/api/DelLoan",params)
       .then(function(res){
         if(res.data>0)
         {
@@ -200,7 +200,7 @@ export default {
     },
     Show() {
       this.axios
-        .get("http://localhost:50774/api/Jie", {
+        .get( this.$api+"/api/Jie", {
           params: {
             z: Number(this.value),
             q: this.value2[0],

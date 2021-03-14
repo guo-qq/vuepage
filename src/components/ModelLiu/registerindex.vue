@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     Login() {
-        this.axios.get("http://localhost:50774/api/Carte?name="+this.form.Usernumber+"&&pwd="+this.form.Userpwd).then((res)=>{
+        this.axios.get(this.$api+"/api/Carte?name="+this.form.Usernumber+"&&pwd="+this.form.Userpwd).then((res)=>{
            
             if(res.data.length>0){               
                   this.send(res);

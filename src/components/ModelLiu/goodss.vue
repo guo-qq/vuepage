@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <el-form>
     <el-button type="text" @click="dialogFormVisible = true"
       >添 加 商 品</el-button
     >
@@ -14,31 +14,25 @@
             v-model="Condition"
             size="mini"
             placeholder="输入关键字搜索"
-            style="width: 300px"
+            style="width: 300px;"
           />
-          <el-button type="primary" @click="selll()" style="float: reight"
-            >搜索</el-button
-          >
+          <el-button type="primary" @click="selll()" style="float:reight">搜索</el-button>
           <el-table
             class="el-table"
             ref="multipleTable"
-            style="marginleft: 300px"
+            style="marginLeft:300px"
             :data="gridData"
             tooltip-effect="dark"
             @selection-change="handleSelectionChange"
           >
             <el-table-column type="selection" width="55"> </el-table-column>
+            <el-table-column prop="cargoCoding" label="商品编号" width="120">
+            </el-table-column>
             <el-table-column prop="cargoName" label="商品名称" width="120">
             </el-table-column>
-            <el-table-column prop="unitPice" label="采购价格" width="120">
+            <el-table-column prop="cargoDate" label="上架时间" width="120">
             </el-table-column>
-            <el-table-column prop="className" label="商品分类" width="120">
-            </el-table-column>
-            <el-table-column
-              prop="cargoCount"
-              label="库存"
-              show-overflow-tooltip
-            >
+            <el-table-column prop="cargoDetails" label="商品详情" width="120">
             </el-table-column>
           </el-table>
         </div>
@@ -49,13 +43,33 @@
         </div>
       </el-dialog>
     </div>
-  </div>
+  </el-form>
 </template>
+
+<style scoped>
+.bigdiv {
+  width: 74%;
+  height: 400px;
+}
+.dialog {
+  width: 50px;
+}
+.el-table {
+  width: 526px;
+  float: right;
+}
+</style>
 
 <script>
 export default {
+  props:{
+    id:{
+      type:Number,
+      Request:true
+    }
+  },
   data() {
-    return {
+    return { 
       gridData: [],
       multipleSelection: [],
       dialogTableVisible: false,
@@ -80,9 +94,10 @@ export default {
     },
     Getshoop() {
       this.axios
-        .get( this.$api+"/api/ChoiceShoop", {
+        .get(this.$api+"/api/GetGoodss", {
           params: {
             name: this.Condition,
+            id:this.id
           },
         })
         .then((res) => {
@@ -114,7 +129,7 @@ export default {
     getCheckedKeys() {
       console.log(this.$refs.tree.getCheckedKeys());
     },
-
+  
     setCheckedKeys() {
       this.$refs.tree.setCheckedKeys([3]);
     },

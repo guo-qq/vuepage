@@ -3,24 +3,14 @@
     <!-- 表单查询 -->
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="状态">
-            <el-select v-model="formInline.region" placeholder="请选择">
-            </el-select>
-        </el-form-item>
-        <el-form-item label="业务日期">
-            <el-date-picker
-            v-model="value1"
-            type="daterange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期">
-            </el-date-picker>
-        </el-form-item>
-        <el-form-item >
-            <el-input v-model="formInline.user" prefix-icon="el-icon-search" placeholder="请输入关键词搜索"></el-input>
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click="onSubmit">搜索</el-button>
-            <el-button  @click="onSubmit" type="danger">重置</el-button>
+        <el-select v-model="formInline.SsAudit" placeholder="请选择">
+          <el-option label="请选择" value="-1"></el-option>
+          <el-option label="已审核" value="1"></el-option>
+          <el-option label="未审核" value="0"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="sou()">搜索</el-button>
             <router-link to="/Addpurchase"><el-button type="primary" plain>新增</el-button></router-link>
         </el-form-item>
     </el-form>
@@ -100,7 +90,8 @@ export default {
         items:[],
         formInline:{    //表单
             user: '',
-           region: ''
+           region: '',
+           SsAudit: "",
         },
         value1: ''     //时间
       };
@@ -117,7 +108,7 @@ export default {
             type: "warning"
         }).then(() => {
             this.$http
-                .post("http://localhost:50774/api/DelSalesSingles?id="+id)
+                .post(this.$api+"/api/DelSalesSingles?id="+id)
                 .then(response => {
                     this.$message({
                     type:"warning",
@@ -147,10 +138,23 @@ export default {
         handleClick(id) {
           this.$router.push({ path:"/edit?id=" + id });
         },
-
+sou() {
+      //搜索
+      this.axios
+        .get(
+          this.$api + "/api/GetSalesTicket?ssAudit=" + this.formInline.SsAudit
+        )
+        .then((response) => {
+          this.items = response.data;
+          console.log("ok");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     },
     mounted () {    //表格显示
-    this.axios.get('http://localhost:50774/api/GetSalesTicket')
+    this.axios.get(this.$api+'/api/GetSalesTicket')
       .then(response => {
         this.items = response.data
         console.log('ok')
