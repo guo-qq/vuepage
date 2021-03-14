@@ -1,4 +1,4 @@
-let commonUrl ="http://localhost:50774";
+let commonUrl ="http://localhost:8033";
 
 let baseUrl={
     commonUrl

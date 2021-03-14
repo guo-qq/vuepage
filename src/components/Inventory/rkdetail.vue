@@ -97,7 +97,7 @@ export default {
     },
     sel() {
       this.axios
-        .get( this.$api+"/api/XiangSelB", {
+        .get( this.$api+"/api/XiangSelBr", {
           params: {
             n: this.input,
             ctype: Number(this.value),
@@ -111,7 +111,7 @@ export default {
     },
     Show() {
       this.axios
-        .get( this.$api+"/api/XiangSelB", {
+        .get( this.$api+"/api/XiangSelBr", {
           params: {
             n: this.input,
             ctype: Number(1),

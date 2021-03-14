@@ -132,6 +132,7 @@
                   SscRemark: "",
                   SscSubtotal: "",
                   UnitPice: "",
+                  QfjCgH:''
                 };
                 this.tableData.forEach((items, index) => {
                   this.SsCount=this.SsCount+=Number(items.SscNumber);   //总数量=数量+数量
@@ -145,6 +146,7 @@
                   o.SscRemark=items.SscRemark;
                   o.SscSubtotal = Number(items.SscNumber*items.cpprice);
                   o.UnitPice=Number(items.unitPice);
+                  o.QfjCgH=Number(1)
                   this.y.push(o);
                    oo = oo + 1;
                 });
@@ -157,7 +159,7 @@
                     SsPrice: Number(this.SsPrice), //总价格
                     SsSjMoney: Number(this.SsSjMoney), //实收金额
                     SsRemark:this.ruleForm.SsRemark,   //总备注
-                    SsWarehouse: "上海仓库",   //仓库
+                    SsWarehouse: String(this.$refs["add"].getCheckedNodes()[0].pathLabels[1]),   //仓库
                     SsClient:this.ruleForm.SsClient,    //客户
                     SsHandle:this.ruleForm.SsHandle,   //经手人
                     SsDrawer:name,    //制单人

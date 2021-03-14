@@ -67,9 +67,26 @@
               </el-table-column>
               <el-table-column prop="unitName" label="单位" width="120">
               </el-table-column>
-              <el-table-column prop="cpprice" label="销售单价(元)" width="120">
+              <el-table-column prop="UnitPice" label="采购单价">
+                <template slot-scope="scope">
+                  <span
+                    v-if="
+                      scope.row.index === tabClickIndex &&
+                      tabClickLabel === '采购单价'
+                    "
+                  >
+                    <el-input
+                      v-model="scope.row.UnitPice"
+                      maxlength="300"
+                      placeholder="采购单价"
+                      size="mini"
+                      @change="inputBlurs(scope.row)"
+                    />
+                  </span>
+                  <span v-else>{{ scope.row.UnitPice }}</span>
+                </template>
               </el-table-column>
-              <el-table-column prop="sTCRemark" label="备注">
+              <el-table-column prop="SscRemark" label="备注">
                 <template slot-scope="scope">
                   <span
                     v-if="
@@ -78,14 +95,14 @@
                     "
                   >
                     <el-input
-                      v-model="scope.row.sTCRemark"
+                      v-model="scope.row.SscRemark"
                       maxlength="300"
                       placeholder="请输入备注"
                       size="mini"
                       @blur="inputBlur"
                     />
                   </span>
-                  <span v-else>{{ scope.row.sTCRemark }}</span>
+                  <span v-else>{{ scope.row.SscRemark }}</span>
                 </template>
               </el-table-column>
             </el-table>
@@ -164,8 +181,8 @@ export default {
       CargoId: "",
       SscNumber: "",
       SscRemark: "",
-      SscSubtotal: "",
-      UnitPice: "",
+      SscSubtotal: "", 
+      UnitPice: "",   //财顾单价
       options: [], //存放下拉数据
       sss: [],
       tableData: [],
@@ -183,19 +200,21 @@ export default {
                   SscRemark: "",
                   SscSubtotal: "",
                   UnitPice: "",
+                  QfjCgH:''
                 };
                 this.tableData.forEach((items, index) => {
                   this.SsCount=this.SsCount+=Number(items.SscNumber);   //总数量=数量+数量
-                  this.SscSubtotal=this.SscSubtotal+= Number(items.sscNumber*items.cpprice) ;  //小计
-                  this.SsPrice=Number(items.SscNumber*items.cpprice) ;  //总价格
-                  this.SsSjMoney=Number(items.SscNumber*items.cpprice-this.ruleForm.SsZkMoney);
+                  this.SscSubtotal=this.SscSubtotal+= Number(items.sscNumber*items.UnitPice) ;  //小计
+                  this.SsPrice=Number(items.SscNumber*items.UnitPice) ;  //总价格
+                  this.SsSjMoney=Number(items.SscNumber*items.UnitPice-this.ruleForm.SsZkMoney);
                   this.sss = items;
                   let no = index + 1;
                   o.CargoId = Number(items.cargoId);
                   o.SscNumber=Number(items.SscNumber) ;
                   o.SscRemark=items.SscRemark;
-                  o.SscSubtotal = Number(items.SscNumber*items.cpprice);
-                  o.UnitPice=Number(items.unitPice);
+                  o.SscSubtotal = Number(items.SscNumber*items.UnitPice);
+                  o.UnitPice=Number(items.UnitPice);
+                  o.QfjCgH=Number(0)
                   this.y.push(o);
                    oo = oo + 1;
                 });
@@ -208,7 +227,7 @@ export default {
                     SsPrice: Number(this.SsPrice), //总价格
                     SsSjMoney: Number(this.SsSjMoney), //实收金额
                     SsRemark:this.ruleForm.SsRemark,   //总备注
-                    SsWarehouse: "上海仓库",   //仓库
+                    SsWarehouse: String(this.$refs["add"].getCheckedNodes()[0].pathLabels[1]),   //仓库
                     SsClient:this.ruleForm.SsClient,    //客户
                     SsHandle:this.ruleForm.SsHandle,   //经手人
                     SsDrawer:name,    //制单人
@@ -235,7 +254,7 @@ export default {
                         title:'温馨提示:',
                         message:'添加成功',
                     })
-                    this.$router.push('/sell');
+                    this.$router.push('/purchase');
                   }else{
                      this.$notify({
                         title:'温馨提示:',
@@ -266,6 +285,10 @@ export default {
     tabClick(row, column, cell, event) {
       switch (column.label) {
         case "备注":
+          this.tabClickIndex = row.index;
+          this.tabClickLabel = column.label;
+          break;
+          case "采购单价":
           this.tabClickIndex = row.index;
           this.tabClickLabel = column.label;
           break;

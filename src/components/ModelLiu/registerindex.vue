@@ -113,7 +113,7 @@ export default {
   width: 550px;
   height: 600px;
   opacity: 0.5;
-  background-image: url(../../components/Img/31.jpg);
+  background-image: url("../../components/Img/31.jpg");
 }
 .div2 {
   float: left;

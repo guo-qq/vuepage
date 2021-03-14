@@ -53,6 +53,7 @@ import rkdetail from '@/components/Inventory/rkdetail'
 import rXiang from '@/components/Inventory/rXiang'
 
 import rkmanagement from '@/components/Inventory/rkmanagement'
+import RXiangC from '@/components/Inventory/RXiangC'
 import inven from '@/components/Inventory/InventorySels'
 import running from '@/components/Inventory/WaterSel'
 import point from '@/components/Inventory/CheckShow'
@@ -133,6 +134,11 @@ export default new Router({
           path: '/rXiang',
           name: '入库详情',
           component: rXiang,
+        },
+        {
+          path: '/RXiangC',
+          name: '入库详情',
+          component: RXiangC,
         },
         {
           path: '/XiangC',

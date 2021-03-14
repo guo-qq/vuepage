@@ -32,8 +32,8 @@
         <el-table-column prop="number" label="出库量"> </el-table-column>
         <el-table-column prop="state" label="状态">
           <template slot-scope="scope">
-            <span v-if="scope.row.state == 0">待出库</span>
-            <span v-if="scope.row.state == 1">已出库</span>
+            <span v-if="scope.row.state == 0">待入库</span>
+            <span v-if="scope.row.state == 1">已入库</span>
           </template>
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
@@ -72,12 +72,12 @@ export default {
   },
   methods: {
     handleClick(row){
-        this.$router.push({path:'/XiangC',query:{id:row.cId}});
+        this.$router.push({path:'/RXiangC',query:{id:row.cId}});
     },
     Show() {
       this.axios
         .get(
-           this.$api+"/api/SelCB?n=" +
+           this.$api+"/api/SelCBr?n=" +
             this.input +
             "&ctype=" +
             Number(this.value)
@@ -91,7 +91,7 @@ export default {
   mounted() {
     this.axios
       .get(
-         this.$api+"/api/SelCB?n=" +
+         this.$api+"/api/SelCBr?n=" +
           this.input +
           "&ctype=" +
           Number(1)
