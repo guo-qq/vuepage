@@ -131,24 +131,7 @@
 </template>
 <script>
   export default {
-
     data() {
-      this.axios.get('http://localhost:50774/api/clientSupplierByid?id='+this.$route.query.id).then((res)=>{
-            this.ruleForm.clientSnumber=res.data.clientSnumber
-            this.ruleForm.clientSname=res.data.clientSname
-            this.ruleForm.aswid=res.data.aswid
-            this.ruleForm.cgradeId=res.data.cgradeId
-            this.ruleForm.lclientId=res.data.lclientId
-            this.ruleForm.ccsid=res.data.ccsid
-            this.ruleForm.clientSaddress=res.data.clientSaddress
-            this.ruleForm.postcode=res.data.postcode
-            this.ruleForm.clientSremark=res.data.clientSremark
-            this.ruleForm.clientSstate=res.data.clientSstate
-            this.ruleForm.clientSlinkman=res.data.clientSlinkman
-            this.ruleForm.clientSphone=res.data.clientSphone
-            this.ruleForm.clientSpost=res.data.clientSpost
-            this.ruleForm.clientSemail=res.data.clientSemail
-          })
       return {
         options:[],
         optio:[],
@@ -173,8 +156,23 @@
       };
     },
     mounted(){
+        this.axios.get(this.$api+'/api/clientSupplierByid?id='+this.$route.query.id).then((res)=>{
+            this.ruleForm.clientSnumber=res.data.clientSnumber
+            this.ruleForm.clientSname=res.data.clientSname
+            this.ruleForm.cgradeId=res.data.cgradeId
+            this.ruleForm.lclientId=res.data.lclientId
+            this.ruleForm.ccsid=res.data.ccsid
+            this.ruleForm.clientSaddress=res.data.clientSaddress
+            this.ruleForm.postcode=res.data.postcode
+            this.ruleForm.clientSremark=res.data.clientSremark
+            this.ruleForm.clientSstate=res.data.clientSstate
+            this.ruleForm.clientSlinkman=res.data.clientSlinkman
+            this.ruleForm.clientSphone=res.data.clientSphone
+            this.ruleForm.clientSpost=res.data.clientSpost
+            this.ruleForm.clientSemail=res.data.clientSemail
+          })
         //仓库下拉
-        this.axios.get('http://localhost:50774/api/SelectWare')
+        this.axios.get(this.$api+'/api/SelectWare')
         .then(response=>{
           this.options=response.data;
             console.log('ok')
@@ -183,7 +181,7 @@
             console.log(error);
           }),
            //客户级别
-        this.axios.get('http://localhost:50774/api/ClientGradeSelect')
+        this.axios.get(this.$api+'/api/ClientGradeSelect')
         .then(response=>{
           this.opn=response.data;
             console.log('ok')
@@ -192,7 +190,7 @@
             console.log(error);
           })
            //客户标签
-        this.axios.get('http://localhost:50774/api/LableClientSelct')
+        this.axios.get(this.$api+'/api/LableClientSelct')
         .then(response=>{
           this.optio=response.data;
             console.log('ok')
@@ -201,7 +199,7 @@
             console.log(error);
           })
            //客户分类
-        this.axios.get('http://localhost:50774/api/ClientClassifySupp')
+        this.axios.get(this.$api+'/api/ClientClassifySupp')
         .then(response=>{
           this.opti=response.data;
             console.log('ok')
@@ -215,7 +213,8 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.axios.post("http://localhost:50774/api/ClientSupplierAdd",{
+           this.axios.post(this.$api+"/api/clientSuppUpt",{
+                clientSid:this.$route.query.id,
                 clientSnumber:this.ruleForm.clientSnumber,
                 clientSname:this.ruleForm.clientSname,
                 aswid:Number(this.ruleForm.aswid),

@@ -42,7 +42,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.axios.post("http://localhost:50774/api/ClassifyAdd",{
+           this.axios.post(this.$api+"/api/ClassifyAdd",{
                 className:this.ruleForm.className,
                 recursionId:Number(this.ruleForm.recursionId),
                 aswid:Number(this.ruleForm.aswid)

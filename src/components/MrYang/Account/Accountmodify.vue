@@ -11,9 +11,28 @@
         </el-form-item>
       </td>
        <td>
-             <el-form-item label="账户名称" prop="name">
-            <el-input v-model="ruleForm.accountName"></el-input>
-        </el-form-item>
+            <el-form-item
+                label="账户名称"
+                prop="accountName"
+                :rules="[
+                  {
+                    required: true,
+                    message: '请输入账户名称',
+                    trigger: 'blur',
+                  },
+                  {
+                    min: 3,
+                    max: 5,
+                    message: '长度在 3 到 5 个字符',
+                    trigger: 'blur',
+                  },
+                ]"
+              >
+                <el-input
+                  v-model="ruleForm.accountNumber"
+                  placeholder="请输入名称"
+                ></el-input>
+              </el-form-item>
        </td>
     </tr>
     <tr>
@@ -118,7 +137,7 @@
     async modify(ss)
     {
         this.dialogFormVisible =true,
-        await this.axios.get("http://localhost:50774/api/AccountByid?id="+this.di).then((res)=>{
+        await this.axios.get(this.$api+"/api/AccountByid?id="+this.di).then((res)=>{
             this.ruleForm.accountDate=res.data.accountDate,
             this.ruleForm.accountNumber=res.data.accountNumber,
             this.ruleForm.accountType=res.data.accountType,
@@ -131,7 +150,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.axios.post("http://localhost:50774/api/AccountUpt",{
+           this.axios.post(this.$api+"/api/AccountUpt",{
                 accountId:this.di,
                 accountDate:this.ruleForm.accountDate,
                 accountNumber:this.ruleForm.accountNumber,
@@ -162,7 +181,7 @@
     },
     mounted(){
          //门店下拉
-        this.axios.get('http://localhost:50774/api/AddShopWareSelect')
+        this.axios.get(this.$api+'/api/AddShopWareSelect')
         .then(response=>{
           this.opn=response.data;
             console.log('ok')

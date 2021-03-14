@@ -10,9 +10,16 @@
             </el-form-item>
           </td>
           <td>
-            <el-form-item label="商品名称" prop="fff">
-            <el-input v-model="ruleForm.cargoName"></el-input>
-            </el-form-item>
+             <el-form-item  label="商品名称"
+        prop="cargoName"
+        :rules="[
+      { required: true, message: '请输入商品名称', trigger: 'blur' },
+      { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+    ]"
+        >
+        <el-input v-model="ruleForm.cargoName" placeholder="请输入商品名称"></el-input>
+         </el-form-item>
+            
           </td>
           <td>
             <el-form-item label="商品分类">
@@ -149,7 +156,7 @@
     },
      mounted(){
         //商品分类下拉
-        this.axios.get('http://localhost:50774/api/ShopTypeSelectAll')
+        this.axios.get(this.$api+'/api/ShopTypeSelectAll')
         .then(response=>{
             this.option=response.data;
             console.log('ok')
@@ -158,7 +165,7 @@
             console.log(error);
           })
           //商品标签
-        this.axios.get('http://localhost:50774/api/LableClientSelect')
+        this.axios.get(this.$api+'/api/LableClientSelect')
         .then(response=>{
           this.optio=response.data;
             console.log('ok')
@@ -167,7 +174,7 @@
             console.log(error);
           })
            //商品单位
-        this.axios.get('http://localhost:50774/api/UnitSelect')
+        this.axios.get(this.$api+'/api/UnitSelect')
         .then(response=>{
           this.opti=response.data;
             console.log('ok')
@@ -176,7 +183,7 @@
             console.log(error);
           })
             //商品属性
-        this.axios.get('http://localhost:50774/api/Shopshuxing')
+        this.axios.get(this.$api+'/api/Shopshuxing')
         .then(response=>{
           this.op=response.data;
             console.log('ok')
@@ -190,7 +197,7 @@
         console.log(this.op)
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.axios.post("http://localhost:50774/api/ShopAdd",{
+           this.axios.post(this.$api+"/api/ShopAdd",{
                  cargoCoding:this.ruleForm.cargoCoding,
                  cargoName:this.ruleForm.cargoName,
                  classId:Number(this.ruleForm.value[1]),
@@ -200,7 +207,7 @@
                  cargoState:Number(this.ruleForm.cargoState),
                  cargoDetails:this.ruleForm.cargoDetails,
             })
-            this.axios.post("http://localhost:50774/api/CargoPropertyAdd",{
+            this.axios.post(this.$api+"/api/CargoPropertyAdd",{
                  propertyId:Number(this.ruleForm.value1[1]),
                  cpggCoding:this.ruleForm.cpggCoding,
                  cpprice:Number(this.ruleForm.cpprice),

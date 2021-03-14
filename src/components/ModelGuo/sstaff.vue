@@ -113,7 +113,7 @@
         </el-table-column>
         <el-table-column label="入职时间">
           <template slot-scope="scope">
-            <span>{{ scope.row.userTime }}</span>
+            <span>{{ scope.row.userTime}}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="300px">
@@ -203,7 +203,7 @@ export default {
   methods: {
     show() {
       this.axios
-        .get("http://localhost:50774/api/users")
+        .get(this.$api+"/api/users")
         .then((response) => {
           console.log(response.data);
           this.tabledatas = response.data;
@@ -214,7 +214,7 @@ export default {
     },
     staff() {
       this.axios
-        .get("http://localhost:50774/api/AddShopWareSelect")
+        .get(this.$api+"/api/AddShopWareSelect")
         .then((response) => {
           this.displayOptions = response.data;
         })
@@ -224,7 +224,7 @@ export default {
     },
     shop() {
       this.axios
-        .get("http://localhost:50774/api/roles")
+        .get(this.$api+"/api/roles")
         .then((response) => {
           this.displayOptions1 = response.data;
         })
@@ -234,7 +234,7 @@ export default {
     },
     changeSwitch(data) {
       this.axios
-        .get("http://localhost:50774/api/Userstate", {
+        .get(this.$api+"/api/Userstate", {
           params: {
             id: Number(data.userid),
             state: Number(data.userstate1),
@@ -259,7 +259,7 @@ export default {
     },
     display(val) {
       this.axios
-        .get("http://localhost:50774/api/Usershop", {
+        .get(this.$api+"/api/Usershop", {
           params: {
             id: Number(val.userid),
             name: val.aswName,
@@ -285,7 +285,7 @@ export default {
     },
     display1(val) {
       this.axios
-        .get("http://localhost:50774/api/UserRole", {
+        .get(this.$api+"/api/UserRole", {
           params: {
             id: Number(val.userid),
             name: val.roleidName,
@@ -318,7 +318,7 @@ export default {
         .then(() => {
           this.axios({
             method: "post",
-            url: "http://localhost:50774/api/uptUser",
+            url: this.$api+"/api/uptUser",
             data: {
               userid: Number(val.userid),
               usernumber: val.usernumber,

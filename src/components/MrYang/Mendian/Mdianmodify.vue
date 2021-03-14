@@ -6,9 +6,28 @@
   <table style="marginLeft:5%">
     <tr>
       <td>
-          <el-form-item label="门店名称" prop="name">
-            <el-input v-model="ruleForm.aswname"></el-input>
-        </el-form-item>
+           <el-form-item
+                label="门店名称"
+                prop="aswname"
+                :rules="[
+                  {
+                    required: true,
+                    message: '请输入门店名称',
+                    trigger: 'blur',
+                  },
+                  {
+                    min: 3,
+                    max: 5,
+                    message: '长度在 3 到 5 个字符',
+                    trigger: 'blur',
+                  },
+                ]"
+              >
+                <el-input
+                  v-model="ruleForm.aswname"
+                  placeholder="请输入名称"
+                ></el-input>
+              </el-form-item>
       </td>
        <td>
              <el-form-item label="门店编号" prop="name">
@@ -25,21 +44,55 @@
     </tr>
     <tr>
         <td>
-            <el-form-item label="联系人姓名" prop="name">
-            <el-input v-model="ruleForm.aswlinkman"></el-input>
-        </el-form-item>
+            <el-form-item
+                label="联系人名称"
+                prop="aswlinkman"
+                :rules="[
+                  {
+                    required: true,
+                    message: '请输入联系人名称',
+                    trigger: 'blur',
+                  },
+                  {
+                    min: 3,
+                    max: 5,
+                    message: '长度在 3 到 5 个字符',
+                    trigger: 'blur',
+                  },
+                ]"
+              >
+                <el-input
+                  v-model="ruleForm.aswlinkman"
+                  placeholder="请输入名称"
+                ></el-input>
+              </el-form-item>
         </td>
         <td>
-            <el-form-item label="手机号码" prop="name">
+            <el-form-item label="手机号码" prop="aswphone">
             <el-input v-model="ruleForm.aswphone"></el-input>
         </el-form-item>
         </td>
     </tr>
     <tr>
         <td>
-            <el-form-item label="E-mail" prop="name">
-            <el-input v-model="ruleForm.aswemail"></el-input>
-        </el-form-item>
+           <el-form-item
+                label="E-mail"
+                prop="aswemail"
+                :rules="[
+                  {
+                    required: true,
+                    message: '请输入邮箱地址',
+                    trigger: 'blur',
+                  },
+                  {
+                    type: 'email',
+                    message: '请输入正确的邮箱地址',
+                    trigger: ['blur', 'change'],
+                  },
+                ]"
+              >
+                <el-input v-model="ruleForm.aswemail"></el-input>
+              </el-form-item>
         </td>
         <td>
             <el-form-item label="QQ" prop="name">
@@ -81,6 +134,17 @@
 <script>
   export default {
     data() {
+       var checkphone = (rule, value, callback) => {
+      // let phoneReg = /(^1[3|4|5|6|7|8|9]\d{9}$)|(^09\d{8}$)/;
+      if (value == "") {
+        callback(new Error("请输入手机号"));
+      } else if (!this.isCellPhone(value)) {
+        //引入methods中封装的检查手机格式的方法
+        callback(new Error("请输入正确的手机号!"));
+      } else {
+        callback();
+      }
+    };
       return {
         dialogVisible: false,
         reload: this.reload,
@@ -97,7 +161,10 @@
           aswqq:'',
           aswstate:'0',
           aswremark:''
-        }
+        },
+        rules: {
+        aswphone: [{ required: true, validator: checkphone, trigger: "blur" }], //validator: checkphone是验证手机的引入checkphone函数
+      },
       };
     },
     props:{
@@ -110,7 +177,7 @@
          async upt(ss)
     {
         this.dialogFormVisible =true,
-        await this.axios.get("http://localhost:50774/api/AddShopWareByid?id="+this.di).then((res)=>{
+        await this.axios.get(this.$api+"/api/AddShopWareByid?id="+this.di).then((res)=>{
             this.ruleForm.aswname=res.data.aswname
             this.ruleForm.aswnumber=res.data.aswnumber
             this.ruleForm.aswlinkman=res.data.aswlinkman
@@ -122,10 +189,18 @@
             this.ruleForm.aswaddress=res.data.aswaddress
         })
     },
+    //检查手机号
+    isCellPhone(val) {
+      if (!/^1(3|4|5|6|7|8)\d{9}$/.test(val)) {
+        return false;
+      } else {
+        return true;
+      }
+    },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.axios.post("http://localhost:50774/api/AddShopWareUpt",{
+           this.axios.post(this.$api+"/api/AddShopWareUpt",{
                 aswid:this.di,
                 aswname:this.ruleForm.aswname,
                 aswnumber:this.ruleForm.aswnumber,

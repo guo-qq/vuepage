@@ -116,7 +116,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        this.$http.post("http://localhost:50774/api/ClientGradeDlet?id="+id);
+        this.$http.post(this.$api+"/api/ClientGradeDlet?id="+id);
         aler("删除成功");
         this.$router.go(0)
       });
@@ -125,7 +125,7 @@ export default {
       this.$router.push("/zclientmodify?id=" + id);
     },
     fetchData(val) {
-        this.axios.get('http://localhost:50774/api/ClientGradeShow',{
+        this.axios.get(this.$api+'/api/ClientGradeShow',{
         params: {
         flname:this.flname,
         stratime:this.value1[0],
@@ -144,7 +144,7 @@ export default {
   created() {
     //显示
     this.axios
-      .get("http://localhost:50774/api/ClientGradeShow")
+      .get(this.$api+"/api/ClientGradeShow")
       .then((response) => {
         this.tableData = response.data;
         console.log("ok");

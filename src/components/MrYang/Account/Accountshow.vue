@@ -75,7 +75,7 @@
       width="150">
       <template slot-scope="scope">
         <Accountmodify v-bind:id="scope.row.accountId"></Accountmodify>
-        <el-button @click="del(scope.row.accountId)" type="text" size="small">删除</el-button>        
+        <el-button @click="del(scope.row.accountId)" type="text" size="small">删除</el-button>      
       </template>
     </el-table-column>
   </el-table>
@@ -122,7 +122,7 @@ const delay = (function() {
               cancelButtonText:'取消',
               type:'warning'
             }).then(()=>{
-              this.$http.post('http://localhost:50774/api/LableCDelt?id='+id)
+              this.$http.post(this.$api+'/api/LableCDelt?id='+id)
               aler("删除成功")
               location.reload()
               .catch(res=>{
@@ -134,7 +134,7 @@ const delay = (function() {
             this.$route.push('/Accountmodify?id='+id);
         },
          fetchData(val) {
-        this.axios.get('http://localhost:50774/api/AccountShow',{
+        this.axios.get(this.$api+'/api/AccountShow',{
         params: {
             bh:this.bh,
             zhname:this.zhname,
@@ -150,7 +150,7 @@ const delay = (function() {
       },
     created(){
         //显示       
-        this.axios.get('http://localhost:50774/api/AccountShow')
+        this.axios.get(this.$api+'/api/AccountShow')
           .then(response=>{
             this.tableData=response.data;
             console.log('ok')

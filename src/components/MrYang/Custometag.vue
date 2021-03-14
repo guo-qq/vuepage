@@ -115,7 +115,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        this.$http.post("http://localhost:50774/api/ClientSupplierDelt?id="+id);
+        this.$http.post(this.$api+"/api/ClientSupplierDelt?id="+id);
         aler("删除成功");
         location.reload();
       });
@@ -124,7 +124,7 @@ export default {
       this.$router.push("/zclientmodify?id=" + id);
     },
     fetchData(val) {
-        this.axios.get('http://localhost:50774/api/LableClientShowkh',{
+        this.axios.get(this.$api+'/api/LableClientShowkh',{
         params: {
         bqname:this.bqname,
         stratime:this.value1[0],
@@ -143,7 +143,7 @@ export default {
   created() {
     //显示
     this.axios
-      .get("http://localhost:50774/api/LableClientShowkh")
+      .get(this.$api+"/api/LableClientShowkh")
       .then((response) => {
         this.tableData = response.data;
         console.log("ok");

@@ -6,8 +6,14 @@
   <table style="marginLeft:5%">
     <tr>
       <td>
-          <el-form-item label="仓库名称" prop="name">
-            <el-input v-model="ruleForm.wname"></el-input>
+         <el-form-item  label="仓库名称"
+        prop="wname"
+        :rules="[
+      { required: true, message: '请输入仓库名称', trigger: 'blur' },
+      { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+    ]"
+        >
+        <el-input v-model="ruleForm.wname" placeholder="请输入名称"></el-input>
         </el-form-item>
       </td>
        <td>
@@ -32,19 +38,30 @@
     </tr>
     <tr>
         <td>
-            <el-form-item label="联系人姓名" prop="name">
-            <el-input v-model="ruleForm.wlink"></el-input>
+             <el-form-item  label="联系人名称"
+        prop="wlink"
+        :rules="[
+      { required: true, message: '请输入联系人名称', trigger: 'blur' },
+      { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+    ]"
+        >
+        <el-input v-model="ruleForm.wlink" placeholder="请输入名称"></el-input>
         </el-form-item>
         </td>
         <td>
-            <el-form-item label="手机号码" prop="name">
+            <el-form-item label="手机号码" prop="wiphone">
             <el-input v-model="ruleForm.wiphone"></el-input>
         </el-form-item>
         </td>
     </tr>
     <tr>
         <td>
-            <el-form-item label="E-mail" prop="name">
+            <el-form-item label="E-mail" prop="wemail"
+             :rules="[
+      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+    ]"
+            >
             <el-input v-model="ruleForm.wemail"></el-input>
         </el-form-item>
         </td>
@@ -88,6 +105,16 @@
 <script>
   export default {
     data() {
+       var checkphone = (rule, value, callback) => {
+		      // let phoneReg = /(^1[3|4|5|6|7|8|9]\d{9}$)|(^09\d{8}$)/;
+		      if (value == "") {
+		        callback(new Error("请输入手机号"));
+		      } else if (!this.isCellPhone(value)) {//引入methods中封装的检查手机格式的方法
+		        callback(new Error("请输入正确的手机号!"));
+		      } else {
+		        callback();
+		      }
+		    };
       return {
         dialogVisible: false,
         reload: this.reload,
@@ -105,6 +132,9 @@
           wstate:'0',
           wremark:'',
           aswid:''
+        },
+        rules: {
+          wiphone: [{ required: true, validator: checkphone, trigger: "blur" }],//validator: checkphone是验证手机的引入checkphone函数    
         }
       };
     },
@@ -118,7 +148,7 @@
         async upt(ss)
     {
         this.dialogFormVisible =true,
-        await this.axios.get("http://localhost:50774/api/WarehouseByid?id="+this.di).then((res)=>{
+        await this.axios.get(this.$api+"/api/WarehouseByid?id="+this.di).then((res)=>{
             this.ruleForm.wname=res.data.wname
             this.ruleForm.waddress=res.data.waddress
             this.ruleForm.wlink=res.data.wlink
@@ -130,10 +160,18 @@
             this.ruleForm.aswid=res.data.aswid
         })
     },
+       //检查手机号
+	isCellPhone(val) {
+	      if (!/^1(3|4|5|6|7|8)\d{9}$/.test(val)) {
+	        return false;
+	      } else {
+	        return true;
+	      }
+	    },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.axios.post("http://localhost:50774/api/WarehouseUpt",{
+           this.axios.post(this.$api+"/api/WarehouseUpt",{
                 wid:di,
                 wname:this.ruleForm.wname,
                 waddress:this.ruleForm.waddress,
@@ -149,7 +187,7 @@
                     message: '添加成功',
                    type: 'success',
                 })
-            this.axios.post("http://localhost:50774/api/Swarehoues",{
+            this.axios.post(this.$api+"/api/Swarehoues",{
                 aswid:Number(this.ruleForm.aswid)
             })
             this.dialogVisible =false,
@@ -170,7 +208,7 @@
     },
     mounted(){
          //仓库下拉
-        this.axios.get('http://localhost:50774/api/AddShopWareSelect')
+        this.axios.get(this.$api+'/api/AddShopWareSelect')
         .then(response=>{
           this.options=response.data;
             console.log('ok')

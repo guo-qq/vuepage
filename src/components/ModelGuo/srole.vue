@@ -149,7 +149,7 @@ export default {
   methods: {
     show() {
       this.axios
-        .get("http://localhost:50774/api/roles")
+        .get(this.$api+"/api/roles")
         .then((val) => {
           this.tabledatas = val.data;
         })
@@ -160,7 +160,7 @@ export default {
     BC(val) {
       this.axios({
         method: "post",
-        url: "http://localhost:50774/api/uptRole",
+        url: this.$api+"/api/uptRole",
         data: {
           Roleid: Number(val.roleid),
           RoleidName: val.roleidName,

@@ -8,9 +8,17 @@
   <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <table style="marginLeft:5%">
     <tr>
-      <td><span>单位名称</span></td>
+      <td></td>
       <td>
+        <el-form-item  label="单位名称"
+        prop="unitName"
+        :rules="[
+      { required: true, message: '请输入单位名称', trigger: 'blur' },
+      { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+    ]"
+        >
         <el-input v-model="ruleForm.unitName" placeholder="请输入名称"></el-input>
+         </el-form-item>
       </td>
     </tr>
     <tr>
@@ -53,7 +61,7 @@
     async upt(ss)
     {
         this.dialogFormVisible =true,
-        await this.axios.get("http://localhost:50774/api/UnitSelctById?id="+this.di).then((res)=>{
+        await this.axios.get(this.$api+"/api/UnitSelctById?id="+this.di).then((res)=>{
             this.ruleForm.unitName=res.data.unitName
             this.ruleForm.checked=res.data.unitDecimals
         })
@@ -61,7 +69,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.axios.post("http://localhost:50774/api/UnitUpt",{
+           this.axios.post(this.$api+"/api/UnitUpt",{
                 unitId:this.di,
                 unitName:this.ruleForm.unitName,
                 unitDecimals:this.ruleForm.checked

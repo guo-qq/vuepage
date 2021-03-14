@@ -79,12 +79,14 @@
               placeholder="请输入内容"
               v-show="scope.row.show"
               v-model="scope.row.opmoney"
-            ></el-input>
+            >
+            
+            </el-input>
             <span
               v-show="!scope.row.show"
               v-if="scope.row.opbudget1 == '其他收入'"
               style="color: green"
-              >+{{ scope.row.opmoney }}</span
+              >+{{ scope.row.opmoney}}</span
             >
             <span
               v-show="!scope.row.show"
@@ -194,7 +196,7 @@ export default {
     },
     Show() {
       this.axios
-        .get("http://localhost:50774/api/otherPayments")
+        .get(this.$api+"/api/otherPayments")
         .then((response) => {
           this.tabledatas = response.data;
         })
@@ -205,7 +207,7 @@ export default {
     Baocun(val) {
       this.axios({
         method: "post",
-        url: "http://localhost:50774/api/uptotherPayments",
+        url: this.$api+"/api/uptotherPayments",
         data: {
           Opid: Number(val.opid),
           OpcreateDate: val.opcreateDate,
@@ -225,7 +227,7 @@ export default {
       });
     },
     Delete(val) {     
-      this.axios.get("http://localhost:50774/api/DeltotherPayments?id="+val)
+      this.axios.get(this.$api+"/api/DeltotherPayments?id="+val)
       .then((val1) => {
     
           this.$message({

@@ -5,9 +5,17 @@
 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <table style="marginLeft:5%">
     <tr>
-      <td><span>分类名称</span></td>
+      <td></td>
       <td>
+        <el-form-item  label="分类名称"
+        prop="ccsname"
+        :rules="[
+      { required: true, message: '请输入分类名称', trigger: 'blur' },
+      { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+    ]"
+        >
         <el-input v-model="ruleForm.ccsname" placeholder="请输入名称"></el-input>
+         </el-form-item>
       </td>
     </tr>
   </table>
@@ -32,6 +40,8 @@
        ruleForm:{
           ccsname:''
         }
+
+
       };
     },
     props:{
@@ -44,14 +54,14 @@
     async upt(ss)
     {
         this.dialogFormVisible =true,
-        await this.axios.get("http://localhost:50774/api/ClientClassifySuppByid?id="+this.di).then((res)=>{
+        await this.axios.get(this.$api+"/api/ClientClassifySuppByid?id="+this.di).then((res)=>{
             this.ruleForm.ccsname=res.data.ccsname
         })
     },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.axios.post("http://localhost:50774/api/ClientClassifyUpttt",{
+           this.axios.post(this.$api+"/api/ClientClassifyUpttt",{
                 ccsname:this.ruleForm.ccsname,
                 ccsid:this.di,
             })

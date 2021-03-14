@@ -128,7 +128,7 @@ export default {
     },
   methods: {
     ztai(id){
-        this.axios.post("http://localhost:50774/api/ClientClassifyZtai?id="+id +"&ztai="+1)
+        this.axios.post(this.$api+"/api/ClientClassifyZtai?id="+id +"&ztai="+1)
         this.$message({
                   message: '启用成功',
                    type: 'success',
@@ -136,7 +136,7 @@ export default {
                 this.$router.go(0)
     },
     zt(id){
-        this.axios.post("http://localhost:50774/api/ClientClassifyZtai?id="+id +"&ztai="+0)
+        this.axios.post(this.$api+"/api/ClientClassifyZtai?id="+id +"&ztai="+0)
         this.$message({
                   message: '禁用成功',
                    type: 'success',
@@ -149,7 +149,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        this.$http.post("http://localhost:50774/api/ClientClassifyDelt?id=" + id);
+        this.$http.post(this.$api+"/api/ClientClassifyDelt?id=" + id);
         aler("删除成功");
         location.reload()
       });
@@ -161,7 +161,7 @@ export default {
     this.$refs[formName].resetFields();
   },
     fetchData(val) {
-        this.axios.get('http://localhost:50774/api/ClientClassifyShow',{
+        this.axios.get(this.$api+'/api/ClientClassifyShow',{
         params: {
         flname:this.flname,
         stratime:this.value1[0],
@@ -177,7 +177,7 @@ export default {
   created() {
     //显示
     this.axios
-      .get("http://localhost:50774/api/ClientClassifyShow")
+      .get(this.$api+"/api/ClientClassifyShow")
       .then((response) => {
         this.tableData = response.data;
         console.log("ok");

@@ -115,7 +115,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        this.$http.post("http://localhost:50774/api/LableCDelt?id=" + id);
+        this.$http.post(this.$api+"/api/LableCDelt?id=" + id);
         aler("删除成功");
         location.reload().catch((res) => {
           console.log("err");
@@ -123,7 +123,7 @@ export default {
       });
     },
     fetchData(val) {
-        this.axios.get('http://localhost:50774/api/LableClientShow',{
+        this.axios.get(this.$api+'/api/LableClientShow',{
         params: {
         bname:this.bname,
         stratime:this.value1[0],
@@ -142,7 +142,7 @@ export default {
   created() {
     //显示
     this.axios
-      .get("http://localhost:50774/api/LableClientShow")
+      .get(this.$api+"/api/LableClientShow")
       .then((response) => {
         this.tableData = response.data;
         console.log("ok");
